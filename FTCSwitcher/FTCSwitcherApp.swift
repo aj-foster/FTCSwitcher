@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import os
 
 @main
 struct FTCSwitcherApp: App {
@@ -13,5 +14,9 @@ struct FTCSwitcherApp: App {
         WindowGroup {
             ContentView()
         }
+    }
+    
+    init() {
+        DoEverythingWithMaximumEffort()
     }
 }

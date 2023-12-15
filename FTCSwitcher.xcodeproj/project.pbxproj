@@ -11,6 +11,7 @@
 		21B3EA2C2B1D86E800C83876 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B3EA2B2B1D86E800C83876 /* ContentView.swift */; };
 		21B3EA2E2B1D86E900C83876 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B3EA2D2B1D86E900C83876 /* Assets.xcassets */; };
 		21B3EA312B1D86E900C83876 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B3EA302B1D86E900C83876 /* Preview Assets.xcassets */; };
+		21B3EA3C2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21B3EA3B2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,9 @@
 		21B3EA2D2B1D86E900C83876 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		21B3EA302B1D86E900C83876 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		21B3EA322B1D86E900C83876 /* FTCSwitcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FTCSwitcher.entitlements; sourceTree = "<group>"; };
+		21B3EA392B22B2B600C83876 /* BMDSwitcherAPI.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = BMDSwitcherAPI.h; sourceTree = "<group>"; };
+		21B3EA3A2B22B2C700C83876 /* FTCSwitcher-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = "FTCSwitcher-Bridging-Header.h"; sourceTree = "<group>"; };
+		21B3EA3B2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMDSwitcherAPIDispatch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,8 +40,10 @@
 		21B3EA1D2B1D86E800C83876 = {
 			isa = PBXGroup;
 			children = (
+				21B3EA382B22B25F00C83876 /* BMDSwitcherAPI */,
 				21B3EA282B1D86E800C83876 /* FTCSwitcher */,
 				21B3EA272B1D86E800C83876 /* Products */,
+				21B3EA3D2B22B4A200C83876 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +73,23 @@
 				21B3EA302B1D86E900C83876 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		21B3EA382B22B25F00C83876 /* BMDSwitcherAPI */ = {
+			isa = PBXGroup;
+			children = (
+				21B3EA3B2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp */,
+				21B3EA392B22B2B600C83876 /* BMDSwitcherAPI.h */,
+				21B3EA3A2B22B2C700C83876 /* FTCSwitcher-Bridging-Header.h */,
+			);
+			path = BMDSwitcherAPI;
+			sourceTree = "<group>";
+		};
+		21B3EA3D2B22B4A200C83876 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -101,6 +124,7 @@
 				TargetAttributes = {
 					21B3EA252B1D86E800C83876 = {
 						CreatedOnToolsVersion = 15.0.1;
+						LastSwiftMigration = 1500;
 					};
 				};
 			};
@@ -141,6 +165,7 @@
 			files = (
 				21B3EA2C2B1D86E800C83876 /* ContentView.swift in Sources */,
 				21B3EA2A2B1D86E800C83876 /* FTCSwitcherApp.swift in Sources */,
+				21B3EA3C2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +231,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -262,6 +288,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 			};
 			name = Release;
 		};
@@ -270,6 +297,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FTCSwitcher/FTCSwitcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -288,6 +316,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster..FTCSwitcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "BMDSwitcherAPI/FTCSwitcher-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -297,6 +327,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FTCSwitcher/FTCSwitcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -315,6 +346,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster..FTCSwitcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "BMDSwitcherAPI/FTCSwitcher-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
