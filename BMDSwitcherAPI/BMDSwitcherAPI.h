@@ -4781,6 +4781,8 @@ extern "C" {
 
     BMD_PUBLIC IBMDSwitcherDiscovery* CreateBMDSwitcherDiscoveryInstance(void);
     BMD_PUBLIC void DoEverythingWithMaximumEffort(void);
+    BMD_PUBLIC IBMDSwitcher* connectSwitcher(CFStringRef);
+    BMD_PUBLIC bool sendMacroToSwitcher(IBMDSwitcher*, int);
 
 }
 

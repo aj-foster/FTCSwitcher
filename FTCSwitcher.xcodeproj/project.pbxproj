@@ -12,6 +12,10 @@
 		21B3EA2E2B1D86E900C83876 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B3EA2D2B1D86E900C83876 /* Assets.xcassets */; };
 		21B3EA312B1D86E900C83876 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B3EA302B1D86E900C83876 /* Preview Assets.xcassets */; };
 		21B3EA3C2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21B3EA3B2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp */; };
+		21D8B0F72B2C0B4600332A85 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 21D8B0F62B2C0B4600332A85 /* Starscream */; };
+		21D8B0F92B2C0B8000332A85 /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0F82B2C0B8000332A85 /* Scoring.swift */; };
+		21D8B0FB2B2CC2F300332A85 /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0FA2B2CC2F300332A85 /* Switcher.swift */; };
+		21D8B0FD2B2CCE2500332A85 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0FC2B2CCE2500332A85 /* Preferences.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,9 @@
 		21B3EA392B22B2B600C83876 /* BMDSwitcherAPI.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = BMDSwitcherAPI.h; sourceTree = "<group>"; };
 		21B3EA3A2B22B2C700C83876 /* FTCSwitcher-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = "FTCSwitcher-Bridging-Header.h"; sourceTree = "<group>"; };
 		21B3EA3B2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMDSwitcherAPIDispatch.cpp; sourceTree = "<group>"; };
+		21D8B0F82B2C0B8000332A85 /* Scoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
+		21D8B0FA2B2CC2F300332A85 /* Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switcher.swift; sourceTree = "<group>"; };
+		21D8B0FC2B2CCE2500332A85 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21D8B0F72B2C0B4600332A85 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +71,9 @@
 				21B3EA2D2B1D86E900C83876 /* Assets.xcassets */,
 				21B3EA322B1D86E900C83876 /* FTCSwitcher.entitlements */,
 				21B3EA2F2B1D86E900C83876 /* Preview Content */,
+				21D8B0F82B2C0B8000332A85 /* Scoring.swift */,
+				21D8B0FA2B2CC2F300332A85 /* Switcher.swift */,
+				21D8B0FC2B2CCE2500332A85 /* Preferences.swift */,
 			);
 			path = FTCSwitcher;
 			sourceTree = "<group>";
@@ -108,6 +119,9 @@
 			dependencies = (
 			);
 			name = FTCSwitcher;
+			packageProductDependencies = (
+				21D8B0F62B2C0B4600332A85 /* Starscream */,
+			);
 			productName = FTCSwitcher;
 			productReference = 21B3EA262B1D86E800C83876 /* FTCSwitcher.app */;
 			productType = "com.apple.product-type.application";
@@ -137,6 +151,9 @@
 				Base,
 			);
 			mainGroup = 21B3EA1D2B1D86E800C83876;
+			packageReferences = (
+				21D8B0F52B2C0B4600332A85 /* XCRemoteSwiftPackageReference "Starscream" */,
+			);
 			productRefGroup = 21B3EA272B1D86E800C83876 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -163,7 +180,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21D8B0FB2B2CC2F300332A85 /* Switcher.swift in Sources */,
 				21B3EA2C2B1D86E800C83876 /* ContentView.swift in Sources */,
+				21D8B0FD2B2CCE2500332A85 /* Preferences.swift in Sources */,
+				21D8B0F92B2C0B8000332A85 /* Scoring.swift in Sources */,
 				21B3EA2A2B1D86E800C83876 /* FTCSwitcherApp.swift in Sources */,
 				21B3EA3C2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp in Sources */,
 			);
@@ -373,6 +393,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		21D8B0F52B2C0B4600332A85 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		21D8B0F62B2C0B4600332A85 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 21D8B0F52B2C0B4600332A85 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 21B3EA1E2B1D86E800C83876 /* Project object */;
 }

@@ -96,3 +96,56 @@ void DoEverythingWithMaximumEffort (void) {
     
     controller->Run(0);
 }
+
+IBMDSwitcher* connectSwitcher(CFStringRef url) {
+    IBMDSwitcherDiscovery* discovery = CreateBMDSwitcherDiscoveryInstance();
+    IBMDSwitcher* switcher = NULL;
+    BMDSwitcherConnectToFailure failureReason = 0;
+    HRESULT res = discovery->ConnectTo(url, &switcher, &failureReason);
+    
+    printf("ConnectTo result: %d\n", res);
+    
+    switch(failureReason) {
+        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureNoResponse:
+            printf("Error: bmdSwitcherConnectToFailureNoResponse");
+            break;
+        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureIncompatibleFirmware:
+            printf("Error: bmdSwitcherConnectToFailureIncompatibleFirmware");
+            break;
+        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureCorruptData:
+            printf("Error: bmdSwitcherConnectToFailureCorruptData");
+            break;
+        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureStateSync:
+            printf("Error: bmdSwitcherConnectToFailureStateSync");
+            break;
+        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureStateSyncTimedOut:
+            printf("Error: bmdSwitcherConnectToFailureStateSyncTimedOut");
+            break;
+        default:
+            printf("Connected to switcher");
+            return switcher;
+    }
+    
+    return NULL;
+}
+
+bool sendMacroToSwitcher(IBMDSwitcher* switcher, int macro) {
+    IBMDSwitcherMacroControl* controller;
+    switcher->QueryInterface(IID_IBMDSwitcherMacroControl, (void **)&controller);
+    
+    HRESULT result = controller->Run(macro);
+    
+    switch (result) {
+    case E_INVALIDARG:
+        printf("Invalid macro");
+        break;
+    case E_FAIL:
+        printf("Unknown failure");
+        break;
+    case S_OK:
+        printf("Successfully sent macro");
+        return true;
+    }
+    
+    return false;
+}

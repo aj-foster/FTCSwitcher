@@ -12,11 +12,7 @@ import os
 struct FTCSwitcherApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(scoring: Scoring.current, switcher: Switcher.current)
         }
-    }
-    
-    init() {
-        DoEverythingWithMaximumEffort()
     }
 }
