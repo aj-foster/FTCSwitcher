@@ -28,7 +28,7 @@ class Switcher: ObservableObject {
         os_log("Sending macro \(macro)")
 
         if macro != 0 && switcher != nil {
-            sendMacroToSwitcher(switcher, Int32(macro))
+            sendMacroToSwitcher(switcher, Int32(macro - 1))
         }
     }
 }

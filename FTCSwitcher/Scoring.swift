@@ -73,6 +73,8 @@ class Scoring: ObservableObject, WebSocketDelegate {
                             break
                         }
                     }
+                    
+                    RunLoop.current.add(timer!, forMode: .common)
 
                 case "MATCH_ABORT":
                     timer?.invalidate()
