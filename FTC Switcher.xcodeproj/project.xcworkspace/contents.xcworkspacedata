@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/aj/Documents/Projects/aj-foster/FTCSwitcher/FTC Switcher.xcodeproj">
    </FileRef>
 </Workspace>

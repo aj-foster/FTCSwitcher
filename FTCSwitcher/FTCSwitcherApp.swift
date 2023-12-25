@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import os
 
 @main
 struct FTCSwitcherApp: App {

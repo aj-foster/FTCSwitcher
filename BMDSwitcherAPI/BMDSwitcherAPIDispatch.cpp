@@ -149,3 +149,7 @@ bool sendMacroToSwitcher(IBMDSwitcher* switcher, int macro) {
     
     return false;
 }
+
+void disconnectSwitcher(IBMDSwitcher* switcher) {
+    switcher->Release();
+}

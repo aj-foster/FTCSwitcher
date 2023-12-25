@@ -4783,6 +4783,7 @@ extern "C" {
     BMD_PUBLIC void DoEverythingWithMaximumEffort(void);
     BMD_PUBLIC IBMDSwitcher* connectSwitcher(CFStringRef);
     BMD_PUBLIC bool sendMacroToSwitcher(IBMDSwitcher*, int);
+    BMD_PUBLIC void disconnectSwitcher(IBMDSwitcher*);
 
 }
 

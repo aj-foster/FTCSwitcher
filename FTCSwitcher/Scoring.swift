@@ -10,8 +10,7 @@ import Starscream
 import os
 
 class Scoring: ObservableObject, WebSocketDelegate {
-    
-    @Published var state: ScoringState = .disconnected
+    @Published var state: Scoring.State = .disconnected
     var socket: Starscream.WebSocket?
     var timer: Timer?
     
@@ -19,35 +18,38 @@ class Scoring: ObservableObject, WebSocketDelegate {
     
     func connect(hostname host: String, event_code code: String) {
         let url = "ws://\(host)/api/v2/stream/?code=\(code)"
+        Log("Connecting to \(url)", tag: "Scoring")
+        
         var request = URLRequest(url: URL(string: url)!)
         request.timeoutInterval = 5
+        
         socket = WebSocket(request: request)
         socket?.delegate = self
         socket?.connect()
     }
     
     func disconnect() {
+        Log("Disconnect", tag: "Scoring")
         socket?.disconnect()
     }
     
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
         switch event {
         case .connected(let headers):
+            Log("Connected", tag: "Scoring")
             state = .connected
-            os_log("websocket is connected: \(headers)")
+            
         case .disconnected(let reason, let code):
+            Log("Disconnected", tag: "Scoring")
             state = .disconnected
-            os_log("websocket is disconnected: \(reason) with code: \(code)")
+            
         case .text(let string):
-            if string == "pong" {
-                break;
-            }
-            os_log("Received text: \(string)")
-
+            guard string != "pong" else { break }
+            Log("Received: \(string)", tag: "Scoring")
 
             let decoder = JSONDecoder()
             if let messageData = string.data(using: .utf8),
-               let message = try? decoder.decode(ScoringMessage.self, from: messageData) {
+               let message = try? decoder.decode(Scoring.Message.self, from: messageData) {
 
                 switch message.updateType {
                 case "SHOW_PREVIEW", "SHOW_RANDOM", "SHOW_MATCH", "MATCH_POST":
@@ -89,77 +91,67 @@ class Scoring: ObservableObject, WebSocketDelegate {
                 }
             }
 
-            
-        case .binary(let data):
-            os_log("Received data: \(data.count)")
-        case .ping(_):
-            os_log("PING")
-            break
-        case .pong(_):
-            os_log("PING")
-            break
         case .viabilityChanged(_):
-            os_log("viability changed")
-            break
+            Log("Change in websocket viability", tag: "Scoring")
+
         case .reconnectSuggested(_):
-            os_log("reconnect suggested")
-            break
+            Log("Reconnect suggested", tag: "Scoring")
+
         case .cancelled:
+            Log("Connection cancelled", tag: "Scoring")
             state = .disconnected
-            os_log("cancelled")
+
         case .error(_):
+            Log("Websocket error", tag: "Scoring")
             state = .disconnected
-            os_log("error!")
-//            handleError(error)
-        case .peerClosed:
-               break
+
+        case .binary(_): break
+        case .ping(_): break
+        case .pong(_): break
+        case .peerClosed: break
         }
     }
     
     func scoringEvent(_ event: String, _ field: Int) {
-        let preference =
-            switch event {
-            case "SHOW_PREVIEW":
-                "ShowPreview"
-            case "SHOW_RANDOM":
-                "ShowRandom"
-            case "SHOW_MATCH":
-                "ShowMatch"
-            case "MATCH_START":
-                "StartMatch"
-            case "AUTO_END":
-                "EndAuto"
-            case "DRIVER_START":
-                "StartDriver"
-            case "ENDGAME":
-                "Endgame"
-            case "MATCH_END":
-                "EndMatch"
-            case "MATCH_POST":
-                "PostScore"
-            default:
-                nil as String?
-            }
+        Log("Event \(event)", tag: "Scoring")
         
-        if let preference {
+        if let preference = ScoringEvents.first(where: { $0.title == event }) {
             let prefKey = "field\(field)\(preference)Macro"
             let macro = UserDefaults.standard.integer(forKey: prefKey)
             
             Switcher.current.sendMacro(macro)
         }
     }
+
+    struct Event: Identifiable {
+        var id: String
+        var macro: String
+        var title: String
+    }
+    
+    enum State {
+        case disconnected
+        case connected
+    }
+    
+    struct Message: Decodable {
+        let updateType: String
+        let payload: Scoring.Message.Payload
+        
+        struct Payload: Decodable {
+            let field: Int
+        }
+    }
 }
 
-enum ScoringState {
-    case disconnected
-    case connected
-}
-
-struct ScoringMessage: Decodable {
-    let updateType: String
-    let payload: ScoringMessagePayload
-}
-
-struct ScoringMessagePayload: Decodable {
-    let field: Int
-}
+var ScoringEvents = [
+    Scoring.Event(id: "SHOW_PREVIEW", macro: "ShowPreview", title: "Show Preview"),
+    Scoring.Event(id: "SHOW_RANDOM", macro: "ShowRandom", title: "Show Random"),
+    Scoring.Event(id: "SHOW_MATCH", macro: "ShowMatch", title: "Show Match"),
+    Scoring.Event(id: "MATCH_START", macro: "StartMatch", title: "Start Match"),
+    Scoring.Event(id: "AUTO_END", macro: "EndAuto", title: "End Autonomous"),
+    Scoring.Event(id: "DRIVER_START", macro: "StartDriver", title: "Start Driver Control"),
+    Scoring.Event(id: "ENDGAME", macro: "Endgame", title: "Start Endgame"),
+    Scoring.Event(id: "MATCH_END", macro: "EndMatch", title: "End Match"),
+    Scoring.Event(id: "MATCH_POST", macro: "PostScore", title: "Post Score")
+]

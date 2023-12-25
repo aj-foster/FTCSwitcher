@@ -15,9 +15,9 @@
 		21D8B0F72B2C0B4600332A85 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 21D8B0F62B2C0B4600332A85 /* Starscream */; };
 		21D8B0F92B2C0B8000332A85 /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0F82B2C0B8000332A85 /* Scoring.swift */; };
 		21D8B0FB2B2CC2F300332A85 /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0FA2B2CC2F300332A85 /* Switcher.swift */; };
-		21D8B0FD2B2CCE2500332A85 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0FC2B2CCE2500332A85 /* Preferences.swift */; };
 		21D8B1022B37C95700332A85 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B1012B37C95700332A85 /* Help.swift */; };
 		21D8B1042B37D06800332A85 /* MacroSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B1032B37D06800332A85 /* MacroSetting.swift */; };
+		21D8B1062B39299100332A85 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B1052B39299100332A85 /* Log.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,9 +32,9 @@
 		21B3EA3B2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMDSwitcherAPIDispatch.cpp; sourceTree = "<group>"; };
 		21D8B0F82B2C0B8000332A85 /* Scoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
 		21D8B0FA2B2CC2F300332A85 /* Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switcher.swift; sourceTree = "<group>"; };
-		21D8B0FC2B2CCE2500332A85 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		21D8B1012B37C95700332A85 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
 		21D8B1032B37D06800332A85 /* MacroSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroSetting.swift; sourceTree = "<group>"; };
+		21D8B1052B39299100332A85 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,13 +72,12 @@
 			children = (
 				21D8B1002B37C92E00332A85 /* Interface */,
 				21B3EA292B1D86E800C83876 /* FTCSwitcherApp.swift */,
-				21B3EA2B2B1D86E800C83876 /* ContentView.swift */,
 				21B3EA2D2B1D86E900C83876 /* Assets.xcassets */,
 				21B3EA322B1D86E900C83876 /* FTCSwitcher.entitlements */,
 				21B3EA2F2B1D86E900C83876 /* Preview Content */,
 				21D8B0F82B2C0B8000332A85 /* Scoring.swift */,
 				21D8B0FA2B2CC2F300332A85 /* Switcher.swift */,
-				21D8B0FC2B2CCE2500332A85 /* Preferences.swift */,
+				21D8B1052B39299100332A85 /* Log.swift */,
 			);
 			path = FTCSwitcher;
 			sourceTree = "<group>";
@@ -111,6 +110,7 @@
 		21D8B1002B37C92E00332A85 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				21B3EA2B2B1D86E800C83876 /* ContentView.swift */,
 				21D8B1012B37C95700332A85 /* Help.swift */,
 				21D8B1032B37D06800332A85 /* MacroSetting.swift */,
 			);
@@ -156,7 +156,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 21B3EA212B1D86E800C83876 /* Build configuration list for PBXProject "FTCSwitcher" */;
+			buildConfigurationList = 21B3EA212B1D86E800C83876 /* Build configuration list for PBXProject "FTC Switcher" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -196,12 +196,12 @@
 			files = (
 				21D8B0FB2B2CC2F300332A85 /* Switcher.swift in Sources */,
 				21B3EA2C2B1D86E800C83876 /* ContentView.swift in Sources */,
-				21D8B0FD2B2CCE2500332A85 /* Preferences.swift in Sources */,
 				21D8B1022B37C95700332A85 /* Help.swift in Sources */,
 				21D8B1042B37D06800332A85 /* MacroSetting.swift in Sources */,
 				21D8B0F92B2C0B8000332A85 /* Scoring.swift in Sources */,
 				21B3EA2A2B1D86E800C83876 /* FTCSwitcherApp.swift in Sources */,
 				21B3EA3C2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp in Sources */,
+				21D8B1062B39299100332A85 /* Log.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +396,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		21B3EA212B1D86E800C83876 /* Build configuration list for PBXProject "FTCSwitcher" */ = {
+		21B3EA212B1D86E800C83876 /* Build configuration list for PBXProject "FTC Switcher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				21B3EA332B1D86E900C83876 /* Debug */,

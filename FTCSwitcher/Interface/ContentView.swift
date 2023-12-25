@@ -35,10 +35,10 @@ struct ContentView: View {
                     Help(text: "Event code (ex. \"usflorls\"), which usually appears in the URL of the event page.", width: 280)
                 }
                 Button(scoring.state == .connected ? "Disconnect" : "Connect") {
-                    if Scoring.current.state == .disconnected {
-                        Scoring.current.connect(hostname: scoring_host, event_code: scoring_code)
+                    if scoring.state == .disconnected {
+                        scoring.connect(hostname: scoring_host, event_code: scoring_code)
                     } else {
-                        Scoring.current.disconnect()
+                        scoring.disconnect()
                     }
                 }
             }
@@ -51,10 +51,10 @@ struct ContentView: View {
                     Help(text: "Leave blank if the ATEM switcher is connected via USB. Otherwise, input the IP address of the switcher.", width: 250)
                 }
                 Button(switcher.state == .connected ? "Disconnect" : "Connect") {
-                    if Switcher.current.state == .disconnected {
-                        Switcher.current.connect(switcher_url)
+                    if switcher.state == .disconnected {
+                        switcher.connect(switcher_url)
                     } else {
-                        
+                        switcher.disconnect()
                     }
                 }
             }
@@ -70,50 +70,12 @@ struct ContentView: View {
                         Text("Field 2").bold()
                     }
                     .padding([.bottom], 10)
-                    GridRow {
-                        Text("Show Preview")
-                        MacroSetting("field1ShowPreviewMacro")
-                        MacroSetting("field2ShowPreviewMacro")
-                    }
-                    GridRow {
-                        Text("Show Random")
-                        MacroSetting("field1ShowRandomMacro")
-                        MacroSetting("field2ShowRandomMacro")
-                    }
-                    GridRow {
-                        Text("Show Match")
-                        MacroSetting("field1ShowMatchMacro")
-                        MacroSetting("field2ShowMatchMacro")
-                    }
-                    GridRow {
-                        Text("Start Match")
-                        MacroSetting("field1StartMatchMacro")
-                        MacroSetting("field2StartMatchMacro")
-                    }
-                    GridRow {
-                        Text("End Autonomous")
-                        MacroSetting("field1EndAutoMacro")
-                        MacroSetting("field2EndAutoMacro")
-                    }
-                    GridRow {
-                        Text("Start Driver Control")
-                        MacroSetting("field1StartDriverMacro")
-                        MacroSetting("field2StartDriverMacro")
-                    }
-                    GridRow {
-                        Text("Start Endgame")
-                        MacroSetting("field1EndgameMacro")
-                        MacroSetting("field2EndgameMacro")
-                    }
-                    GridRow {
-                        Text("End Match")
-                        MacroSetting("field1EndMatchMacro")
-                        MacroSetting("field2EndMatchMacro")
-                    }
-                    GridRow {
-                        Text("Post Score")
-                        MacroSetting("field1PostScoreMacro")
-                        MacroSetting("field2PostScoreMacro")
+                    ForEach(ScoringEvents) { event in
+                        GridRow {
+                            Text(event.title)
+                            MacroSetting("field1\(event.macro)Macro")
+                            MacroSetting("field2\(event.macro)Macro")
+                        }
                     }
                 }
             }
