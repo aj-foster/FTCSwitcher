@@ -15,120 +15,114 @@ struct ContentView: View {
     @AppStorage("scoringHost") private var scoring_host = "localhost"
     @AppStorage("switcherUrl") private var switcher_url = ""
     
-    @AppStorage("field1ShowPreviewMacro") private var field1ShowPreviewMacro = 0
-    @AppStorage("field1ShowRandomMacro") private var field1ShowRandomMacro = 0
-    @AppStorage("field1ShowMatchMacro") private var field1ShowMatchMacro = 0
-    @AppStorage("field1StartMatchMacro") private var field1StartMatchMacro = 0
-    @AppStorage("field1EndAutoMacro") private var field1EndAutoMacro = 0
-    @AppStorage("field1StartDriverMacro") private var field1StartDriverMacro = 0
-    @AppStorage("field1EndgameMacro") private var field1EndgameMacro = 0
-    @AppStorage("field1EndMatchMacro") private var field1EndMatchMacro = 0
-    @AppStorage("field1PostScoreMacro") private var field1PostScoreMacro = 0
-    
-    @AppStorage("field2ShowPreviewMacro") private var field2ShowPreviewMacro = 0
-    @AppStorage("field2ShowRandomMacro") private var field2ShowRandomMacro = 0
-    @AppStorage("field2ShowMatchMacro") private var field2ShowMatchMacro = 0
-    @AppStorage("field2StartMatchMacro") private var field2StartMatchMacro = 0
-    @AppStorage("field2EndAutoMacro") private var field2EndAutoMacro = 0
-    @AppStorage("field2StartDriverMacro") private var field2StartDriverMacro = 0
-    @AppStorage("field2EndgameMacro") private var field2EndgameMacro = 0
-    @AppStorage("field2EndMatchMacro") private var field2EndMatchMacro = 0
-    @AppStorage("field2PostScoreMacro") private var field2PostScoreMacro = 0
+    @State private var showScoringHostHelp = false
+    @State private var showScoringCodeHelp = false
+    @State private var showSwitcherURLHelp = false
     
     var body: some View {
-        HStack {
-            VStack(spacing: 20) {
-                Form {
-                    Section(header: Text("Scoring System").bold()) {
-                        TextField(text: $scoring_host, prompt: Text("Hostname (ex. localhost)")) {
-                            Text("Host")
-                        }
-                        TextField(text: $scoring_code, prompt: Text("Event Code (ex. florlm1)")) {
-                            Text("Event")
-                        }
-                        Button(scoring.state == .connected ? "Disconnect" : "Connect") {
-                            if Scoring.current.state == .disconnected {
-                                Scoring.current.connect(hostname: scoring_host, event_code: scoring_code)
-                            } else {
-                                
-                            }
-                        }
+        Form {
+            Section(header: Text("Scoring System").bold()) {
+                HStack {
+                    TextField(text: $scoring_host, prompt: Text("Hostname (ex. localhost)")) {
+                        Text("Host")
                     }
-                    Spacer().frame(height: 20)
-                    Section(header: Text("ATEM Switcher").bold()) {
-                        TextField(text: $switcher_url, prompt: Text("Blank for USB")) {
-                            Text("URL")
-                        }
-                        Button(switcher.state == .connected ? "Disconnect" : "Connect") {
-                            if Switcher.current.state == .disconnected {
-                                Switcher.current.connect(switcher_url)
-                            } else {
-                                
-                            }
-                        }
-                    }
+                    Help(text: "Use \"localhost\" if the scoring system runs on the same computer, or the IP address displayed at the top of the scoring system otherwise.", width: 290)
                 }
-                Form {
-                    Grid(alignment: .leading, horizontalSpacing: 10, verticalSpacing: 10) {
-                        GridRow {
-                            Spacer()
-                            Text("Field 1").bold()
-                            Text("Field 2").bold()
-                        }
-                        GridRow {
-                            Text("Show Preview")
-                            TextField("", value: $field1ShowPreviewMacro, format: .number).labelsHidden()
-                            TextField("", value: $field2ShowPreviewMacro, format: .number).labelsHidden()
-                        }
-                        GridRow {
-                            Text("Show Random")
-                            TextField("", value: $field1ShowRandomMacro, format: .number).labelsHidden()
-                            TextField("", value: $field2ShowRandomMacro, format: .number).labelsHidden()
-                        }
-                        GridRow {
-                            Text("Show Match")
-                            TextField("", value: $field1ShowMatchMacro, format: .number).labelsHidden()
-                            TextField("", value: $field2ShowMatchMacro, format: .number).labelsHidden()
-                        }
-                        GridRow {
-                            Text("Start Match")
-                            TextField("", value: $field1StartMatchMacro, format: .number).labelsHidden()
-                            TextField("", value: $field2StartMatchMacro, format: .number).labelsHidden()
-                        }
-                        GridRow {
-                            Text("End Autonomous")
-                            TextField("", value: $field1EndAutoMacro, format: .number).labelsHidden()
-                            TextField("", value: $field2EndAutoMacro, format: .number).labelsHidden()
-                        }
-                        GridRow {
-                            Text("Start Driver Control")
-                            TextField("", value: $field1StartDriverMacro, format: .number).labelsHidden()
-                            TextField("", value: $field2StartDriverMacro, format: .number).labelsHidden()
-                        }
-                        GridRow {
-                            Text("Start Endgame")
-                            TextField("", value: $field1EndgameMacro, format: .number).labelsHidden()
-                            TextField("", value: $field2EndgameMacro, format: .number).labelsHidden()
-                        }
-                        GridRow {
-                            Text("End Match")
-                            TextField("", value: $field1EndMatchMacro, format: .number).labelsHidden()
-                            TextField("", value: $field2EndMatchMacro, format: .number).labelsHidden()
-                        }
-                        GridRow {
-                            Text("Post Score")
-                            TextField("", value: $field1PostScoreMacro, format: .number).labelsHidden()
-                            TextField("", value: $field2PostScoreMacro, format: .number).labelsHidden()
-                        }
+                HStack {
+                    TextField(text: $scoring_code, prompt: Text("Event Code (ex. florlm1)")) {
+                        Text("Event")
+                    }
+                    Help(text: "Event code (ex. \"usflorls\"), which usually appears in the URL of the event page.", width: 280)
+                }
+                Button(scoring.state == .connected ? "Disconnect" : "Connect") {
+                    if Scoring.current.state == .disconnected {
+                        Scoring.current.connect(hostname: scoring_host, event_code: scoring_code)
+                    } else {
+                        Scoring.current.disconnect()
                     }
                 }
             }
-            .padding()
+            Spacer().frame(height: 40)
+            Section(header: Text("ATEM Switcher").bold()) {
+                HStack {
+                    TextField(text: $switcher_url, prompt: Text("Blank for USB")) {
+                        Text("URL")
+                    }
+                    Help(text: "Leave blank if the ATEM switcher is connected via USB. Otherwise, input the IP address of the switcher.", width: 250)
+                }
+                Button(switcher.state == .connected ? "Disconnect" : "Connect") {
+                    if Switcher.current.state == .disconnected {
+                        Switcher.current.connect(switcher_url)
+                    } else {
+                        
+                    }
+                }
+            }
+            Spacer().frame(height: 40)
+            Section() {
+                Grid(alignment: .leading, horizontalSpacing: 40, verticalSpacing: 10) {
+                    GridRow {
+                        HStack {
+                            Text("Macros").bold()
+                            Help(text: "Number of the pre-programmed macro to use during each event.")
+                        }
+                        Text("Field 1").bold()
+                        Text("Field 2").bold()
+                    }
+                    .padding([.bottom], 10)
+                    GridRow {
+                        Text("Show Preview")
+                        MacroSetting("field1ShowPreviewMacro")
+                        MacroSetting("field2ShowPreviewMacro")
+                    }
+                    GridRow {
+                        Text("Show Random")
+                        MacroSetting("field1ShowRandomMacro")
+                        MacroSetting("field2ShowRandomMacro")
+                    }
+                    GridRow {
+                        Text("Show Match")
+                        MacroSetting("field1ShowMatchMacro")
+                        MacroSetting("field2ShowMatchMacro")
+                    }
+                    GridRow {
+                        Text("Start Match")
+                        MacroSetting("field1StartMatchMacro")
+                        MacroSetting("field2StartMatchMacro")
+                    }
+                    GridRow {
+                        Text("End Autonomous")
+                        MacroSetting("field1EndAutoMacro")
+                        MacroSetting("field2EndAutoMacro")
+                    }
+                    GridRow {
+                        Text("Start Driver Control")
+                        MacroSetting("field1StartDriverMacro")
+                        MacroSetting("field2StartDriverMacro")
+                    }
+                    GridRow {
+                        Text("Start Endgame")
+                        MacroSetting("field1EndgameMacro")
+                        MacroSetting("field2EndgameMacro")
+                    }
+                    GridRow {
+                        Text("End Match")
+                        MacroSetting("field1EndMatchMacro")
+                        MacroSetting("field2EndMatchMacro")
+                    }
+                    GridRow {
+                        Text("Post Score")
+                        MacroSetting("field1PostScoreMacro")
+                        MacroSetting("field2PostScoreMacro")
+                    }
+                }
+            }
         }
-        .padding()
+        .padding([.top, .bottom], 40)
+        .padding([.leading, .trailing], 20)
     }
 }
 
-#Preview {
+#Preview("FTC Switcher") {
     ContentView(scoring: Scoring.current, switcher: Switcher.current)
 }

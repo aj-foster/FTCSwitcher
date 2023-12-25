@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HelpView: View {
+struct Help: View {
     @State var text: String
     @State private var showPopover = false
     @State var width: CGFloat = 300

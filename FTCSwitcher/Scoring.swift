@@ -26,6 +26,10 @@ class Scoring: ObservableObject, WebSocketDelegate {
         socket?.connect()
     }
     
+    func disconnect() {
+        socket?.disconnect()
+    }
+    
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
         switch event {
         case .connected(let headers):
