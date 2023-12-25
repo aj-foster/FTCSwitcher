@@ -21,14 +21,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		21B3EA262B1D86E800C83876 /* FTCSwitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FTCSwitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		21B3EA262B1D86E800C83876 /* FTC Switcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FTC Switcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B3EA292B1D86E800C83876 /* FTCSwitcherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCSwitcherApp.swift; sourceTree = "<group>"; };
 		21B3EA2B2B1D86E800C83876 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		21B3EA2D2B1D86E900C83876 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		21B3EA302B1D86E900C83876 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		21B3EA322B1D86E900C83876 /* FTCSwitcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FTCSwitcher.entitlements; sourceTree = "<group>"; };
 		21B3EA392B22B2B600C83876 /* BMDSwitcherAPI.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = BMDSwitcherAPI.h; sourceTree = "<group>"; };
-		21B3EA3A2B22B2C700C83876 /* FTCSwitcher-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = "FTCSwitcher-Bridging-Header.h"; sourceTree = "<group>"; };
 		21B3EA3B2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMDSwitcherAPIDispatch.cpp; sourceTree = "<group>"; };
 		21D8B0F82B2C0B8000332A85 /* Scoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
 		21D8B0FA2B2CC2F300332A85 /* Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switcher.swift; sourceTree = "<group>"; };
@@ -62,7 +61,7 @@
 		21B3EA272B1D86E800C83876 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				21B3EA262B1D86E800C83876 /* FTCSwitcher.app */,
+				21B3EA262B1D86E800C83876 /* FTC Switcher.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,7 +94,6 @@
 			children = (
 				21B3EA3B2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp */,
 				21B3EA392B22B2B600C83876 /* BMDSwitcherAPI.h */,
-				21B3EA3A2B22B2C700C83876 /* FTCSwitcher-Bridging-Header.h */,
 			);
 			path = BMDSwitcherAPI;
 			sourceTree = "<group>";
@@ -120,9 +118,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		21B3EA252B1D86E800C83876 /* FTCSwitcher */ = {
+		21B3EA252B1D86E800C83876 /* FTC Switcher */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 21B3EA352B1D86E900C83876 /* Build configuration list for PBXNativeTarget "FTCSwitcher" */;
+			buildConfigurationList = 21B3EA352B1D86E900C83876 /* Build configuration list for PBXNativeTarget "FTC Switcher" */;
 			buildPhases = (
 				21B3EA222B1D86E800C83876 /* Sources */,
 				21B3EA232B1D86E800C83876 /* Frameworks */,
@@ -132,12 +130,12 @@
 			);
 			dependencies = (
 			);
-			name = FTCSwitcher;
+			name = "FTC Switcher";
 			packageProductDependencies = (
 				21D8B0F62B2C0B4600332A85 /* Starscream */,
 			);
 			productName = FTCSwitcher;
-			productReference = 21B3EA262B1D86E800C83876 /* FTCSwitcher.app */;
+			productReference = 21B3EA262B1D86E800C83876 /* FTC Switcher.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -172,7 +170,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				21B3EA252B1D86E800C83876 /* FTCSwitcher */,
+				21B3EA252B1D86E800C83876 /* FTC Switcher */,
 			);
 		};
 /* End PBXProject section */
@@ -355,7 +353,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster.FTCSwitcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "BMDSwitcherAPI/FTCSwitcher-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = BMDSwitcherAPI/BMDSwitcherAPI.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -388,7 +386,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster.FTCSwitcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "BMDSwitcherAPI/FTCSwitcher-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = BMDSwitcherAPI/BMDSwitcherAPI.h;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -405,7 +403,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		21B3EA352B1D86E900C83876 /* Build configuration list for PBXNativeTarget "FTCSwitcher" */ = {
+		21B3EA352B1D86E900C83876 /* Build configuration list for PBXNativeTarget "FTC Switcher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				21B3EA362B1D86E900C83876 /* Debug */,
