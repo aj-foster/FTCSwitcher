@@ -16,6 +16,8 @@
 		21D8B0F92B2C0B8000332A85 /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0F82B2C0B8000332A85 /* Scoring.swift */; };
 		21D8B0FB2B2CC2F300332A85 /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0FA2B2CC2F300332A85 /* Switcher.swift */; };
 		21D8B0FD2B2CCE2500332A85 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0FC2B2CCE2500332A85 /* Preferences.swift */; };
+		21D8B1022B37C95700332A85 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B1012B37C95700332A85 /* Help.swift */; };
+		21D8B1042B37D06800332A85 /* MacroSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B1032B37D06800332A85 /* MacroSetting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		21D8B0F82B2C0B8000332A85 /* Scoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
 		21D8B0FA2B2CC2F300332A85 /* Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switcher.swift; sourceTree = "<group>"; };
 		21D8B0FC2B2CCE2500332A85 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		21D8B1012B37C95700332A85 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
+		21D8B1032B37D06800332A85 /* MacroSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroSetting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,7 @@
 		21B3EA282B1D86E800C83876 /* FTCSwitcher */ = {
 			isa = PBXGroup;
 			children = (
+				21D8B1002B37C92E00332A85 /* Interface */,
 				21B3EA292B1D86E800C83876 /* FTCSwitcherApp.swift */,
 				21B3EA2B2B1D86E800C83876 /* ContentView.swift */,
 				21B3EA2D2B1D86E900C83876 /* Assets.xcassets */,
@@ -101,6 +106,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		21D8B1002B37C92E00332A85 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				21D8B1012B37C95700332A85 /* Help.swift */,
+				21D8B1032B37D06800332A85 /* MacroSetting.swift */,
+			);
+			path = Interface;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +197,8 @@
 				21D8B0FB2B2CC2F300332A85 /* Switcher.swift in Sources */,
 				21B3EA2C2B1D86E800C83876 /* ContentView.swift in Sources */,
 				21D8B0FD2B2CCE2500332A85 /* Preferences.swift in Sources */,
+				21D8B1022B37C95700332A85 /* Help.swift in Sources */,
+				21D8B1042B37D06800332A85 /* MacroSetting.swift in Sources */,
 				21D8B0F92B2C0B8000332A85 /* Scoring.swift in Sources */,
 				21B3EA2A2B1D86E800C83876 /* FTCSwitcherApp.swift in Sources */,
 				21B3EA3C2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp in Sources */,
@@ -317,6 +333,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FTCSwitcher/FTCSwitcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -327,13 +344,15 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "FTC Switcher";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster..FTCSwitcher";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster.FTCSwitcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "BMDSwitcherAPI/FTCSwitcher-Bridging-Header.h";
@@ -347,6 +366,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FTCSwitcher/FTCSwitcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -357,13 +377,15 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "FTC Switcher";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster..FTCSwitcher";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster.FTCSwitcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "BMDSwitcherAPI/FTCSwitcher-Bridging-Header.h";
