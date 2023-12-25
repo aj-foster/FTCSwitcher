@@ -64,7 +64,7 @@ struct ContentView: View {
                     GridRow {
                         HStack {
                             Text("Macros").bold()
-                            Help(text: "Number of the pre-programmed macro to use during each event.")
+                            Help(text: "Number of the pre-programmed macro to use during each event. Use 0 to take no action.")
                         }
                         Text("Field 1").bold()
                         Text("Field 2").bold()
