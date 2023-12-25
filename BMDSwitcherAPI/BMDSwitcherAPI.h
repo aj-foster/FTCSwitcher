@@ -4781,13 +4781,11 @@ extern "C" {
 
     BMD_PUBLIC IBMDSwitcherDiscovery* CreateBMDSwitcherDiscoveryInstance(void);
     BMD_PUBLIC void DoEverythingWithMaximumEffort(void);
-    BMD_PUBLIC IBMDSwitcher* connectSwitcher(CFStringRef);
+    BMD_PUBLIC IBMDSwitcher* connectSwitcher(CFStringRef, BMDSwitcherConnectToFailure*);
     BMD_PUBLIC bool sendMacroToSwitcher(IBMDSwitcher*, int);
     BMD_PUBLIC void disconnectSwitcher(IBMDSwitcher*);
 
 }
-
-
 
 #endif /* defined(__cplusplus) */
 #endif /* defined(BMD_BMDSWITCHERAPI_H) */

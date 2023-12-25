@@ -49,13 +49,16 @@ struct ContentView: View {
                         Text("URL")
                     }
                     Help(text: "Leave blank if the ATEM switcher is connected via USB. Otherwise, input the IP address of the switcher.", width: 250)
-                }
-                Button(switcher.state == .connected ? "Disconnect" : "Connect") {
-                    if switcher.state == .disconnected {
-                        switcher.connect(switcher_url)
-                    } else {
-                        switcher.disconnect()
+                }.padding([.bottom], 2)
+                HStack {
+                    Button(switcher.state == .connected ? "Disconnect" : "Connect") {
+                        if switcher.state == .disconnected {
+                            switcher.connect(switcher_url)
+                        } else {
+                            switcher.disconnect()
+                        }
                     }
+                    Text(switcher.error ?? " ")
                 }
             }
             Spacer().frame(height: 40)

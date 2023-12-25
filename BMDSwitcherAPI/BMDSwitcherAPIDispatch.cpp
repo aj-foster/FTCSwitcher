@@ -53,7 +53,7 @@ static void	InitBMDSwitcherAPI (void)
 	}
 }
 
-IBMDSwitcherDiscovery*				CreateBMDSwitcherDiscoveryInstance (void)
+IBMDSwitcherDiscovery* CreateBMDSwitcherDiscoveryInstance (void)
 {
 	pthread_once(&gBMDSwitcherOnceControl, InitBMDSwitcherAPI);
 	
@@ -63,70 +63,19 @@ IBMDSwitcherDiscovery*				CreateBMDSwitcherDiscoveryInstance (void)
 	return gCreateDiscoveryFunc();
 }
 
-void DoEverythingWithMaximumEffort (void) {
+IBMDSwitcher* connectSwitcher(
+    CFStringRef url,
+    BMDSwitcherConnectToFailure* failureReason
+) {
     IBMDSwitcherDiscovery* discovery = CreateBMDSwitcherDiscoveryInstance();
     IBMDSwitcher* switcher = NULL;
-    BMDSwitcherConnectToFailure failureReason = 0;
-    HRESULT res = discovery->ConnectTo(CFSTR(""), &switcher, &failureReason);
+    HRESULT res = discovery->ConnectTo(url, &switcher, failureReason);
     
-    printf("ConnectTo result: %d\n", res);
-    
-    switch(failureReason) {
-        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureNoResponse:
-            printf("bmdSwitcherConnectToFailureNoResponse");
-            break;
-        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureIncompatibleFirmware:
-            printf("bmdSwitcherConnectToFailureIncompatibleFirmware");
-            break;
-        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureCorruptData:
-            printf("bmdSwitcherConnectToFailureCorruptData");
-            break;
-        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureStateSync:
-            printf("bmdSwitcherConnectToFailureStateSync");
-            break;
-        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureStateSyncTimedOut:
-            printf("bmdSwitcherConnectToFailureStateSyncTimedOut");
-            break;
-        default:
-            printf("No idea.");
+    if (res == S_OK) {
+        return switcher;
+    } else {
+        return NULL;
     }
-    
-    IBMDSwitcherMacroControl* controller;
-    switcher->QueryInterface(IID_IBMDSwitcherMacroControl, (void **)&controller);
-    
-    controller->Run(0);
-}
-
-IBMDSwitcher* connectSwitcher(CFStringRef url) {
-    IBMDSwitcherDiscovery* discovery = CreateBMDSwitcherDiscoveryInstance();
-    IBMDSwitcher* switcher = NULL;
-    BMDSwitcherConnectToFailure failureReason = 0;
-    HRESULT res = discovery->ConnectTo(url, &switcher, &failureReason);
-    
-    printf("ConnectTo result: %d\n", res);
-    
-    switch(failureReason) {
-        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureNoResponse:
-            printf("Error: bmdSwitcherConnectToFailureNoResponse");
-            break;
-        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureIncompatibleFirmware:
-            printf("Error: bmdSwitcherConnectToFailureIncompatibleFirmware");
-            break;
-        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureCorruptData:
-            printf("Error: bmdSwitcherConnectToFailureCorruptData");
-            break;
-        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureStateSync:
-            printf("Error: bmdSwitcherConnectToFailureStateSync");
-            break;
-        case _BMDSwitcherConnectToFailure::bmdSwitcherConnectToFailureStateSyncTimedOut:
-            printf("Error: bmdSwitcherConnectToFailureStateSyncTimedOut");
-            break;
-        default:
-            printf("Connected to switcher");
-            return switcher;
-    }
-    
-    return NULL;
 }
 
 bool sendMacroToSwitcher(IBMDSwitcher* switcher, int macro) {

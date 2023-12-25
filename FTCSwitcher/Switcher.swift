@@ -9,14 +9,35 @@ import Foundation
 import os
 
 class Switcher: ObservableObject {
+    @Published var error: String?
     @Published var state: Switcher.State = .disconnected
     var switcher: OpaquePointer?
     
     static let current = Switcher()
     
     func connect(_ url: String) {
+        error = nil
         Log("Connect", tag: "Switcher")
-        switcher = connectSwitcher(url as CFString)
+        
+        var failureReason : BMDSwitcherConnectToFailure = 0
+        switcher = connectSwitcher(url as CFString, &failureReason)
+        
+        switch failureReason {
+        case 0:
+            break
+        case bmdSwitcherConnectToFailureNoResponse.rawValue:
+            error = "No response from switcher"
+        case bmdSwitcherConnectToFailureIncompatibleFirmware.rawValue:
+            error = "Incompatible switcher firmware"
+        case bmdSwitcherConnectToFailureCorruptData.rawValue:
+            error = "Corrupt data received"
+        case bmdSwitcherConnectToFailureStateSync.rawValue:
+            error = "Failure during state sync"
+        case bmdSwitcherConnectToFailureStateSyncTimedOut.rawValue:
+            error = "Timeout during state sync"
+        default:
+            error = "Unknown error (\(failureReason))"
+        }
         
         if switcher != nil {
             state = .connected
@@ -34,9 +55,11 @@ class Switcher: ObservableObject {
     }
     
     func disconnect() {
+        error = nil
         Log("Disconnect", tag: "Switcher")
         
         if switcher != nil {
+            switcher = nil
             disconnectSwitcher(switcher)
             state = .disconnected
         }
