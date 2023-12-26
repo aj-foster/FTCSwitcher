@@ -10,6 +10,7 @@ import Starscream
 import os
 
 class Scoring: ObservableObject, WebSocketDelegate {
+    @Published var error: String?
     @Published var state: Scoring.State = .disconnected
     var socket: Starscream.WebSocket?
     var timer: Timer?
@@ -19,6 +20,7 @@ class Scoring: ObservableObject, WebSocketDelegate {
     func connect(hostname host: String, event_code code: String) {
         let url = "ws://\(host)/api/v2/stream/?code=\(code)"
         Log("Connecting to \(url)", tag: "Scoring")
+        error = nil
         
         var request = URLRequest(url: URL(string: url)!)
         request.timeoutInterval = 5
@@ -30,17 +32,21 @@ class Scoring: ObservableObject, WebSocketDelegate {
     
     func disconnect() {
         Log("Disconnect", tag: "Scoring")
+        error = nil
         socket?.disconnect()
     }
     
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
         switch event {
-        case .connected(let headers):
+        case .connected(_):
             Log("Connected", tag: "Scoring")
+            error = nil
             state = .connected
             
-        case .disconnected(let reason, let code):
+        case .disconnected(let reason, _):
+            error = reason
             Log("Disconnected", tag: "Scoring")
+            error = nil
             state = .disconnected
             
         case .text(let string):
@@ -101,14 +107,19 @@ class Scoring: ObservableObject, WebSocketDelegate {
             Log("Connection cancelled", tag: "Scoring")
             state = .disconnected
 
-        case .error(_):
-            Log("Websocket error", tag: "Scoring")
+        case .error(let error):
+            Log("Websocket error: \(String(describing: error))", tag: "Scoring")
+            self.error = error?.localizedDescription
             state = .disconnected
 
-        case .binary(_): break
+        case .binary(let data):
+            Log("Received binary: \(data)", tag: "Scoring")
         case .ping(_): break
         case .pong(_): break
-        case .peerClosed: break
+        case .peerClosed:
+            Log("Connection closed by peer", tag: "Scoring")
+            error = "Connection closed by scoring system"
+            state = .disconnected
         }
     }
     

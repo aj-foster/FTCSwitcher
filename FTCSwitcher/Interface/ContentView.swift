@@ -33,13 +33,16 @@ struct ContentView: View {
                         Text("Event")
                     }
                     Help(text: "Event code (ex. \"usflorls\"), which usually appears in the URL of the event page.", width: 280)
-                }
-                Button(scoring.state == .connected ? "Disconnect" : "Connect") {
-                    if scoring.state == .disconnected {
-                        scoring.connect(hostname: scoring_host, event_code: scoring_code)
-                    } else {
-                        scoring.disconnect()
+                }.padding([.bottom], 5)
+                HStack {
+                    Button(scoring.state == .connected ? "Disconnect" : "Connect") {
+                        if scoring.state == .disconnected {
+                            scoring.connect(hostname: scoring_host, event_code: scoring_code)
+                        } else {
+                            scoring.disconnect()
+                        }
                     }
+                    Text(scoring.error ?? " ")
                 }
             }
             Spacer().frame(height: 40)
@@ -49,7 +52,7 @@ struct ContentView: View {
                         Text("URL")
                     }
                     Help(text: "Leave blank if the ATEM switcher is connected via USB. Otherwise, input the IP address of the switcher.", width: 250)
-                }.padding([.bottom], 2)
+                }.padding([.bottom], 5)
                 HStack {
                     Button(switcher.state == .connected ? "Disconnect" : "Connect") {
                         if switcher.state == .disconnected {
