@@ -59,8 +59,8 @@ class Switcher: ObservableObject {
         Log("Disconnect", tag: "Switcher")
         
         if switcher != nil {
-            switcher = nil
             disconnectSwitcher(switcher)
+            switcher = nil
             state = .disconnected
         }
     }
