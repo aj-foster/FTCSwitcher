@@ -12,6 +12,7 @@
 		21B3EA2E2B1D86E900C83876 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B3EA2D2B1D86E900C83876 /* Assets.xcassets */; };
 		21B3EA312B1D86E900C83876 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B3EA302B1D86E900C83876 /* Preview Assets.xcassets */; };
 		21B3EA3C2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21B3EA3B2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp */; };
+		21B69C1F2B3A6D1E00CD5F60 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 21B69C1E2B3A6D1E00CD5F60 /* Sparkle */; };
 		21D8B0F72B2C0B4600332A85 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 21D8B0F62B2C0B4600332A85 /* Starscream */; };
 		21D8B0F92B2C0B8000332A85 /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0F82B2C0B8000332A85 /* Scoring.swift */; };
 		21D8B0FB2B2CC2F300332A85 /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0FA2B2CC2F300332A85 /* Switcher.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		211AB8882B4CF8A700087615 /* FTC-Switcher-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "FTC-Switcher-Info.plist"; sourceTree = "<group>"; };
 		21B3EA262B1D86E800C83876 /* FTC Switcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FTC Switcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B3EA292B1D86E800C83876 /* FTCSwitcherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCSwitcherApp.swift; sourceTree = "<group>"; };
 		21B3EA2B2B1D86E800C83876 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -42,6 +44,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21D8B0F72B2C0B4600332A85 /* Starscream in Frameworks */,
+				21B69C1F2B3A6D1E00CD5F60 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +54,7 @@
 		21B3EA1D2B1D86E800C83876 = {
 			isa = PBXGroup;
 			children = (
+				211AB8882B4CF8A700087615 /* FTC-Switcher-Info.plist */,
 				21B3EA382B22B25F00C83876 /* BMDSwitcherAPI */,
 				21B3EA282B1D86E800C83876 /* FTCSwitcher */,
 				21B3EA272B1D86E800C83876 /* Products */,
@@ -133,6 +137,7 @@
 			name = "FTC Switcher";
 			packageProductDependencies = (
 				21D8B0F62B2C0B4600332A85 /* Starscream */,
+				21B69C1E2B3A6D1E00CD5F60 /* Sparkle */,
 			);
 			productName = FTCSwitcher;
 			productReference = 21B3EA262B1D86E800C83876 /* FTC Switcher.app */;
@@ -165,6 +170,7 @@
 			mainGroup = 21B3EA1D2B1D86E800C83876;
 			packageReferences = (
 				21D8B0F52B2C0B4600332A85 /* XCRemoteSwiftPackageReference "Starscream" */,
+				21D8B1072B3A6B2200332A85 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = 21B3EA272B1D86E800C83876 /* Products */;
 			projectDirPath = "";
@@ -345,6 +351,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "FTC-Switcher-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "FTC Switcher";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -352,7 +359,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster.FTCSwitcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -379,6 +386,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "FTC-Switcher-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "FTC Switcher";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -386,7 +394,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster.FTCSwitcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -427,9 +435,22 @@
 				minimumVersion = 4.0.6;
 			};
 		};
+		21D8B1072B3A6B2200332A85 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		21B69C1E2B3A6D1E00CD5F60 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 21D8B1072B3A6B2200332A85 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
 		21D8B0F62B2C0B4600332A85 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 21D8B0F52B2C0B4600332A85 /* XCRemoteSwiftPackageReference "Starscream" */;
