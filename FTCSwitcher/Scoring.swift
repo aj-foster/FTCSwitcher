@@ -126,8 +126,14 @@ class Scoring: ObservableObject, WebSocketDelegate {
     func scoringEvent(_ event: String, _ field: Int) {
         Log("Event \(event)", tag: "Scoring")
         
-        if let preference = ScoringEvents.first(where: { $0.title == event }) {
-            let prefKey = "field\(field)\(preference)Macro"
+        let translatedField = if field == 0 {
+            UserDefaults.standard.integer(forKey: "finalsField")
+        } else {
+            field
+        }
+        
+        if let preference = ScoringEvents.first(where: { $0.id == event }) {
+            let prefKey = "field\(translatedField)\(preference.macro)Macro"
             let macro = UserDefaults.standard.integer(forKey: prefKey)
             
             Switcher.current.sendMacro(macro)
