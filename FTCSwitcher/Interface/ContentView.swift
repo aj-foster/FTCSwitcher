@@ -85,7 +85,7 @@ struct ContentView: View {
                         }
                         Stepper(value: $finals_field, in: 1...field_count, step: 1) {}.labelsHidden()
                         Help(text: "For events with elimination matches, which field will hold the finals. Usually field 1.", width: 200)
-                    }.padding([.bottom], 5)
+                    }.padding([.bottom], 4)
                     HStack {
                         Picker("Orientation", selection: $reverse_fields) {
                             Text("Audience").tag(false)
@@ -133,11 +133,17 @@ struct ContentView: View {
                 }
             }
         }
-        .padding([.bottom], 40)
+        .padding([.bottom], 20)
         .padding([.leading, .trailing], 40)
         .onChange(of: $field_count.wrappedValue) { new_field_count in
             finals_field = min(finals_field, new_field_count)
         }
+        Text("Created by [FTAJ](https://youtube.com/@FTAAJ). If this application helped you, please consider making a [donation](https://donate.stripe.com/eVa8A63oQ0drcF2aEE) to the Orlando Robotics Foundation.")
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(width: 320)
+            .font(.system(size: 10))
+            .padding([.bottom], 20)
     }
 }
 
