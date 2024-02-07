@@ -17,7 +17,8 @@ class Switcher: ObservableObject {
     
     func connect(_ url: String) {
         error = nil
-        Log("Connect", tag: "Switcher")
+        let target = if url == "" { "USB" } else { url }
+        Log("Connect to \(target)", tag: "Switcher")
         
         var failureReason : BMDSwitcherConnectToFailure = 0
         switcher = connectSwitcher(url as CFString, &failureReason)
