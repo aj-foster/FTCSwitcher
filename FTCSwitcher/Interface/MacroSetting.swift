@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct MacroSetting: View {
+    var switcher: Switcher
     @State var setting: String
     @AppStorage private var value: Int
     
-    init(_ setting: String) {
+    init(_ setting: String, switcher: Switcher) {
+        self.switcher = switcher
         self.setting = setting
         self._value = AppStorage(wrappedValue: 0, setting)
     }
@@ -21,9 +23,9 @@ struct MacroSetting: View {
             TextField("", value: $value, format: .number)
                 .labelsHidden()
             Button("Run") {
-                Switcher.current.sendMacro(value)
+                switcher.sendMacro(value)
             }
-                .disabled(value == 0 || Switcher.current.state == .disconnected)
+                .disabled(value == 0 || switcher.state == .disconnected)
         }
     }
 }

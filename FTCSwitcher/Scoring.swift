@@ -10,12 +10,28 @@ import Starscream
 import os
 
 class Scoring: ObservableObject, WebSocketDelegate {
+//    private static var divisions: [Scoring] = []
+//    static func division(_ division: Int) -> Scoring {
+//        if divisions.count > division {
+//            divisions[division]
+//        } else {
+//            for i in (divisions.count...division) {
+//                divisions.append(Scoring(division: i))
+//            }
+//        }
+//    }
+
     @Published var error: String?
     @Published var state: Scoring.State = .disconnected
+    var division: Int
+    var switcher: Switcher
     var socket: Starscream.WebSocket?
     var timer: Timer?
     
-    static let current = Scoring()
+    init(division: Int, switcher: Switcher) {
+        self.division = division
+        self.switcher = switcher
+    }
     
     func connect(hostname host: String, event_code code: String) {
         let url = "ws://\(host)/api/v2/stream/?code=\(code)"
@@ -127,16 +143,16 @@ class Scoring: ObservableObject, WebSocketDelegate {
         Log("Event \(event)", tag: "Scoring")
         
         let translatedField = if field == 0 {
-            UserDefaults.standard.integer(forKey: "finalsField")
+            UserDefaults.standard.integer(forKey: "d\(division)finalsField")
         } else {
             field
         }
         
         if let preference = ScoringEvents.first(where: { $0.id == event }) {
-            let prefKey = "field\(translatedField)\(preference.macro)Macro"
+            let prefKey = "d\(division)f\(translatedField)\(preference.macro)Macro"
             let macro = UserDefaults.standard.integer(forKey: prefKey)
             
-            Switcher.current.sendMacro(macro)
+            switcher.sendMacro(macro)
         }
     }
 

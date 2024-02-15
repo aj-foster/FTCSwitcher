@@ -6,19 +6,21 @@
 //
 
 import Sparkle
+import SwiftData
 import SwiftUI
 
 @main
 struct FTCSwitcherApp: App {
 //    private let updaterController: SPUStandardUpdaterController
     
-//    init() {
+    init() {
 //        updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
-//    }
+    }
     
     var body: some Scene {
-        WindowGroup {
-            ContentView(scoring: Scoring.current, switcher: Switcher.current)
+        Window("FTC Switcher", id: "ftc-switcher") {
+            ContentView()
+                .modelContainer(for: Division.self)
         }
     }
 }

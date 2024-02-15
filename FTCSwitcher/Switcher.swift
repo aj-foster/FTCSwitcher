@@ -9,11 +9,19 @@ import Foundation
 import os
 
 class Switcher: ObservableObject {
+    private static var divisions: [Switcher] = []
+    static func division(_ division: Int) -> Switcher {
+        if divisions.count < division {
+            for i in (divisions.count...division) {
+                divisions.append(Switcher())
+            }
+        }
+        return divisions[division]
+    }
+
     @Published var error: String?
     @Published var state: Switcher.State = .disconnected
     var switcher: OpaquePointer?
-    
-    static let current = Switcher()
     
     func connect(_ url: String) {
         error = nil
