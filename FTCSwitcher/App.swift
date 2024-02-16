@@ -1,10 +1,3 @@
-//
-//  FTCSwitcherApp.swift
-//  FTCSwitcher
-//
-//  Created by AJ Foster on 12/3/23.
-//
-
 import Sparkle
 import SwiftUI
 
@@ -17,7 +10,7 @@ struct FTCSwitcherApp: App {
 //    }
     
     var body: some Scene {
-        WindowGroup {
+        Window("FTC Switcher", id: "ftc-switcher") {
             ContentView(scoring: Scoring.current, switcher: Switcher.current)
         }
     }
