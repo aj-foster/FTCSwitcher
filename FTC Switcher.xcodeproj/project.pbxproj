@@ -12,7 +12,6 @@
 		21833FDF2B75DE9300200565 /* ScoringSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21833FDE2B75DE9300200565 /* ScoringSettingsView.swift */; };
 		21833FE12B75E2E400200565 /* FieldSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21833FE02B75E2E400200565 /* FieldSettingsView.swift */; };
 		21833FE42B75E7A400200565 /* Division.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21833FE32B75E7A400200565 /* Division.swift */; };
-		21833FE62B75E88900200565 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21833FE52B75E88900200565 /* Field.swift */; };
 		21833FE82B75FFF600200565 /* DivisionSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21833FE72B75FFF600200565 /* DivisionSetupView.swift */; };
 		21B3EA2A2B1D86E800C83876 /* FTCSwitcherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B3EA292B1D86E800C83876 /* FTCSwitcherApp.swift */; };
 		21B3EA2C2B1D86E800C83876 /* DivisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B3EA2B2B1D86E800C83876 /* DivisionView.swift */; };
@@ -36,7 +35,6 @@
 		21833FDE2B75DE9300200565 /* ScoringSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringSettingsView.swift; sourceTree = "<group>"; };
 		21833FE02B75E2E400200565 /* FieldSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSettingsView.swift; sourceTree = "<group>"; };
 		21833FE32B75E7A400200565 /* Division.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Division.swift; sourceTree = "<group>"; };
-		21833FE52B75E88900200565 /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
 		21833FE72B75FFF600200565 /* DivisionSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionSetupView.swift; sourceTree = "<group>"; };
 		21B3EA262B1D86E800C83876 /* FTC Switcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FTC Switcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B3EA292B1D86E800C83876 /* FTCSwitcherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCSwitcherApp.swift; sourceTree = "<group>"; };
@@ -71,7 +69,6 @@
 			isa = PBXGroup;
 			children = (
 				21833FE32B75E7A400200565 /* Division.swift */,
-				21833FE52B75E88900200565 /* Field.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -236,7 +233,6 @@
 				21833FE82B75FFF600200565 /* DivisionSetupView.swift in Sources */,
 				21B3EA2C2B1D86E800C83876 /* DivisionView.swift in Sources */,
 				21D8B1022B37C95700332A85 /* Help.swift in Sources */,
-				21833FE62B75E88900200565 /* Field.swift in Sources */,
 				21D8B1042B37D06800332A85 /* MacroSetting.swift in Sources */,
 				21D8B0F92B2C0B8000332A85 /* Scoring.swift in Sources */,
 				21BFC0F72B744F7D00A013AF /* ContentView.swift in Sources */,

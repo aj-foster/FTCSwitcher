@@ -8,24 +8,17 @@
 import SwiftUI
 
 struct MacroSetting: View {
+    @Binding var setting: Int
     var switcher: Switcher
-    @State var setting: String
-    @AppStorage private var value: Int
-    
-    init(_ setting: String, switcher: Switcher) {
-        self.switcher = switcher
-        self.setting = setting
-        self._value = AppStorage(wrappedValue: 0, setting)
-    }
     
     var body: some View {
         HStack {
-            TextField("", value: $value, format: .number)
+            TextField("", value: $setting, format: .number)
                 .labelsHidden()
             Button("Run") {
-                switcher.sendMacro(value)
+                switcher.sendMacro(setting)
             }
-                .disabled(value == 0 || switcher.state == .disconnected)
+                .disabled(setting == 0 || switcher.state == .disconnected)
         }
     }
 }

@@ -45,11 +45,11 @@ struct DivisionView: View {
                                 Text(event.title)
                                 if division.reverse {
                                     ForEach((1...division.field_count).reversed(), id: \.self) { field in
-                                        MacroSetting("d1f\(field)\(event.macro)Macro", switcher: switcher)
+                                        MacroSetting(setting: macro_binding(field: field, macro: event.id), switcher: switcher)
                                     }
                                 } else {
                                     ForEach((1...division.field_count), id: \.self) { field in
-                                        MacroSetting("d1f\(field)\(event.macro)Macro", switcher: switcher)
+                                        MacroSetting(setting: macro_binding(field: field, macro: event.id), switcher: switcher)
                                     }
                                 }
                             }
@@ -59,6 +59,22 @@ struct DivisionView: View {
             }
             .padding([.bottom], 20)
             .padding([.leading, .trailing], 40)
+        }
+    }
+    
+    private func macro_binding(field: Int, macro: String) -> Binding<Int> {
+        if field == 1 {
+            return Binding(get: {
+                division.field1_macros[macro] ?? 0
+            }, set: {
+                division.field1_macros[macro] = $0
+            })
+        } else {
+            return Binding(get: {
+                division.field2_macros[macro] ?? 0
+            }, set: {
+                division.field2_macros[macro] = $0
+            })
         }
     }
 }

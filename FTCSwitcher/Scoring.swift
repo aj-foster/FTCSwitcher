@@ -149,7 +149,7 @@ class Scoring: ObservableObject, WebSocketDelegate {
         }
         
         if let preference = ScoringEvents.first(where: { $0.id == event }) {
-            let prefKey = "d\(division)f\(translatedField)\(preference.macro)Macro"
+            let prefKey = "d\(division)f\(translatedField)WhateverMacro"
             let macro = UserDefaults.standard.integer(forKey: prefKey)
             
             switcher.sendMacro(macro)
@@ -158,7 +158,6 @@ class Scoring: ObservableObject, WebSocketDelegate {
 
     struct Event: Identifiable {
         var id: String
-        var macro: String
         var title: String
     }
     
@@ -178,13 +177,13 @@ class Scoring: ObservableObject, WebSocketDelegate {
 }
 
 var ScoringEvents = [
-    Scoring.Event(id: "SHOW_PREVIEW", macro: "ShowPreview", title: "Show Preview"),
-    Scoring.Event(id: "SHOW_RANDOM", macro: "ShowRandom", title: "Show Random"),
-    Scoring.Event(id: "SHOW_MATCH", macro: "ShowMatch", title: "Show Match"),
-    Scoring.Event(id: "MATCH_START", macro: "StartMatch", title: "Start Match"),
-    Scoring.Event(id: "AUTO_END", macro: "EndAuto", title: "End Autonomous"),
-    Scoring.Event(id: "DRIVER_START", macro: "StartDriver", title: "Start Driver Control"),
-    Scoring.Event(id: "ENDGAME", macro: "Endgame", title: "Start Endgame"),
-    Scoring.Event(id: "MATCH_END", macro: "EndMatch", title: "End Match"),
-    Scoring.Event(id: "MATCH_POST", macro: "PostScore", title: "Post Score")
+    Scoring.Event(id: "SHOW_PREVIEW", title: "Show Preview"),
+    Scoring.Event(id: "SHOW_RANDOM", title: "Show Random"),
+    Scoring.Event(id: "SHOW_MATCH", title: "Show Match"),
+    Scoring.Event(id: "MATCH_START", title: "Start Match"),
+    Scoring.Event(id: "AUTO_END", title: "End Autonomous"),
+    Scoring.Event(id: "DRIVER_START", title: "Start Driver Control"),
+    Scoring.Event(id: "ENDGAME", title: "Start Endgame"),
+    Scoring.Event(id: "MATCH_END", title: "End Match"),
+    Scoring.Event(id: "MATCH_POST", title: "Post Score")
 ]
