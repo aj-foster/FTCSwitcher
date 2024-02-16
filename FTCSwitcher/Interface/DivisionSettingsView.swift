@@ -5,17 +5,31 @@ struct DivisionSettingsView: View {
     @ObservedObject var scoring: Scoring
     @ObservedObject var switcher: Switcher
     
-    @AppStorage("scoringCode") private var scoring_code = ""
-    @AppStorage("scoringHost") private var scoring_host = "localhost"
-    @AppStorage("switcherUrl") private var switcher_url = ""
+    @AppStorage private var scoring_code: String
+    @AppStorage private var scoring_host: String
+    @AppStorage private var switcher_url: String
     
-    @AppStorage("fieldCount") private var field_count = 1
-    @AppStorage("finalsField") private var finals_field = 1
-    @AppStorage("reverseFields") private var reverse_fields = true
+    @AppStorage private var field_count: Int
+    @AppStorage private var finals_field: Int
+    @AppStorage private var reverse_fields: Bool
     
     @State private var showScoringHostHelp = false
     @State private var showScoringCodeHelp = false
     @State private var showSwitcherURLHelp = false
+    
+    init(division: Int, scoring: Scoring, switcher: Switcher) {
+        self.division = division
+        self.scoring = scoring
+        self.switcher = switcher
+        
+        _scoring_code = AppStorage(wrappedValue: "", "d\(division)scoringCode")
+        _scoring_host = AppStorage(wrappedValue: "localhost", "d\(division)scoringHost")
+        _switcher_url = AppStorage(wrappedValue: "", "d\(division)switcherUrl")
+
+        _field_count = AppStorage(wrappedValue: 1, "d\(division)fieldCount")
+        _finals_field = AppStorage(wrappedValue: 1, "d\(division)finalsField")
+        _reverse_fields = AppStorage(wrappedValue: false, "d\(division)reverseFields")
+    }
     
     var body: some View {
         let _ = Self._printChanges()

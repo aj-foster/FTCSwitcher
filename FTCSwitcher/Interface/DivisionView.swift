@@ -5,8 +5,8 @@ struct DivisionView: View {
     @ObservedObject var scoring: Scoring
     @ObservedObject var switcher: Switcher
     
-    @AppStorage("fieldCount") private var field_count = 1
-    @AppStorage("reverseFields") private var reverse_fields = true
+    @AppStorage private var field_count: Int
+    @AppStorage private var reverse_fields: Bool
     
     @State private var showScoringHostHelp = false
     @State private var showScoringCodeHelp = false
@@ -16,6 +16,9 @@ struct DivisionView: View {
         scoring = Scoring()
         switcher = Switcher()
         self.division = division
+        
+        _field_count = AppStorage(wrappedValue: 1, "d\(division)fieldCount")
+        _reverse_fields = AppStorage(wrappedValue: false, "d\(division)reverseFields")
     }
     
     var body: some View {
