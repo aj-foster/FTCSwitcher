@@ -11,7 +11,7 @@ struct FTCSwitcherApp: App {
     
     var body: some Scene {
         Window("FTC Switcher", id: "ftc-switcher") {
-            ContentView(scoring: Scoring.current, switcher: Switcher.current)
+            ContentView()
         }
     }
 }
