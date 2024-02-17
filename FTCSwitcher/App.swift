@@ -3,11 +3,15 @@ import SwiftUI
 
 @main
 struct FTCSwitcherApp: App {
-//    private let updaterController: SPUStandardUpdaterController
+    private let updaterController: SPUStandardUpdaterController
     
-//    init() {
-//        updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
-//    }
+    init() {
+        #if DEBUG
+            updaterController = SPUStandardUpdaterController(startingUpdater: false, updaterDelegate: nil, userDriverDelegate: nil)
+        #else
+            updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+        #endif
+    }
     
     var body: some Scene {
         Window("FTC Switcher", id: "ftc-switcher") {
