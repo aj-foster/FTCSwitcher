@@ -10,13 +10,8 @@ import Starscream
 import os
 
 class Scoring: ObservableObject, WebSocketDelegate {
-    var division: Int
-    @Published var error: String?
-    @Published var state: Scoring.State = .disconnected
-    var socket: Starscream.WebSocket?
-    var timer: Timer?
-    
     static private var registry: [Int : Scoring] = [:]
+    
     static func get(division: Int) -> Scoring {
         if let scoring = registry[division] {
             return scoring
@@ -26,6 +21,12 @@ class Scoring: ObservableObject, WebSocketDelegate {
             return scoring
         }
     }
+    
+    var division: Int
+    @Published var error: String?
+    @Published var state: Scoring.State = .disconnected
+    var socket: Starscream.WebSocket?
+    var timer: Timer?
     
     init(division: Int) {
         self.division = division
@@ -137,7 +138,7 @@ class Scoring: ObservableObject, WebSocketDelegate {
         }
     }
     
-    func scoringEvent(_ event: String, _ field: Int) {
+    private func scoringEvent(_ event: String, _ field: Int) {
         Log("Event \(event)", tag: "Scoring")
         
         let translatedField = if field == 0 {
