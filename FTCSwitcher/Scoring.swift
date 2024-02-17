@@ -10,12 +10,26 @@ import Starscream
 import os
 
 class Scoring: ObservableObject, WebSocketDelegate {
+    var division: Int
     @Published var error: String?
     @Published var state: Scoring.State = .disconnected
     var socket: Starscream.WebSocket?
     var timer: Timer?
     
-    static let current = Scoring()
+    static private var registry: [Int : Scoring] = [:]
+    static func get(division: Int) -> Scoring {
+        if let scoring = registry[division] {
+            return scoring
+        } else {
+            let scoring = Scoring(division: division)
+            registry[division] = scoring
+            return scoring
+        }
+    }
+    
+    init(division: Int) {
+        self.division = division
+    }
     
     func connect(hostname host: String, event_code code: String) {
         let url = "ws://\(host)/api/v2/stream/?code=\(code)"
@@ -136,7 +150,7 @@ class Scoring: ObservableObject, WebSocketDelegate {
             let prefKey = "field\(translatedField)\(preference.macro)Macro"
             let macro = UserDefaults.standard.integer(forKey: prefKey)
             
-            Switcher.current.sendMacro(macro)
+            Switcher.get(division: division).sendMacro(macro)
         }
     }
 

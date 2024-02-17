@@ -13,10 +13,6 @@ struct DivisionSettingsView: View {
     @AppStorage private var finals_field: Int
     @AppStorage private var reverse_fields: Bool
     
-    @State private var showScoringHostHelp = false
-    @State private var showScoringCodeHelp = false
-    @State private var showSwitcherURLHelp = false
-    
     init(division: Int, scoring: Scoring, switcher: Switcher) {
         self.division = division
         self.scoring = scoring
@@ -61,24 +57,7 @@ struct DivisionSettingsView: View {
                     }
                 }
                 Spacer().frame(height: 20)
-                Section(header: Text("ATEM Switcher").bold()) {
-                    HStack {
-                        TextField(text: $switcher_url, prompt: Text("Blank for USB")) {
-                            Text("URL")
-                        }
-                        Help(text: "Leave blank if the ATEM switcher is connected via USB. Otherwise, input the IP address of the switcher.", width: 250)
-                    }.padding([.bottom], 5)
-                    HStack {
-                        Button(switcher.state == .connected ? "Disconnect" : "Connect") {
-                            if switcher.state == .disconnected {
-                                switcher.connect(switcher_url)
-                            } else {
-                                switcher.disconnect()
-                            }
-                        }
-                        Text(switcher.error ?? " ")
-                    }
-                }
+                ATEMSettingsView(division: division, switcher: switcher)
             }
             Form {
                 Section(header: Text("Setup").bold()) {
@@ -113,5 +92,5 @@ struct DivisionSettingsView: View {
 }
 
 #Preview("FTC Switcher") {
-    DivisionSettingsView(division: 1, scoring: Scoring(), switcher: Switcher())
+    DivisionSettingsView(division: 1, scoring: Scoring.get(division: 1), switcher: Switcher.get(division: 1))
 }

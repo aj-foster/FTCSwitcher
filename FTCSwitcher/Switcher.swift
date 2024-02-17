@@ -9,11 +9,25 @@ import Foundation
 import os
 
 class Switcher: ObservableObject {
+    var division: Int
     @Published var error: String?
     @Published var state: Switcher.State = .disconnected
     var switcher: OpaquePointer?
     
-    static let current = Switcher()
+    static private var registry: [Int : Switcher] = [:]
+    static func get(division: Int) -> Switcher {
+        if let switcher = registry[division] {
+            return switcher
+        } else {
+            let switcher = Switcher(division: division)
+            registry[division] = switcher
+            return switcher
+        }
+    }
+    
+    init(division: Int) {
+        self.division = division
+    }
     
     func connect(_ url: String) {
         error = nil
