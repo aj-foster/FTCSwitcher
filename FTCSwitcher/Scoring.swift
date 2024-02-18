@@ -148,7 +148,7 @@ class Scoring: ObservableObject, WebSocketDelegate {
         }
         
         if let preference = ScoringEvents.first(where: { $0.id == event }) {
-            let prefKey = "field\(translatedField)\(preference.macro)Macro"
+            let prefKey = "d\(division)field\(translatedField)\(preference.macro)Macro"
             let macro = UserDefaults.standard.integer(forKey: prefKey)
             
             Switcher.get(division: division).sendMacro(macro)
