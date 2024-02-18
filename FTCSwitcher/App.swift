@@ -17,5 +17,13 @@ struct FTCSwitcherApp: App {
         Window("FTC Switcher", id: "ftc-switcher") {
             ContentView()
         }
+        .commands {
+            CommandGroup(before: .appTermination) {
+                Button("Check for Updates...") {
+                    Log("User-initiated update check", tag: "App")
+                    updaterController.checkForUpdates(self)
+                }
+            }
+        }
     }
 }
