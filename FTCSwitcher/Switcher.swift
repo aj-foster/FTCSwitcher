@@ -32,7 +32,7 @@ class Switcher: ObservableObject {
     func connect(_ url: String) {
         error = nil
         let target = if url == "" { "USB" } else { url }
-        Log("Connect to \(target)", tag: "Switcher")
+        Log("Connect to \(target)", tag: "Switcher \(division)")
         
         var failureReason : BMDSwitcherConnectToFailure = 0
         switcher = connectSwitcher(url as CFString, &failureReason)
@@ -54,6 +54,10 @@ class Switcher: ObservableObject {
             error = "Unknown error (\(failureReason))"
         }
         
+        if let error {
+            Log("Error during connection to switcher: \(error)", tag: "Switcher \(division)")
+        }
+        
         if switcher != nil {
             state = .connected
         } else {
@@ -63,15 +67,15 @@ class Switcher: ObservableObject {
     
     func sendMacro(_ macro: Int) {
         guard macro != 0 else { return }
-        guard switcher != nil && state == .connected else { Log("Intended to send macro \(macro) but switcher is disconnected"); return }
+        guard switcher != nil && state == .connected else { Log("Intended to send macro \(macro) but switcher is disconnected", tag: "Switcher \(division)"); return }
         
-        Log("Sending macro \(macro)", tag: "Switcher")
+        Log("Sending macro \(macro)", tag: "Switcher \(division)")
         sendMacroToSwitcher(switcher, Int32(macro - 1))
     }
     
     func disconnect() {
         error = nil
-        Log("Disconnect", tag: "Switcher")
+        Log("Disconnect", tag: "Switcher \(division)")
         
         if switcher != nil {
             disconnectSwitcher(switcher)
