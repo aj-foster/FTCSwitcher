@@ -35,8 +35,8 @@ struct FieldSettingsView: View {
             }.padding([.bottom], 4)
             HStack {
                 Picker("Orientation", selection: $reverse_fields) {
-                    Text("Audience").tag(false)
-                    Text("Scoring").tag(true)
+                    Text("Normal").tag(false)
+                    Text("Reverse").tag(true)
                 }.disabled(field_count <= 1)
                 Help(text: "Changes the order of the fields in the interface below.", width: 200)
             }
