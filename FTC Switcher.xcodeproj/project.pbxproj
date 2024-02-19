@@ -14,6 +14,7 @@
 		2112906E2B805C69008200B9 /* ScoringSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112906D2B805C69008200B9 /* ScoringSettingsView.swift */; };
 		211290702B806460008200B9 /* FieldSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112906F2B806460008200B9 /* FieldSettingsView.swift */; };
 		214B982E2B82933D00EF3129 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 214B982D2B82933D00EF3129 /* Credits.html */; };
+		214B98302B82C88200EF3129 /* ManualRunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214B982F2B82C88200EF3129 /* ManualRunView.swift */; };
 		21B3EA2A2B1D86E800C83876 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B3EA292B1D86E800C83876 /* App.swift */; };
 		21B3EA2C2B1D86E800C83876 /* DivisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B3EA2B2B1D86E800C83876 /* DivisionView.swift */; };
 		21B3EA2E2B1D86E900C83876 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B3EA2D2B1D86E900C83876 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 		2112906F2B806460008200B9 /* FieldSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSettingsView.swift; sourceTree = "<group>"; };
 		211AB8882B4CF8A700087615 /* FTC-Switcher-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "FTC-Switcher-Info.plist"; sourceTree = "<group>"; };
 		214B982D2B82933D00EF3129 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
+		214B982F2B82C88200EF3129 /* ManualRunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualRunView.swift; sourceTree = "<group>"; };
 		21B3EA262B1D86E800C83876 /* FTC Switcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FTC Switcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B3EA292B1D86E800C83876 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		21B3EA2B2B1D86E800C83876 /* DivisionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionView.swift; sourceTree = "<group>"; };
@@ -87,15 +89,15 @@
 		21B3EA282B1D86E800C83876 /* FTCSwitcher */ = {
 			isa = PBXGroup;
 			children = (
-				21D8B1002B37C92E00332A85 /* Interface */,
 				21B3EA292B1D86E800C83876 /* App.swift */,
 				21B3EA2D2B1D86E900C83876 /* Assets.xcassets */,
+				214B982D2B82933D00EF3129 /* Credits.html */,
 				21B3EA322B1D86E900C83876 /* FTCSwitcher.entitlements */,
+				21D8B1002B37C92E00332A85 /* Interface */,
+				21D8B1052B39299100332A85 /* Log.swift */,
 				21B3EA2F2B1D86E900C83876 /* Preview Content */,
 				21D8B0F82B2C0B8000332A85 /* Scoring.swift */,
 				21D8B0FA2B2CC2F300332A85 /* Switcher.swift */,
-				21D8B1052B39299100332A85 /* Log.swift */,
-				214B982D2B82933D00EF3129 /* Credits.html */,
 			);
 			path = FTCSwitcher;
 			sourceTree = "<group>";
@@ -127,15 +129,16 @@
 		21D8B1002B37C92E00332A85 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				21B3EA2B2B1D86E800C83876 /* DivisionView.swift */,
-				21D8B1012B37C95700332A85 /* Help.swift */,
-				21D8B1032B37D06800332A85 /* MacroSetting.swift */,
+				211290692B7F4F68008200B9 /* ATEMSettingsView.swift */,
 				211290652B7F1716008200B9 /* ContentView.swift */,
 				211290672B7F2DDB008200B9 /* DivisionSettingsView.swift */,
-				211290692B7F4F68008200B9 /* ATEMSettingsView.swift */,
-				2112906B2B803DC7008200B9 /* FieldView.swift */,
-				2112906D2B805C69008200B9 /* ScoringSettingsView.swift */,
+				21B3EA2B2B1D86E800C83876 /* DivisionView.swift */,
 				2112906F2B806460008200B9 /* FieldSettingsView.swift */,
+				2112906B2B803DC7008200B9 /* FieldView.swift */,
+				21D8B1012B37C95700332A85 /* Help.swift */,
+				21D8B1032B37D06800332A85 /* MacroSetting.swift */,
+				214B982F2B82C88200EF3129 /* ManualRunView.swift */,
+				2112906D2B805C69008200B9 /* ScoringSettingsView.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				211290682B7F2DDB008200B9 /* DivisionSettingsView.swift in Sources */,
+				214B98302B82C88200EF3129 /* ManualRunView.swift in Sources */,
 				2112906C2B803DC8008200B9 /* FieldView.swift in Sources */,
 				21D8B0FB2B2CC2F300332A85 /* Switcher.swift in Sources */,
 				21B3EA2C2B1D86E800C83876 /* DivisionView.swift in Sources */,

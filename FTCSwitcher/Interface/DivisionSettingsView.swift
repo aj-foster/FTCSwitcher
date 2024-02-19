@@ -16,6 +16,8 @@ struct DivisionSettingsView: View {
             }
             Form {
                 FieldSettingsView(division: division)
+                Spacer().frame(height: 20)
+                ManualRunView(division: division, switcher: switcher)
             }
         }
     }
