@@ -4,6 +4,8 @@ _Automate video switching for FIRST Tech Challenge competitions_
 
 ---
 
+[![Download Now](https://img.shields.io/badge/Download%20Now-F57E25)](https://assets.ftaj.me/ftcswitcher/FTC%20Switcher.dmg)
+
 Have you ever needed something so niche that you just have to build it yourself?
 This is one of those projects.
 
