@@ -1,0 +1,15 @@
+#!/bin/sh
+
+BUILD_VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" FTC\ Switcher.app/Contents/Info.plist)
+HUMAN_VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" FTC\ Switcher.app/Contents/Info.plist)
+
+# Create auto-update files
+/usr/bin/ditto -c -k --sequesterRsrc --keepParent "FTC Switcher.app" "FTC Switcher ($BUILD_VERSION).zip"
+cp NOTES.html "FTC Switcher ($BUILD_VERSION).html"
+./Sparkle/generate_appcast --maximum-versions 10 --maximum-deltas 10 .
+rm "FTC Switcher ($BUILD_VERSION).html"
+
+# Create DMG for first download
+create-dmg --overwrite "FTC Switcher.app"
+mv -f "FTC Switcher $HUMAN_VERSION.dmg" "FTC Switcher.dmg"
+xcrun notarytool submit "FTC Switcher.dmg" --keychain-profile "notarytool-password" --wait
