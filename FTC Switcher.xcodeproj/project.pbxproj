@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		211290662B7F1716008200B9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211290652B7F1716008200B9 /* ContentView.swift */; };
+		21119AC52BB0B13A00FAFB3A /* Division.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21119AC42BB0B13A00FAFB3A /* Division.swift */; };
+		21119AC72BB0C1F100FAFB3A /* SwitcherSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21119AC62BB0C1F100FAFB3A /* SwitcherSettings.swift */; };
+		21119AC92BB106AC00FAFB3A /* FieldSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21119AC82BB106AC00FAFB3A /* FieldSettings.swift */; };
+		21119ACB2BB108AC00FAFB3A /* ScoringSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21119ACA2BB108AC00FAFB3A /* ScoringSettings.swift */; };
+		21119ACD2BB1235500FAFB3A /* FieldCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21119ACC2BB1235500FAFB3A /* FieldCommands.swift */; };
 		211290682B7F2DDB008200B9 /* DivisionSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211290672B7F2DDB008200B9 /* DivisionSettingsView.swift */; };
 		2112906A2B7F4F68008200B9 /* ATEMSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211290692B7F4F68008200B9 /* ATEMSettingsView.swift */; };
 		2112906C2B803DC8008200B9 /* FieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112906B2B803DC7008200B9 /* FieldView.swift */; };
@@ -30,7 +34,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		211290652B7F1716008200B9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		21119AC42BB0B13A00FAFB3A /* Division.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Division.swift; sourceTree = "<group>"; };
+		21119AC62BB0C1F100FAFB3A /* SwitcherSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitcherSettings.swift; sourceTree = "<group>"; };
+		21119AC82BB106AC00FAFB3A /* FieldSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSettings.swift; sourceTree = "<group>"; };
+		21119ACA2BB108AC00FAFB3A /* ScoringSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringSettings.swift; sourceTree = "<group>"; };
+		21119ACC2BB1235500FAFB3A /* FieldCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldCommands.swift; sourceTree = "<group>"; };
 		211290672B7F2DDB008200B9 /* DivisionSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionSettingsView.swift; sourceTree = "<group>"; };
 		211290692B7F4F68008200B9 /* ATEMSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATEMSettingsView.swift; sourceTree = "<group>"; };
 		2112906B2B803DC7008200B9 /* FieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldView.swift; sourceTree = "<group>"; };
@@ -67,6 +75,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21119AC32BB0B12C00FAFB3A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				21119AC42BB0B13A00FAFB3A /* Division.swift */,
+				21119AC62BB0C1F100FAFB3A /* SwitcherSettings.swift */,
+				21119AC82BB106AC00FAFB3A /* FieldSettings.swift */,
+				21119ACA2BB108AC00FAFB3A /* ScoringSettings.swift */,
+				21119ACC2BB1235500FAFB3A /* FieldCommands.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		21B3EA1D2B1D86E800C83876 = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +112,7 @@
 				21B3EA292B1D86E800C83876 /* App.swift */,
 				21B3EA2D2B1D86E900C83876 /* Assets.xcassets */,
 				214B982D2B82933D00EF3129 /* Credits.html */,
+				21119AC32BB0B12C00FAFB3A /* Data */,
 				21B3EA322B1D86E900C83876 /* FTCSwitcher.entitlements */,
 				21D8B1002B37C92E00332A85 /* Interface */,
 				21D8B1052B39299100332A85 /* Log.swift */,
@@ -130,7 +151,6 @@
 			isa = PBXGroup;
 			children = (
 				211290692B7F4F68008200B9 /* ATEMSettingsView.swift */,
-				211290652B7F1716008200B9 /* ContentView.swift */,
 				211290672B7F2DDB008200B9 /* DivisionSettingsView.swift */,
 				21B3EA2B2B1D86E800C83876 /* DivisionView.swift */,
 				2112906F2B806460008200B9 /* FieldSettingsView.swift */,
@@ -226,17 +246,21 @@
 				211290682B7F2DDB008200B9 /* DivisionSettingsView.swift in Sources */,
 				214B98302B82C88200EF3129 /* ManualRunView.swift in Sources */,
 				2112906C2B803DC8008200B9 /* FieldView.swift in Sources */,
+				21119AC72BB0C1F100FAFB3A /* SwitcherSettings.swift in Sources */,
 				21D8B0FB2B2CC2F300332A85 /* Switcher.swift in Sources */,
 				21B3EA2C2B1D86E800C83876 /* DivisionView.swift in Sources */,
 				21D8B1022B37C95700332A85 /* Help.swift in Sources */,
 				21D8B1042B37D06800332A85 /* MacroSetting.swift in Sources */,
 				21D8B0F92B2C0B8000332A85 /* Scoring.swift in Sources */,
-				211290662B7F1716008200B9 /* ContentView.swift in Sources */,
 				2112906A2B7F4F68008200B9 /* ATEMSettingsView.swift in Sources */,
 				2112906E2B805C69008200B9 /* ScoringSettingsView.swift in Sources */,
 				21B3EA2A2B1D86E800C83876 /* App.swift in Sources */,
+				21119ACB2BB108AC00FAFB3A /* ScoringSettings.swift in Sources */,
+				21119ACD2BB1235500FAFB3A /* FieldCommands.swift in Sources */,
 				21B3EA3C2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp in Sources */,
 				211290702B806460008200B9 /* FieldSettingsView.swift in Sources */,
+				21119AC92BB106AC00FAFB3A /* FieldSettings.swift in Sources */,
+				21119AC52BB0B13A00FAFB3A /* Division.swift in Sources */,
 				21D8B1062B39299100332A85 /* Log.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +417,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster.FTCSwitcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -428,6 +453,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.aj-foster.FTCSwitcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";

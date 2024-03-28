@@ -9,23 +9,30 @@ import Foundation
 import os
 
 class Switcher: ObservableObject {
-    var division: Int
+    var division: Division
     @Published var error: String?
     @Published var state: Switcher.State = .disconnected
     var switcher: OpaquePointer?
     
-    static private var registry: [Int : Switcher] = [:]
-    static func get(division: Int) -> Switcher {
-        if let switcher = registry[division] {
+    static private var registry: [UUID : Switcher] = [:]
+    static func get(_ division: Division) -> Switcher {
+        if let switcher = registry[division.id] {
             return switcher
         } else {
-            let switcher = Switcher(division: division)
-            registry[division] = switcher
+            let switcher = Switcher(division)
+            registry[division.id] = switcher
             return switcher
         }
     }
     
-    init(division: Int) {
+    static func remove(_ division: UUID) {
+        if let scoring = registry[division] {
+            scoring.disconnect()
+            registry.removeValue(forKey: division)
+        }
+    }
+    
+    init(_ division: Division) {
         self.division = division
     }
     

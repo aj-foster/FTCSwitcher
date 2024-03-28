@@ -1,34 +1,64 @@
-//
-//  Scoring.swift
-//  FTCSwitcher
-//
-//  Created by AJ Foster on 12/14/23.
-//
-
 import Foundation
 import Starscream
-import os
 
+/**
+ * Interface for the FTCLive Scoring software
+ */
 class Scoring: ObservableObject, WebSocketDelegate {
-    static private var registry: [Int : Scoring] = [:]
+    // MARK: Static interface
+
+    static private var registry: [UUID : Scoring] = [:]
     
-    static func get(division: Int) -> Scoring {
-        if let scoring = registry[division] {
+    /**
+     Get the scoring instance associated with the given division
+     
+     If no scoring instance exists for the division, a new one is created.
+     */
+    static func get(_ division: Division) -> Scoring {
+        if let scoring = registry[division.id] {
             return scoring
         } else {
             let scoring = Scoring(division: division)
-            registry[division] = scoring
+            registry[division.id] = scoring
             return scoring
         }
     }
     
-    var division: Int
+    /**
+     Disconnect the scoring instance associated with the given division ID and remove it from the
+     registry
+     
+     Any future attempts to `get` the scoring instance will result in a new instance.
+     */
+    static func remove(_ division: UUID) {
+        if let scoring = registry[division] {
+            scoring.disconnect()
+            registry.removeValue(forKey: division)
+        }
+    }
+    
+    // MARK: Connection status
+    
     @Published var error: String?
     @Published var state: Scoring.State = .disconnected
-    var socket: Starscream.WebSocket?
-    var timer: Timer?
     
-    init(division: Int) {
+    // MARK: Connection management
+    
+    private var division: Division
+    private var socket: Starscream.WebSocket?
+    private var timer: Timer?
+    
+    private init(division: Division) {
+        self.division = division
+    }
+    
+    /**
+     Update information about the associated division
+     
+     This is especially important when, for example, the video switcher type (ATEM, Companion)
+     changes.
+     */
+    func update(_ division: Division) {
         self.division = division
     }
     
@@ -50,6 +80,14 @@ class Scoring: ObservableObject, WebSocketDelegate {
         error = nil
         socket?.disconnect()
     }
+    
+    /*
+     Callback for Starscream.WebSocketDelegate when messages are received
+     
+     This delegate receives information about a large number of events, but we only care about
+     those representing certain actions in the _FIRST_ Tech Challenge scoring system. We also use
+     this information to set the connection status and error information.
+     */
     
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
         switch event {
@@ -147,17 +185,17 @@ class Scoring: ObservableObject, WebSocketDelegate {
             field
         }
         
-        if let preference = ScoringEvents.first(where: { $0.id == event }) {
-            let prefKey = "d\(division)field\(translatedField)\(preference.macro)Macro"
-            let macro = UserDefaults.standard.integer(forKey: prefKey)
-            
-            Switcher.get(division: division).sendMacro(macro)
+        if let event = ScoringEvents.first(where: { $0.id == event }) {
+            if division.switcher_settings.type == .atem {
+                let macro = division.fields[translatedField - 1][keyPath: event.macro].atem_macro
+                Switcher.get(division).sendMacro(macro)
+            }
         }
     }
 
     struct Event: Identifiable {
         var id: String
-        var macro: String
+        var macro: WritableKeyPath<FieldCommands, Command>
         var title: String
     }
     
@@ -177,13 +215,13 @@ class Scoring: ObservableObject, WebSocketDelegate {
 }
 
 var ScoringEvents = [
-    Scoring.Event(id: "SHOW_PREVIEW", macro: "ShowPreview", title: "Show Preview"),
-    Scoring.Event(id: "SHOW_RANDOM", macro: "ShowRandom", title: "Show Random"),
-    Scoring.Event(id: "SHOW_MATCH", macro: "ShowMatch", title: "Show Match"),
-    Scoring.Event(id: "MATCH_START", macro: "StartMatch", title: "Start Match"),
-    Scoring.Event(id: "AUTO_END", macro: "EndAuto", title: "End Autonomous"),
-    Scoring.Event(id: "DRIVER_START", macro: "StartDriver", title: "Start Driver Control"),
-    Scoring.Event(id: "ENDGAME", macro: "Endgame", title: "Start Endgame"),
-    Scoring.Event(id: "MATCH_END", macro: "EndMatch", title: "End Match"),
-    Scoring.Event(id: "MATCH_POST", macro: "PostScore", title: "Post Score")
+    Scoring.Event(id: "SHOW_PREVIEW", macro: \.show_preview, title: "Show Preview"),
+    Scoring.Event(id: "SHOW_RANDOM", macro: \.show_random, title: "Show Random"),
+    Scoring.Event(id: "SHOW_MATCH", macro: \.show_match, title: "Show Match"),
+    Scoring.Event(id: "MATCH_START", macro: \.match_start, title: "Start Match"),
+    Scoring.Event(id: "AUTO_END", macro: \.auto_end, title: "End Autonomous"),
+    Scoring.Event(id: "DRIVER_START", macro: \.driver_start, title: "Start Driver Control"),
+    Scoring.Event(id: "ENDGAME", macro: \.endgame, title: "Start Endgame"),
+    Scoring.Event(id: "MATCH_END", macro: \.match_end, title: "End Match"),
+    Scoring.Event(id: "MATCH_POST", macro: \.match_post, title: "Post Score")
 ]

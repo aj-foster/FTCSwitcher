@@ -1,24 +1,15 @@
 import SwiftUI
 
 struct ATEMSettingsView: View {
-    var division: Int
+    @Binding var settings: SwitcherSettings
     @ObservedObject var switcher: Switcher
-    
-    @AppStorage private var switcher_url: String
-    
-    init(division: Int, switcher: Switcher) {
-        self.division = division
-        self.switcher = switcher
-        
-        _switcher_url = AppStorage(wrappedValue: "", "d\(division)switcherUrl")
-    }
     
     var body: some View {
         let _ = Self._printChanges()
         
         Section(header: Text("ATEM Switcher").bold()) {
             HStack {
-                TextField(text: $switcher_url, prompt: Text("Blank for USB")) {
+                TextField(text: $settings.host, prompt: Text("Blank for USB")) {
                     Text("URL")
                 }
                 Help(text: "Leave blank if the ATEM switcher is connected via USB. Otherwise, input the IP address of the switcher.", width: 250)
@@ -26,7 +17,7 @@ struct ATEMSettingsView: View {
             HStack {
                 Button(switcher.state == .connected ? "Disconnect" : "Connect") {
                     if switcher.state == .disconnected {
-                        switcher.connect(switcher_url)
+                        switcher.connect(settings.host)
                     } else {
                         switcher.disconnect()
                     }
@@ -37,6 +28,6 @@ struct ATEMSettingsView: View {
     }
 }
 
-#Preview("FTC Switcher") {
-    ATEMSettingsView(division: 1, switcher: Switcher.get(division: 1))
-}
+//#Preview("FTC Switcher") {
+//    ATEMSettingsView(settings: .constant(SwitcherSettings()), switcher: Switcher.get(division: 1))
+//}

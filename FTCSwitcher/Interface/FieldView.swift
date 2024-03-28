@@ -1,25 +1,14 @@
 import SwiftUI
 
 struct FieldView: View {
-    private var division: Int
-    @ObservedObject var scoring: Scoring
-    @ObservedObject var switcher: Switcher
-    
-    @AppStorage private var field_count: Int
-    @AppStorage private var reverse_fields: Bool
-    
-    init(division: Int, scoring: Scoring, switcher: Switcher) {
-        self.division = division
-        self.scoring = scoring
-        self.switcher = switcher
-        
-        _field_count = AppStorage(wrappedValue: 1, "d\(division)fieldCount")
-        _reverse_fields = AppStorage(wrappedValue: false, "d\(division)reverseFields")
-    }
+    @Binding var division: Division
     
     var body: some View {
         let _ = Self._printChanges()
-        let fields = if reverse_fields { Array((1...field_count).reversed()) } else { Array(1...field_count) }
+        
+        let switcher = Switcher.get(division)
+        
+        let fields = if division.field_settings.reverse_fields { Array((1...division.field_settings.field_count).reversed()) } else { Array(1...division.field_settings.field_count) }
         
         Form {
             Section() {
@@ -38,7 +27,11 @@ struct FieldView: View {
                         GridRow {
                             Text(event.title)
                             ForEach(fields, id: \.self) { field in
-                                MacroSetting("d\(division)field\(field)\(event.macro)Macro", switcher: switcher)
+                                let command = Binding(
+                                    get: { division.fields[field - 1][keyPath: event.macro] },
+                                    set: { division.fields[field - 1][keyPath: event.macro] = $0 }
+                                )
+                                MacroSetting(command: command, switcher: switcher)
                             }
                         }
                     }
@@ -48,6 +41,6 @@ struct FieldView: View {
     }
 }
 
-#Preview("FTC Switcher") {
-    FieldView(division: 1, scoring: Scoring.get(division: 1), switcher: Switcher.get(division: 1))
-}
+//#Preview("FTC Switcher") {
+//    FieldView(division: 1, scoring: Scoring.get(division: 1), switcher: Switcher.get(division: 1))
+//}

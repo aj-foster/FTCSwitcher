@@ -16,8 +16,9 @@ struct FTCSwitcherApp: App {
     }
     
     var body: some Scene {
-        Window("FTC Switcher", id: "ftc-switcher") {
-            ContentView()
+        DocumentGroup(newDocument: Division()) { file in
+            DivisionView(division: file.$document)
+                .frame(minWidth: 550)
         }
         .commands {
             CommandGroup(before: .appTermination) {

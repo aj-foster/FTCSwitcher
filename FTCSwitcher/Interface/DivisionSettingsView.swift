@@ -1,28 +1,29 @@
 import SwiftUI
 
 struct DivisionSettingsView: View {
-    var division: Int
-    @ObservedObject var scoring: Scoring
-    @ObservedObject var switcher: Switcher
+    @Binding var division: Division
     
     var body: some View {
         let _ = Self._printChanges()
         
+        let scoring = Scoring.get(division)
+        let switcher = Switcher.get(division)
+        
         HStack(alignment: .top, spacing: 40) {
             Form {
-                ScoringSettingsView(division: division, scoring: scoring)
+                ScoringSettingsView(settings: $division.scoring_settings, scoring: scoring)
                 Spacer().frame(height: 20)
-                ATEMSettingsView(division: division, switcher: switcher)
+                ATEMSettingsView(settings: $division.switcher_settings, switcher: switcher)
             }
             Form {
-                FieldSettingsView(division: division)
+                FieldSettingsView(settings: $division.field_settings)
                 Spacer().frame(height: 20)
-                ManualRunView(division: division, switcher: switcher)
+                ManualRunView(division: $division.id, switcher: switcher)
             }
         }
     }
 }
 
-#Preview("FTC Switcher") {
-    DivisionSettingsView(division: 1, scoring: Scoring.get(division: 1), switcher: Switcher.get(division: 1))
-}
+//#Preview("FTC Switcher") {
+//    DivisionSettingsView(division: .constant(Division()), scoring: Scoring.get(division: 1), switcher: Switcher.get(division: 1))
+//}
