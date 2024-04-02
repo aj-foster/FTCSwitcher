@@ -4,7 +4,9 @@ struct FieldView: View {
     @Binding var division: Division
     
     var body: some View {
-        let _ = Self._printChanges()
+        #if DEBUG
+            let _ = Self._printChanges()
+        #endif
         
         let fields = if division.field_settings.reverse_fields { Array((1...division.field_settings.field_count).reversed()) } else { Array(1...division.field_settings.field_count) }
         

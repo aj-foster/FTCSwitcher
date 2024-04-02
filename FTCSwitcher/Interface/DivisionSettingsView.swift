@@ -4,7 +4,9 @@ struct DivisionSettingsView: View {
     @Binding var division: Division
     
     var body: some View {
-        let _ = Self._printChanges()
+        #if DEBUG
+            let _ = Self._printChanges()
+        #endif
         
         let scoring = Scoring.get(division)
         

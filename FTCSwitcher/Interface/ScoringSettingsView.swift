@@ -5,7 +5,9 @@ struct ScoringSettingsView: View {
     @ObservedObject var scoring: Scoring
 
     var body: some View {
-        let _ = Self._printChanges()
+        #if DEBUG
+            let _ = Self._printChanges()
+        #endif
  
         Section(header: Text("Scoring System").bold()) {
             HStack {

@@ -5,7 +5,9 @@ struct ManualRunView: View {
     @State private var command = Command()
 
     var body: some View {
-        let _ = Self._printChanges()
+        #if DEBUG
+            let _ = Self._printChanges()
+        #endif
         
         Section(header: Text("Manual Run").bold()) {
             MacroSetting(command: $command, division: $division, label: "Macro")

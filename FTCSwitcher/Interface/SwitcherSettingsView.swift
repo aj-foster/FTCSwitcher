@@ -12,8 +12,9 @@ struct SwitcherSettingsView: View {
     }
     
     var body: some View {
-        let _ = Self._printChanges()
-        
+        #if DEBUG
+            let _ = Self._printChanges()
+        #endif
         
         if division.switcher_settings.type == .atem {
             atem
