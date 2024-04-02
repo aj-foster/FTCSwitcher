@@ -89,6 +89,16 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		211BBB842BBBD03E00BE421A /* External */ = {
+			isa = PBXGroup;
+			children = (
+				21D8B0FA2B2CC2F300332A85 /* ATEM.swift */,
+				211BBB822BBA4AFA00BE421A /* Companion.swift */,
+				21D8B0F82B2C0B8000332A85 /* Scoring.swift */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
 		21B3EA1D2B1D86E800C83876 = {
 			isa = PBXGroup;
 			children = (
@@ -115,13 +125,11 @@
 				21B3EA2D2B1D86E900C83876 /* Assets.xcassets */,
 				214B982D2B82933D00EF3129 /* Credits.html */,
 				21119AC32BB0B12C00FAFB3A /* Data */,
+				211BBB842BBBD03E00BE421A /* External */,
 				21B3EA322B1D86E900C83876 /* FTCSwitcher.entitlements */,
 				21D8B1002B37C92E00332A85 /* Interface */,
 				21D8B1052B39299100332A85 /* Log.swift */,
 				21B3EA2F2B1D86E900C83876 /* Preview Content */,
-				21D8B0F82B2C0B8000332A85 /* Scoring.swift */,
-				21D8B0FA2B2CC2F300332A85 /* ATEM.swift */,
-				211BBB822BBA4AFA00BE421A /* Companion.swift */,
 			);
 			path = FTCSwitcher;
 			sourceTree = "<group>";
@@ -153,7 +161,6 @@
 		21D8B1002B37C92E00332A85 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				211290692B7F4F68008200B9 /* SwitcherSettingsView.swift */,
 				211290672B7F2DDB008200B9 /* DivisionSettingsView.swift */,
 				21B3EA2B2B1D86E800C83876 /* DivisionView.swift */,
 				2112906F2B806460008200B9 /* FieldSettingsView.swift */,
@@ -162,6 +169,7 @@
 				21D8B1032B37D06800332A85 /* MacroSetting.swift */,
 				214B982F2B82C88200EF3129 /* ManualRunView.swift */,
 				2112906D2B805C69008200B9 /* ScoringSettingsView.swift */,
+				211290692B7F4F68008200B9 /* SwitcherSettingsView.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
