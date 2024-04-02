@@ -34,6 +34,20 @@ struct FieldSettingsView: View {
     }
 }
 
-#Preview("FTC Switcher") {
-    FieldSettingsView(settings: .constant(FieldSettings()))
+struct FieldSettingsView_Preview: PreviewProvider {
+    struct Preview: View {
+        @State var division = Division()
+        
+        var body: some View {
+            Form {
+                FieldSettingsView(settings: $division.field_settings)
+            }
+        }
+    }
+
+    static var previews: some View {
+            Preview()
+                .padding(20)
+                .previewDisplayName("Field Settings")
+    }
 }

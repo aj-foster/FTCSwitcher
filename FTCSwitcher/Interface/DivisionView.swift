@@ -28,6 +28,9 @@ struct DivisionView: View {
             .onChange(of: division) { division in
                 Scoring.get(division).update(division)
             }
+            .environmentObject(ATEM.get(division.id))
+            .environmentObject(Companion.get(division.id))
+            .environmentObject(Scoring.get(division))
     }
 }
 

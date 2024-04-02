@@ -8,11 +8,9 @@ struct DivisionSettingsView: View {
             let _ = Self._printChanges()
         #endif
         
-        let scoring = Scoring.get(division)
-        
         HStack(alignment: .top, spacing: 40) {
             Form {
-                ScoringSettingsView(settings: $division.scoring_settings, scoring: scoring)
+                ScoringSettingsView(settings: $division.scoring_settings)
                 Spacer().frame(height: 20)
                 SwitcherSettingsView(division: $division)
             }
@@ -25,6 +23,23 @@ struct DivisionSettingsView: View {
     }
 }
 
-#Preview("FTC Switcher") {
-    DivisionSettingsView(division: .constant(Division()))
+struct DivisionSettingsView_Preview: PreviewProvider {
+    struct Preview: View {
+        @State var division = Division()
+        
+        var body: some View {
+            Form {
+                DivisionSettingsView(division: $division)
+                    .environmentObject(ATEM.get(division.id))
+                    .environmentObject(Companion.get(division.id))
+                    .environmentObject(Scoring.get(division))
+            }
+        }
+    }
+
+    static var previews: some View {
+            Preview()
+                .padding(20)
+                .previewDisplayName("Division Settings")
+    }
 }

@@ -5,17 +5,8 @@ struct MacroSetting: View {
     @Binding var division: Division
     var label = ""
     
-    @ObservedObject private var atem_switcher: ATEM
-    @ObservedObject private var companion_switcher: Companion
-    
-    init(command: Binding<Command>, division: Binding<Division>, label: String = "") {
-        self._command = command
-        self._division = division
-        self.label = label
-        
-        atem_switcher = ATEM.get(division.id)
-        companion_switcher = Companion.get(division.id)
-    }
+    @EnvironmentObject private var atem_switcher: ATEM
+    @EnvironmentObject private var companion_switcher: Companion
     
     var body: some View {
         if division.switcher_settings.type == .atem {
@@ -34,7 +25,7 @@ struct MacroSetting: View {
             }
             
             Button("Run") {
-                ATEM.get(division.id).sendMacro(command.atem_macro)
+                atem_switcher.sendMacro(command.atem_macro)
             }
                 .disabled(command.atem_macro == 0 || atem_switcher.state == .disconnected)
         }
@@ -50,7 +41,7 @@ struct MacroSetting: View {
             TextField("", value: $command.companion_row, format: .number).labelsHidden()
             TextField("", value: $command.companion_col, format: .number).labelsHidden()
             Button("Run") {
-                Companion.get(division.id).sendMacro(command.companion_page, command.companion_row, command.companion_col)
+                companion_switcher.sendMacro(command.companion_page, command.companion_row, command.companion_col)
             }
                 .disabled(command.companion_page == 0 || companion_switcher.state == .disconnected)
         }

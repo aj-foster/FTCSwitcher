@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ScoringSettingsView: View {
     @Binding var settings: ScoringSettings
-    @ObservedObject var scoring: Scoring
+    @EnvironmentObject private var scoring: Scoring
 
     var body: some View {
         #if DEBUG
@@ -36,6 +36,21 @@ struct ScoringSettingsView: View {
     }
 }
 
-//#Preview("FTC Switcher") {
-//    ScoringSettingsView(division: 1, scoring: Scoring.get(division: 1))
-//}
+struct ScoringSettingsView_Preview: PreviewProvider {
+    struct Preview: View {
+        @State var division = Division()
+        
+        var body: some View {
+            Form {
+                ScoringSettingsView(settings: $division.scoring_settings)
+                    .environmentObject(Scoring.get(division))
+            }
+        }
+    }
+
+    static var previews: some View {
+            Preview()
+                .padding(20)
+                .previewDisplayName("Scoring Settings")
+    }
+}

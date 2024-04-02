@@ -2,14 +2,8 @@ import SwiftUI
 
 struct SwitcherSettingsView: View {
     @Binding var division: Division
-    @ObservedObject var atem_switcher: ATEM
-    @ObservedObject var companion_switcher: Companion
-    
-    init(division: Binding<Division>) {
-        _division = division
-        atem_switcher = ATEM.get(division.id)
-        companion_switcher = Companion.get(division.id)
-    }
+    @EnvironmentObject private var atem_switcher: ATEM
+    @EnvironmentObject private var companion_switcher: Companion
     
     var body: some View {
         #if DEBUG
@@ -89,6 +83,22 @@ struct SwitcherSettingsView: View {
     }
 }
 
-//#Preview("FTC Switcher") {
-//    SwitcherSettingsView(settings: .constant(SwitcherSettings()), switcher: Switcher.get(Division()))
-//}
+struct SwitcherSettingsView_Preview: PreviewProvider {
+    struct Preview: View {
+        @State var division = Division()
+        
+        var body: some View {
+            Form {
+                SwitcherSettingsView(division: $division)
+                    .environmentObject(ATEM.get(division.id))
+                    .environmentObject(Companion.get(division.id))
+            }
+        }
+    }
+
+    static var previews: some View {
+            Preview()
+                .padding(20)
+                .previewDisplayName("Switcher Settings")
+    }
+}
