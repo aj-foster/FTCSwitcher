@@ -61,7 +61,7 @@ class Companion: NSObject, ObservableObject {
         url = url_with_scheme
         error = nil
         state = .connected
-        Log("Connect to Companion \(host_and_port)", tag: "Switcher \(division_id)")
+        Log("Connect to Companion \(host_and_port)", tag: "Companion \(division_id)")
         startURLSession()
         maintainConnection()
     }
@@ -71,7 +71,7 @@ class Companion: NSObject, ObservableObject {
      */
     func disconnect() {
         error = nil
-        Log("Disconnect", tag: "Switcher \(division_id)")
+        Log("Disconnect", tag: "Companion \(division_id)")
         endURLSession()
         state = .disconnected
     }
@@ -92,9 +92,9 @@ class Companion: NSObject, ObservableObject {
      */
     func sendMacro(_ page: Int, _ row: Int, _ column: Int) {
         guard page >= 1, row >= 0, column >= 0 else { return }
-        guard state == .connected else { Log("Intended to send macro \(page)/\(row)/\(column) but switcher is disconnected", tag: "Switcher \(division_id)"); return }
+        guard state == .connected else { Log("Intended to send macro \(page)/\(row)/\(column) but switcher is disconnected", tag: "Companion \(division_id)"); return }
         
-        Log("Sending macro \(page)/\(row)/\(column)", tag: "Switcher \(division_id)")
+        Log("Sending macro \(page)/\(row)/\(column)", tag: "Companion \(division_id)")
         
         guard let url = url?.withPath("/api/location/\(page)/\(row)/\(column)/press") else { return }
         if urlSession == nil { startURLSession() }

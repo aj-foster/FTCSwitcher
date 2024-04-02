@@ -60,7 +60,7 @@ class ATEM: ObservableObject {
     func connect(_ host: String) {
         error = nil
         let target = if host == "" { "USB" } else { host }
-        Log("Connect to ATEM \(target)", tag: "Switcher \(division_id)")
+        Log("Connect to ATEM \(target)", tag: "ATEM \(division_id)")
         
         var failureReason : BMDSwitcherConnectToFailure = 0
         switcher = connectSwitcher(host as CFString, &failureReason)
@@ -83,7 +83,7 @@ class ATEM: ObservableObject {
         }
         
         if let error {
-            Log("Error during connection to switcher: \(error)", tag: "Switcher \(division_id)")
+            Log("Error during connection to switcher: \(error)", tag: "ATEM \(division_id)")
         }
         
         if switcher != nil {
@@ -98,7 +98,7 @@ class ATEM: ObservableObject {
      */
     func disconnect() {
         error = nil
-        Log("Disconnect", tag: "Switcher \(division_id)")
+        Log("Disconnect", tag: "ATEM \(division_id)")
         
         if switcher != nil {
             disconnectSwitcher(switcher)
@@ -124,11 +124,11 @@ class ATEM: ObservableObject {
     func sendMacro(_ macro: Int) {
         guard macro != 0 else { return }
         guard switcher != nil && state == .connected else {
-            Log("Intended to send macro \(macro) but switcher is disconnected", tag: "Switcher \(division_id)")
+            Log("Intended to send macro \(macro) but switcher is disconnected", tag: "ATEM \(division_id)")
             return
         }
         
-        Log("Sending macro \(macro)", tag: "Switcher \(division_id)")
+        Log("Sending macro \(macro)", tag: "ATEM \(division_id)")
         sendMacroToSwitcher(switcher, Int32(macro - 1))
     }
 }
