@@ -13,10 +13,11 @@
 		21119ACB2BB108AC00FAFB3A /* ScoringSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21119ACA2BB108AC00FAFB3A /* ScoringSettings.swift */; };
 		21119ACD2BB1235500FAFB3A /* FieldCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21119ACC2BB1235500FAFB3A /* FieldCommands.swift */; };
 		211290682B7F2DDB008200B9 /* DivisionSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211290672B7F2DDB008200B9 /* DivisionSettingsView.swift */; };
-		2112906A2B7F4F68008200B9 /* ATEMSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211290692B7F4F68008200B9 /* ATEMSettingsView.swift */; };
+		2112906A2B7F4F68008200B9 /* SwitcherSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211290692B7F4F68008200B9 /* SwitcherSettingsView.swift */; };
 		2112906C2B803DC8008200B9 /* FieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112906B2B803DC7008200B9 /* FieldView.swift */; };
 		2112906E2B805C69008200B9 /* ScoringSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112906D2B805C69008200B9 /* ScoringSettingsView.swift */; };
 		211290702B806460008200B9 /* FieldSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112906F2B806460008200B9 /* FieldSettingsView.swift */; };
+		211BBB832BBA4AFA00BE421A /* Companion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211BBB822BBA4AFA00BE421A /* Companion.swift */; };
 		214B982E2B82933D00EF3129 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 214B982D2B82933D00EF3129 /* Credits.html */; };
 		214B98302B82C88200EF3129 /* ManualRunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214B982F2B82C88200EF3129 /* ManualRunView.swift */; };
 		21B3EA2A2B1D86E800C83876 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B3EA292B1D86E800C83876 /* App.swift */; };
@@ -27,7 +28,7 @@
 		21B69C1F2B3A6D1E00CD5F60 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 21B69C1E2B3A6D1E00CD5F60 /* Sparkle */; };
 		21D8B0F72B2C0B4600332A85 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 21D8B0F62B2C0B4600332A85 /* Starscream */; };
 		21D8B0F92B2C0B8000332A85 /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0F82B2C0B8000332A85 /* Scoring.swift */; };
-		21D8B0FB2B2CC2F300332A85 /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0FA2B2CC2F300332A85 /* Switcher.swift */; };
+		21D8B0FB2B2CC2F300332A85 /* ATEM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B0FA2B2CC2F300332A85 /* ATEM.swift */; };
 		21D8B1022B37C95700332A85 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B1012B37C95700332A85 /* Help.swift */; };
 		21D8B1042B37D06800332A85 /* MacroSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B1032B37D06800332A85 /* MacroSetting.swift */; };
 		21D8B1062B39299100332A85 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D8B1052B39299100332A85 /* Log.swift */; };
@@ -40,11 +41,12 @@
 		21119ACA2BB108AC00FAFB3A /* ScoringSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringSettings.swift; sourceTree = "<group>"; };
 		21119ACC2BB1235500FAFB3A /* FieldCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldCommands.swift; sourceTree = "<group>"; };
 		211290672B7F2DDB008200B9 /* DivisionSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionSettingsView.swift; sourceTree = "<group>"; };
-		211290692B7F4F68008200B9 /* ATEMSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATEMSettingsView.swift; sourceTree = "<group>"; };
+		211290692B7F4F68008200B9 /* SwitcherSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitcherSettingsView.swift; sourceTree = "<group>"; };
 		2112906B2B803DC7008200B9 /* FieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldView.swift; sourceTree = "<group>"; };
 		2112906D2B805C69008200B9 /* ScoringSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringSettingsView.swift; sourceTree = "<group>"; };
 		2112906F2B806460008200B9 /* FieldSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSettingsView.swift; sourceTree = "<group>"; };
 		211AB8882B4CF8A700087615 /* FTC-Switcher-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "FTC-Switcher-Info.plist"; sourceTree = "<group>"; };
+		211BBB822BBA4AFA00BE421A /* Companion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Companion.swift; sourceTree = "<group>"; };
 		214B982D2B82933D00EF3129 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		214B982F2B82C88200EF3129 /* ManualRunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualRunView.swift; sourceTree = "<group>"; };
 		21B3EA262B1D86E800C83876 /* FTC Switcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FTC Switcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,7 +58,7 @@
 		21B3EA392B22B2B600C83876 /* BMDSwitcherAPI.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = BMDSwitcherAPI.h; sourceTree = "<group>"; };
 		21B3EA3B2B22B2C800C83876 /* BMDSwitcherAPIDispatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMDSwitcherAPIDispatch.cpp; sourceTree = "<group>"; };
 		21D8B0F82B2C0B8000332A85 /* Scoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
-		21D8B0FA2B2CC2F300332A85 /* Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switcher.swift; sourceTree = "<group>"; };
+		21D8B0FA2B2CC2F300332A85 /* ATEM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATEM.swift; sourceTree = "<group>"; };
 		21D8B1012B37C95700332A85 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
 		21D8B1032B37D06800332A85 /* MacroSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroSetting.swift; sourceTree = "<group>"; };
 		21D8B1052B39299100332A85 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -118,7 +120,8 @@
 				21D8B1052B39299100332A85 /* Log.swift */,
 				21B3EA2F2B1D86E900C83876 /* Preview Content */,
 				21D8B0F82B2C0B8000332A85 /* Scoring.swift */,
-				21D8B0FA2B2CC2F300332A85 /* Switcher.swift */,
+				21D8B0FA2B2CC2F300332A85 /* ATEM.swift */,
+				211BBB822BBA4AFA00BE421A /* Companion.swift */,
 			);
 			path = FTCSwitcher;
 			sourceTree = "<group>";
@@ -150,7 +153,7 @@
 		21D8B1002B37C92E00332A85 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				211290692B7F4F68008200B9 /* ATEMSettingsView.swift */,
+				211290692B7F4F68008200B9 /* SwitcherSettingsView.swift */,
 				211290672B7F2DDB008200B9 /* DivisionSettingsView.swift */,
 				21B3EA2B2B1D86E800C83876 /* DivisionView.swift */,
 				2112906F2B806460008200B9 /* FieldSettingsView.swift */,
@@ -247,12 +250,12 @@
 				214B98302B82C88200EF3129 /* ManualRunView.swift in Sources */,
 				2112906C2B803DC8008200B9 /* FieldView.swift in Sources */,
 				21119AC72BB0C1F100FAFB3A /* SwitcherSettings.swift in Sources */,
-				21D8B0FB2B2CC2F300332A85 /* Switcher.swift in Sources */,
+				21D8B0FB2B2CC2F300332A85 /* ATEM.swift in Sources */,
 				21B3EA2C2B1D86E800C83876 /* DivisionView.swift in Sources */,
 				21D8B1022B37C95700332A85 /* Help.swift in Sources */,
 				21D8B1042B37D06800332A85 /* MacroSetting.swift in Sources */,
 				21D8B0F92B2C0B8000332A85 /* Scoring.swift in Sources */,
-				2112906A2B7F4F68008200B9 /* ATEMSettingsView.swift in Sources */,
+				2112906A2B7F4F68008200B9 /* SwitcherSettingsView.swift in Sources */,
 				2112906E2B805C69008200B9 /* ScoringSettingsView.swift in Sources */,
 				21B3EA2A2B1D86E800C83876 /* App.swift in Sources */,
 				21119ACB2BB108AC00FAFB3A /* ScoringSettings.swift in Sources */,
@@ -261,6 +264,7 @@
 				211290702B806460008200B9 /* FieldSettingsView.swift in Sources */,
 				21119AC92BB106AC00FAFB3A /* FieldSettings.swift in Sources */,
 				21119AC52BB0B13A00FAFB3A /* Division.swift in Sources */,
+				211BBB832BBA4AFA00BE421A /* Companion.swift in Sources */,
 				21D8B1062B39299100332A85 /* Log.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

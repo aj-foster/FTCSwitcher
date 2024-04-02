@@ -20,7 +20,8 @@ struct DivisionView: View {
             .padding(20)
             .onDisappear {
                 Scoring.remove(division.id)
-                Switcher.remove(division.id)
+                ATEM.remove(division.id)
+                Companion.remove(division.id)
             }
             .onChange(of: division) { division in
                 Scoring.get(division).update(division)

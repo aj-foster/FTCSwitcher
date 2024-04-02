@@ -6,8 +6,6 @@ struct FieldView: View {
     var body: some View {
         let _ = Self._printChanges()
         
-        let switcher = Switcher.get(division)
-        
         let fields = if division.field_settings.reverse_fields { Array((1...division.field_settings.field_count).reversed()) } else { Array(1...division.field_settings.field_count) }
         
         Form {
@@ -31,7 +29,7 @@ struct FieldView: View {
                                     get: { division.fields[field - 1][keyPath: event.macro] },
                                     set: { division.fields[field - 1][keyPath: event.macro] = $0 }
                                 )
-                                MacroSetting(command: command, switcher: switcher)
+                                MacroSetting(command: command, division: $division)
                             }
                         }
                     }

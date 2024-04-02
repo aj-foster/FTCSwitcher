@@ -1,15 +1,14 @@
 import SwiftUI
 
 struct ManualRunView: View {
-    var division: UUID
+    @Binding var division: Division
     @State private var command = Command()
-    @ObservedObject var switcher: Switcher
 
     var body: some View {
         let _ = Self._printChanges()
         
         Section(header: Text("Manual Run").bold()) {
-            MacroSetting(command: $command, switcher: switcher, label: "Macro")
+            MacroSetting(command: $command, division: $division, label: "Macro")
         }
     }
 }

@@ -188,7 +188,10 @@ class Scoring: ObservableObject, WebSocketDelegate {
         if let event = ScoringEvents.first(where: { $0.id == event }) {
             if division.switcher_settings.type == .atem {
                 let macro = division.fields[translatedField - 1][keyPath: event.macro].atem_macro
-                Switcher.get(division).sendMacro(macro)
+                ATEM.get(division.id).sendMacro(macro)
+            } else {
+                let macro = division.fields[translatedField - 1][keyPath: event.macro]
+                Companion.get(division.id).sendMacro(macro.companion_page, macro.companion_row, macro.companion_col)
             }
         }
     }
