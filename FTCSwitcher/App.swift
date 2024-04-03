@@ -3,13 +3,14 @@ import SwiftUI
 
 @main
 struct FTCSwitcherApp: App {
+    @AppStorage("appUpdateBetaChannelEnabled") private var betaUpdatesEnabled = false;
     private let updaterController: SPUStandardUpdaterController
     
     init() {
         #if DEBUG
-            updaterController = SPUStandardUpdaterController(startingUpdater: false, updaterDelegate: nil, userDriverDelegate: nil)
+            updaterController = SPUStandardUpdaterController(startingUpdater: false, updaterDelegate: Update(), userDriverDelegate: nil)
         #else
-            updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+            updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: Update(), userDriverDelegate: nil)
         #endif
         
         ProcessInfo.processInfo.beginActivity(options: .userInitiated, reason: "Timer-based Scoring Events")
@@ -26,6 +27,8 @@ struct FTCSwitcherApp: App {
                     Log("User-initiated update check", tag: "App")
                     updaterController.checkForUpdates(self)
                 }
+                Toggle("Enable Beta Updates", isOn: $betaUpdatesEnabled)
+                Divider()
             }
         }
     }
