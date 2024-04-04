@@ -15,7 +15,7 @@ struct FieldView: View {
                 Grid(alignment: .leading, horizontalSpacing: 20, verticalSpacing: 5) {
                     GridRow {
                         HStack {
-                            Text("Macros").bold()
+                            Text(division.switcher_settings.type == .atem ? "Macros" : "Page / Row / Col").bold()
                             Help(text: "Number of the pre-programmed macro to use during each event. Use 0 to take no action.")
                         }
                         ForEach(fields, id: \.self) { index in
@@ -41,6 +41,23 @@ struct FieldView: View {
     }
 }
 
-//#Preview("FTC Switcher") {
-//    FieldView(division: 1, scoring: Scoring.get(division: 1), switcher: Switcher.get(division: 1))
-//}
+struct FieldView_Preview: PreviewProvider {
+    struct Preview: View {
+        @State var division = Division()
+        
+        var body: some View {
+            Form {
+                FieldView(division: $division)
+                    .environmentObject(ATEM.get(division.id))
+                    .environmentObject(Companion.get(division.id))
+                    .environmentObject(Scoring.get(division))
+            }
+        }
+    }
+
+    static var previews: some View {
+            Preview()
+                .padding(20)
+                .previewDisplayName("Field")
+    }
+}

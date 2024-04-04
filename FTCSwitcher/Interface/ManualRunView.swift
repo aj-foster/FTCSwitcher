@@ -10,7 +10,7 @@ struct ManualRunView: View {
         #endif
         
         Section(header: Text("Manual Run").bold()) {
-            MacroSetting(command: $command, division: $division, label: "Macro")
+            MacroSetting(command: $command, division: $division, label: division.switcher_settings.type == .atem ? "Macro" : "Page / Row / Col")
         }
     }
 }
