@@ -10,5 +10,5 @@ fileprivate var dateFormatter: DateFormatter = {
 func Log(_ message: String, tag: String = "", file: String = #file, function: String = #function, line: Int = #line) {
     let tagText = if tag != "" { "[\(tag)] " } else { "" }
     let timeText = dateFormatter.string(from: .init())
-    Logger().info("\(tagText, privacy: .public)\(timeText, privacy: .public): \(message, privacy: .public)")
+    Logger().notice("\(tagText, privacy: .public)\(timeText, privacy: .public): \(message, privacy: .public)")
 }

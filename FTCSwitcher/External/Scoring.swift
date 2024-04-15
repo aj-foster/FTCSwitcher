@@ -64,7 +64,7 @@ class Scoring: ObservableObject, WebSocketDelegate {
     
     func connect(hostname host: String, event_code code: String) {
         let url = "ws://\(host)/api/v2/stream/?code=\(code)"
-        Log("Connecting to \(url)", tag: "Scoring \(division)")
+        Log("Connecting to \(url)", tag: "Scoring \(division.id)")
         error = nil
         
         var request = URLRequest(url: URL(string: url)!)
@@ -92,19 +92,19 @@ class Scoring: ObservableObject, WebSocketDelegate {
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
         switch event {
         case .connected(_):
-            Log("Connected", tag: "Scoring \(division)")
+            Log("Connected", tag: "Scoring \(division.id)")
             error = nil
             state = .connected
             
         case .disconnected(let reason, _):
             error = reason
-            Log("Disconnected", tag: "Scoring \(division)")
+            Log("Disconnected", tag: "Scoring \(division.id)")
             error = nil
             state = .disconnected
             
         case .text(let string):
             guard string != "pong" else { break }
-            Log("Received: \(string)", tag: "Scoring \(division)")
+            Log("Received: \(string)", tag: "Scoring \(division.id)")
 
             let decoder = JSONDecoder()
             if let messageData = string.data(using: .utf8),
@@ -151,33 +151,33 @@ class Scoring: ObservableObject, WebSocketDelegate {
             }
 
         case .viabilityChanged(_):
-            Log("Change in websocket viability", tag: "Scoring \(division)")
+            Log("Change in websocket viability", tag: "Scoring \(division.id)")
 
         case .reconnectSuggested(_):
-            Log("Reconnect suggested", tag: "Scoring \(division)")
+            Log("Reconnect suggested", tag: "Scoring \(division.id)")
 
         case .cancelled:
-            Log("Connection cancelled", tag: "Scoring \(division)")
+            Log("Connection cancelled", tag: "Scoring \(division.id)")
             state = .disconnected
 
         case .error(let error):
-            Log("Websocket error: \(String(describing: error))", tag: "Scoring \(division)")
+            Log("Websocket error: \(String(describing: error))", tag: "Scoring \(division.id)")
             self.error = error?.localizedDescription
             state = .disconnected
 
         case .binary(let data):
-            Log("Received binary: \(data)", tag: "Scoring \(division)")
+            Log("Received binary: \(data)", tag: "Scoring \(division.id)")
         case .ping(_): break
         case .pong(_): break
         case .peerClosed:
-            Log("Connection closed by peer", tag: "Scoring \(division)")
+            Log("Connection closed by peer", tag: "Scoring \(division.id)")
             error = "Connection closed by scoring system"
             state = .disconnected
         }
     }
     
     private func scoringEvent(_ event: String, _ field: Int) {
-        Log("Event \(event)", tag: "Scoring \(division)")
+        Log("Event \(event)", tag: "Scoring \(division.id)")
         
         let translatedField = if field == 0 {
             UserDefaults.standard.integer(forKey: "finalsField")
