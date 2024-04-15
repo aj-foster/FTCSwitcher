@@ -12,8 +12,6 @@ struct FTCSwitcherApp: App {
         #else
             updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: Update(), userDriverDelegate: nil)
         #endif
-        
-        ProcessInfo.processInfo.beginActivity(options: .userInitiated, reason: "Timer-based Scoring Events")
     }
     
     var body: some Scene {

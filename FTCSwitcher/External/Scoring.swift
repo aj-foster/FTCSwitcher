@@ -47,6 +47,7 @@ class Scoring: ObservableObject, WebSocketDelegate {
     private var division: Division
     private var socket: Starscream.WebSocket?
     private var timer: Timer?
+    private var activity: NSObjectProtocol?
     
     private init(division: Division) {
         self.division = division
@@ -67,6 +68,8 @@ class Scoring: ObservableObject, WebSocketDelegate {
         Log("Connecting to \(url)", tag: "Scoring \(division.id)")
         error = nil
         
+        activity = ProcessInfo.processInfo.beginActivity(options: [.automaticTerminationDisabled, .idleSystemSleepDisabled, .latencyCritical], reason: "Timer-based Scoring Events")
+        
         var request = URLRequest(url: URL(string: url)!)
         request.timeoutInterval = 5
         
@@ -76,7 +79,12 @@ class Scoring: ObservableObject, WebSocketDelegate {
     }
     
     func disconnect() {
-        Log("Disconnect", tag: "Scoring")
+        if let activity = activity {
+            ProcessInfo.processInfo.endActivity(activity)
+            self.activity = nil
+        }
+        
+        Log("Disconnect", tag: "Scoring \(division.id)")
         error = nil
         socket?.disconnect()
     }
