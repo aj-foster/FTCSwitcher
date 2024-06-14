@@ -188,7 +188,7 @@ class Scoring: ObservableObject, WebSocketDelegate {
         Log("Event \(event)", tag: "Scoring \(division.id)")
         
         let translatedField = if field == 0 {
-            UserDefaults.standard.integer(forKey: "finalsField")
+            division.field_settings.finals_field
         } else {
             field
         }
