@@ -14,7 +14,7 @@ _FIRST®_ Tech Challenge competitions are celebrations of the students' hard wor
 Some competitions are live-streamed to the world, often using [video switchers created by Blackmagic Design](https://www.blackmagicdesign.com/products/atemmini).
 
 This macOS application communicates with the [_FIRST®_ Tech Challenge scoring system](https://github.com/FIRST-Tech-Challenge/scorekeeper) (the software that starts and stops matches and announces scores) to learn when certain events occur.
-Then it issues commands (macros) to a connected Blackmagic Design ATEM video switcher.
+Then it issues commands (macros) to a connected Blackmagic Design ATEM video switcher or an instance of the [Companion API](https://bitfocus.io/companion).
 The result?
 Automatically change between cameras, keys, and other settings when matches start, scores are announced, etc.
 
@@ -24,7 +24,8 @@ It's a hands-free way to keep live video feeds relevant during a competition.
 
 ## Installation
 
-_To be determined_
+First, [download the application](https://assets.ftaj.me/ftcswitcher/FTC%20Switcher.dmg).
+Move it into the `/Applications` directory.
 
 In order to use this application, you must also have the [ATEM Switchers software](https://www.blackmagicdesign.com/support/family/atem-live-production-switchers) available from Blackmagic Design.
 Specifically, the application requires the following library bundle to exist:
@@ -44,7 +45,7 @@ Here's an overview of the necessary setup:
 1. FTC Switcher running on a macOS computer (the "controller")
 2. FTC Scoring software running on the same network as the controller (or on the controller itself)
 3. ATEM video switcher running on the same network as the switcher (or plugged in via USB to the controller itself)
-4. Macros saved on the ATEM video switcher
+4. Macros saved on the ATEM video switcher OR an instance of the Companion API with macros for the video switcher
 
 It's important to understand that this application doesn't know anything about video switching — all it knows how to do is issue a numbered macro to a connected ATEM switcher.
 Therefore, it's necessary to set up those macros ahead of time.

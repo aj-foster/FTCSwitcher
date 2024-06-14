@@ -1,3 +1,4 @@
 # Exported Applications and Update Staging
 /Export/*
 !/Export/publish
+!/Export/publish-beta
