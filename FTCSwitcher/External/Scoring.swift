@@ -1,6 +1,11 @@
 import Foundation
 import Starscream
 
+private let TIME_AUTO_END_SEC: Int = 30
+private let TIME_DRIVER_START_SEC: Int = 38
+private let TIME_ENDGAME_SEC: Int = 138
+private let TIME_MATCH_END_SEC: Int = 158
+
 /**
  * Interface for the FTCLive Scoring software
  */
@@ -133,13 +138,13 @@ class Scoring: ObservableObject, WebSocketDelegate {
                         secondsSinceStart += 1
                         
                         switch secondsSinceStart {
-                        case 30:
+                        case TIME_AUTO_END_SEC:
                             self?.scoringEvent("AUTO_END", field)
-                        case 38:
+                        case TIME_DRIVER_START_SEC:
                             self?.scoringEvent("DRIVER_START", field)
-                        case 128:
+                        case TIME_ENDGAME_SEC:
                             self?.scoringEvent("ENDGAME", field)
-                        case 158:
+                        case TIME_MATCH_END_SEC:
                             self?.scoringEvent("MATCH_END", field)
                             timer.invalidate()
                         default:
