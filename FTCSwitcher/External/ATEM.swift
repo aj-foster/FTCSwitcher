@@ -62,21 +62,21 @@ class ATEM: ObservableObject {
         let target = if host == "" { "USB" } else { host }
         Log("Connect to ATEM \(target)", tag: "ATEM \(division_id)")
         
-        var failureReason : BMDSwitcherConnectToFailure = 0
+        var failureReason : BMDSwitcherConnectToFailure = .init(0)
         switcher = connectSwitcher(host as CFString, &failureReason)
         
         switch failureReason {
-        case 0:
+        case .init(0):
             break
-        case bmdSwitcherConnectToFailureNoResponse.rawValue:
+        case bmdSwitcherConnectToFailureNoResponse:
             error = "No response from switcher"
-        case bmdSwitcherConnectToFailureIncompatibleFirmware.rawValue:
+        case bmdSwitcherConnectToFailureIncompatibleFirmware:
             error = "Incompatible switcher firmware"
-        case bmdSwitcherConnectToFailureCorruptData.rawValue:
+        case bmdSwitcherConnectToFailureCorruptData:
             error = "Corrupt data received"
-        case bmdSwitcherConnectToFailureStateSync.rawValue:
+        case bmdSwitcherConnectToFailureStateSync:
             error = "Failure during state sync"
-        case bmdSwitcherConnectToFailureStateSyncTimedOut.rawValue:
+        case bmdSwitcherConnectToFailureStateSyncTimedOut:
             error = "Timeout during state sync"
         default:
             error = "Unknown error (\(failureReason))"

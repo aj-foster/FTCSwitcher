@@ -1,5 +1,5 @@
 /* -LICENSE-START-
-** Copyright (c) 2024 Blackmagic Design
+** Copyright (c) 2025 Blackmagic Design
 **
 ** Permission is hereby granted, free of charge, to any person or organization
 ** obtaining a copy of the software and accompanying documentation covered by
@@ -55,6 +55,7 @@
 
 typedef int64_t BMDSwitcherInputId;
 typedef struct { uint8_t data[16]; } BMDSwitcherHash;
+typedef struct { BMDSwitcherInputId source; BMDSwitcherInputId substitute; } BMDSourceSubstitution;
 typedef int64_t BMDSwitcherAudioInputId;
 typedef int64_t BMDSwitcherFairlightAudioSourceId;
 typedef uint32_t BMDSwitcherRecordDiskId;
@@ -93,7 +94,7 @@ BMD_CONST REFIID IID_IBMDSwitcherFairlightAudioSourceCallback     = /* E9331BC4-
 BMD_CONST REFIID IID_IBMDSwitcherFairlightAudioSource             = /* 17116142-C39E-48DC-8E50-C4DBDC85DBF3 */ { 0x17,0x11,0x61,0x42,0xC3,0x9E,0x48,0xDC,0x8E,0x50,0xC4,0xDB,0xDC,0x85,0xDB,0xF3 };
 BMD_CONST REFIID IID_IBMDSwitcherFairlightAudioSourceIterator     = /* 97504C44-D0E6-40D8-8649-7C7FC1AFC158 */ { 0x97,0x50,0x4C,0x44,0xD0,0xE6,0x40,0xD8,0x86,0x49,0x7C,0x7F,0xC1,0xAF,0xC1,0x58 };
 BMD_CONST REFIID IID_IBMDSwitcherFairlightAnalogAudioInputCallback = /* A9B917B9-46C7-474D-BD86-75CC34D71AF8 */ { 0xA9,0xB9,0x17,0xB9,0x46,0xC7,0x47,0x4D,0xBD,0x86,0x75,0xCC,0x34,0xD7,0x1A,0xF8 };
-BMD_CONST REFIID IID_IBMDSwitcherFairlightAnalogAudioInput        = /* 7103C039-96F5-46C0-B2AF-A7FFFFFBB4F2 */ { 0x71,0x03,0xC0,0x39,0x96,0xF5,0x46,0xC0,0xB2,0xAF,0xA7,0xFF,0xFF,0xFB,0xB4,0xF2 };
+BMD_CONST REFIID IID_IBMDSwitcherFairlightAnalogAudioInput        = /* 46FF85E1-74B5-4B3F-928E-19DECF7A96DE */ { 0x46,0xFF,0x85,0xE1,0x74,0xB5,0x4B,0x3F,0x92,0x8E,0x19,0xDE,0xCF,0x7A,0x96,0xDE };
 BMD_CONST REFIID IID_IBMDSwitcherFairlightAudioInputCallback      = /* 25F66467-A6BB-4813-B214-158D0FF8653C */ { 0x25,0xF6,0x64,0x67,0xA6,0xBB,0x48,0x13,0xB2,0x14,0x15,0x8D,0x0F,0xF8,0x65,0x3C };
 BMD_CONST REFIID IID_IBMDSwitcherFairlightAudioInput              = /* 96748040-89C2-44F3-BCC0-124BDB9E378F */ { 0x96,0x74,0x80,0x40,0x89,0xC2,0x44,0xF3,0xBC,0xC0,0x12,0x4B,0xDB,0x9E,0x37,0x8F };
 BMD_CONST REFIID IID_IBMDSwitcherFairlightAudioInputIterator      = /* 019DABB8-EF1A-4BB6-9460-6972C5AD2B07 */ { 0x01,0x9D,0xAB,0xB8,0xEF,0x1A,0x4B,0xB6,0x94,0x60,0x69,0x72,0xC5,0xAD,0x2B,0x07 };
@@ -140,14 +141,18 @@ BMD_CONST REFIID IID_IBMDSwitcherTransitionStingerParametersCallback = /* 9A8B3F
 BMD_CONST REFIID IID_IBMDSwitcherTransitionStingerParameters      = /* 0F449A50-4083-49E8-BBF5-C3D95BFA1908 */ { 0x0F,0x44,0x9A,0x50,0x40,0x83,0x49,0xE8,0xBB,0xF5,0xC3,0xD9,0x5B,0xFA,0x19,0x08 };
 BMD_CONST REFIID IID_IBMDSwitcherTransitionParametersCallback     = /* DED1876A-38E3-418E-8044-F3C126C626E7 */ { 0xDE,0xD1,0x87,0x6A,0x38,0xE3,0x41,0x8E,0x80,0x44,0xF3,0xC1,0x26,0xC6,0x26,0xE7 };
 BMD_CONST REFIID IID_IBMDSwitcherTransitionParameters             = /* 83755CE5-748B-4E49-A856-AC95B8CCD215 */ { 0x83,0x75,0x5C,0xE5,0x74,0x8B,0x4E,0x49,0xA8,0x56,0xAC,0x95,0xB8,0xCC,0xD2,0x15 };
+BMD_CONST REFIID IID_IBMDSwitcherMixEffectBlockShadowCallback     = /* 0A8E6042-10E6-46A8-979A-3B52DDB06AA5 */ { 0x0A,0x8E,0x60,0x42,0x10,0xE6,0x46,0xA8,0x97,0x9A,0x3B,0x52,0xDD,0xB0,0x6A,0xA5 };
+BMD_CONST REFIID IID_IBMDSwitcherMixEffectBlockShadow             = /* 9D864712-26BD-421A-A19E-8384CC0528A9 */ { 0x9D,0x86,0x47,0x12,0x26,0xBD,0x42,0x1A,0xA1,0x9E,0x83,0x84,0xCC,0x05,0x28,0xA9 };
 BMD_CONST REFIID IID_IBMDSwitcherMixEffectBlockCallback           = /* 5BC629A0-4271-4597-9E87-9B563F519238 */ { 0x5B,0xC6,0x29,0xA0,0x42,0x71,0x45,0x97,0x9E,0x87,0x9B,0x56,0x3F,0x51,0x92,0x38 };
-BMD_CONST REFIID IID_IBMDSwitcherMixEffectBlock                   = /* 6604B7AD-A814-46B2-8C69-C1C38815419A */ { 0x66,0x04,0xB7,0xAD,0xA8,0x14,0x46,0xB2,0x8C,0x69,0xC1,0xC3,0x88,0x15,0x41,0x9A };
+BMD_CONST REFIID IID_IBMDSwitcherMixEffectBlock                   = /* 1F0A8C19-B39B-4B50-800B-63BC459FE6D5 */ { 0x1F,0x0A,0x8C,0x19,0xB3,0x9B,0x4B,0x50,0x80,0x0B,0x63,0xBC,0x45,0x9F,0xE6,0xD5 };
 BMD_CONST REFIID IID_IBMDSwitcherInputCallback                    = /* 93054328-C4C8-402D-8899-8E1ED28FAC22 */ { 0x93,0x05,0x43,0x28,0xC4,0xC8,0x40,0x2D,0x88,0x99,0x8E,0x1E,0xD2,0x8F,0xAC,0x22 };
 BMD_CONST REFIID IID_IBMDSwitcherInput                            = /* 78B814D6-E98D-47B0-8B9A-0429DF56E462 */ { 0x78,0xB8,0x14,0xD6,0xE9,0x8D,0x47,0xB0,0x8B,0x9A,0x04,0x29,0xDF,0x56,0xE4,0x62 };
 BMD_CONST REFIID IID_IBMDSwitcherInputColorCallback               = /* BAE02C95-9394-439C-BE18-CEF0C0784EC3 */ { 0xBA,0xE0,0x2C,0x95,0x93,0x94,0x43,0x9C,0xBE,0x18,0xCE,0xF0,0xC0,0x78,0x4E,0xC3 };
 BMD_CONST REFIID IID_IBMDSwitcherInputColor                       = /* A0AF18D9-CBE6-49F3-B548-A44E856054D1 */ { 0xA0,0xAF,0x18,0xD9,0xCB,0xE6,0x49,0xF3,0xB5,0x48,0xA4,0x4E,0x85,0x60,0x54,0xD1 };
+BMD_CONST REFIID IID_IBMDSwitcherInputAuxShadowCallback           = /* 957BDDFF-179A-4DAD-B13A-49ADE406B204 */ { 0x95,0x7B,0xDD,0xFF,0x17,0x9A,0x4D,0xAD,0xB1,0x3A,0x49,0xAD,0xE4,0x06,0xB2,0x04 };
+BMD_CONST REFIID IID_IBMDSwitcherInputAuxShadow                   = /* D91345F7-0CB6-42EC-B81A-A82639C30151 */ { 0xD9,0x13,0x45,0xF7,0x0C,0xB6,0x42,0xEC,0xB8,0x1A,0xA8,0x26,0x39,0xC3,0x01,0x51 };
 BMD_CONST REFIID IID_IBMDSwitcherInputAuxCallback                 = /* 5AD1FF91-143F-49E9-9964-1B9FAF9A712A */ { 0x5A,0xD1,0xFF,0x91,0x14,0x3F,0x49,0xE9,0x99,0x64,0x1B,0x9F,0xAF,0x9A,0x71,0x2A };
-BMD_CONST REFIID IID_IBMDSwitcherInputAux                         = /* 52C745A8-89B1-449A-A149-C43F5108DAE7 */ { 0x52,0xC7,0x45,0xA8,0x89,0xB1,0x44,0x9A,0xA1,0x49,0xC4,0x3F,0x51,0x08,0xDA,0xE7 };
+BMD_CONST REFIID IID_IBMDSwitcherInputAux                         = /* 7B8C4F2C-EB8C-4F8B-803C-D24007265E32 */ { 0x7B,0x8C,0x4F,0x2C,0xEB,0x8C,0x4F,0x8B,0x80,0x3C,0xD2,0x40,0x07,0x26,0x5E,0x32 };
 BMD_CONST REFIID IID_IBMDSwitcherSuperSourceBoxCallback           = /* 7F667AF6-9B4E-4CDE-9F2F-2DF4505BF877 */ { 0x7F,0x66,0x7A,0xF6,0x9B,0x4E,0x4C,0xDE,0x9F,0x2F,0x2D,0xF4,0x50,0x5B,0xF8,0x77 };
 BMD_CONST REFIID IID_IBMDSwitcherSuperSourceBox                   = /* 137028E5-87B2-407E-846F-283B18C82CE9 */ { 0x13,0x70,0x28,0xE5,0x87,0xB2,0x40,0x7E,0x84,0x6F,0x28,0x3B,0x18,0xC8,0x2C,0xE9 };
 BMD_CONST REFIID IID_IBMDSwitcherSuperSourceBoxBorderCallback     = /* 9D33C944-D641-11EE-B853-C30C8796A4D1 */ { 0x9D,0x33,0xC9,0x44,0xD6,0x41,0x11,0xEE,0xB8,0x53,0xC3,0x0C,0x87,0x96,0xA4,0xD1 };
@@ -162,9 +167,11 @@ BMD_CONST REFIID IID_IBMDSwitcherDownstreamKeyCallback            = /* 0C7D4DE3-
 BMD_CONST REFIID IID_IBMDSwitcherDownstreamKey                    = /* F54F9E1D-5EEE-40D2-A77A-85197A7D344E */ { 0xF5,0x4F,0x9E,0x1D,0x5E,0xEE,0x40,0xD2,0xA7,0x7A,0x85,0x19,0x7A,0x7D,0x34,0x4E };
 BMD_CONST REFIID IID_IBMDSwitcherInputIterator                    = /* 759CFA56-DE34-43C6-8E85-A8B4108A7E80 */ { 0x75,0x9C,0xFA,0x56,0xDE,0x34,0x43,0xC6,0x8E,0x85,0xA8,0xB4,0x10,0x8A,0x7E,0x80 };
 BMD_CONST REFIID IID_IBMDSwitcherSuperSourceBoxIterator           = /* 96153CDA-C894-42EA-BA90-C387018CC334 */ { 0x96,0x15,0x3C,0xDA,0xC8,0x94,0x42,0xEA,0xBA,0x90,0xC3,0x87,0x01,0x8C,0xC3,0x34 };
-BMD_CONST REFIID IID_IBMDSwitcherMixEffectBlockIterator           = /* EA8D1E06-4A59-47EF-AF68-C7F074A35FE9 */ { 0xEA,0x8D,0x1E,0x06,0x4A,0x59,0x47,0xEF,0xAF,0x68,0xC7,0xF0,0x74,0xA3,0x5F,0xE9 };
+BMD_CONST REFIID IID_IBMDSwitcherMixEffectBlockIterator           = /* 488EE33F-BEDB-46DA-9EF9-5BE2F570D759 */ { 0x48,0x8E,0xE3,0x3F,0xBE,0xDB,0x46,0xDA,0x9E,0xF9,0x5B,0xE2,0xF5,0x70,0xD7,0x59 };
 BMD_CONST REFIID IID_IBMDSwitcherDownstreamKeyIterator            = /* AF65039F-C4D0-4C85-8CB0-AE060EDDC0B9 */ { 0xAF,0x65,0x03,0x9F,0xC4,0xD0,0x4C,0x85,0x8C,0xB0,0xAE,0x06,0x0E,0xDD,0xC0,0xB9 };
 BMD_CONST REFIID IID_IBMDSwitcherKeyIterator                      = /* 63032A58-35FC-4AE3-86E3-49DFF879EA4A */ { 0x63,0x03,0x2A,0x58,0x35,0xFC,0x4A,0xE3,0x86,0xE3,0x49,0xDF,0xF8,0x79,0xEA,0x4A };
+BMD_CONST REFIID IID_IBMDSwitcherMixEffectBlockShadowIterator     = /* 4B93F21A-1D79-4D11-917C-65F5AA0BCB86 */ { 0x4B,0x93,0xF2,0x1A,0x1D,0x79,0x4D,0x11,0x91,0x7C,0x65,0xF5,0xAA,0x0B,0xCB,0x86 };
+BMD_CONST REFIID IID_IBMDSwitcherInputAuxShadowIterator           = /* 965E8834-BC22-4808-8061-8E4F17B18002 */ { 0x96,0x5E,0x88,0x34,0xBC,0x22,0x48,0x08,0x80,0x61,0x8E,0x4F,0x17,0xB1,0x80,0x02 };
 BMD_CONST REFIID IID_IBMDSwitcherMediaPlayerIterator              = /* E910816F-59CB-4224-A77F-06DE3D232275 */ { 0xE9,0x10,0x81,0x6F,0x59,0xCB,0x42,0x24,0xA7,0x7F,0x06,0xDE,0x3D,0x23,0x22,0x75 };
 BMD_CONST REFIID IID_IBMDSwitcherMultiViewIterator                = /* 4501543C-E0FF-46F2-AC34-883E0796EB1D */ { 0x45,0x01,0x54,0x3C,0xE0,0xFF,0x46,0xF2,0xAC,0x34,0x88,0x3E,0x07,0x96,0xEB,0x1D };
 BMD_CONST REFIID IID_IBMDSwitcherAudioMonitorOutputIterator       = /* C76BAC6A-DFEE-4F2F-B161-226B481D556A */ { 0xC7,0x6B,0xAC,0x6A,0xDF,0xEE,0x4F,0x2F,0xB1,0x61,0x22,0x6B,0x48,0x1D,0x55,0x6A };
@@ -175,8 +182,8 @@ BMD_CONST REFIID IID_IBMDSwitcherHyperDeckIterator                = /* D21B6DA6-
 BMD_CONST REFIID IID_IBMDSwitcherMixMinusOutputIterator           = /* 7EE8380F-2A09-4085-86BC-DFB8ACACE0FB */ { 0x7E,0xE8,0x38,0x0F,0x2A,0x09,0x40,0x85,0x86,0xBC,0xDF,0xB8,0xAC,0xAC,0xE0,0xFB };
 BMD_CONST REFIID IID_IBMDSwitcherTalkbackIterator                 = /* D9C8C098-7494-40B8-8330-6B568F1A06EC */ { 0xD9,0xC8,0xC0,0x98,0x74,0x94,0x40,0xB8,0x83,0x30,0x6B,0x56,0x8F,0x1A,0x06,0xEC };
 BMD_CONST REFIID IID_IBMDSwitcherCallback                         = /* EE50FC2C-D0D7-42D6-965A-57498CECC1F6 */ { 0xEE,0x50,0xFC,0x2C,0xD0,0xD7,0x42,0xD6,0x96,0x5A,0x57,0x49,0x8C,0xEC,0xC1,0xF6 };
-BMD_CONST REFIID IID_IBMDSwitcher                                 = /* 41F9EEC4-2F04-4608-A154-6A16485FDC08 */ { 0x41,0xF9,0xEE,0xC4,0x2F,0x04,0x46,0x08,0xA1,0x54,0x6A,0x16,0x48,0x5F,0xDC,0x08 };
-BMD_CONST REFIID IID_IBMDSwitcherDiscovery                        = /* 7F10848C-A281-43B4-94F6-2E1B388600D8 */ { 0x7F,0x10,0x84,0x8C,0xA2,0x81,0x43,0xB4,0x94,0xF6,0x2E,0x1B,0x38,0x86,0x00,0xD8 };
+BMD_CONST REFIID IID_IBMDSwitcher                                 = /* FD979282-9281-4FDC-8C1F-012F3FB12245 */ { 0xFD,0x97,0x92,0x82,0x92,0x81,0x4F,0xDC,0x8C,0x1F,0x01,0x2F,0x3F,0xB1,0x22,0x45 };
+BMD_CONST REFIID IID_IBMDSwitcherDiscovery                        = /* 1EEE089A-5422-4A76-B068-F6EDCFBD3AC0 */ { 0x1E,0xEE,0x08,0x9A,0x54,0x22,0x4A,0x76,0xB0,0x68,0xF6,0xED,0xCF,0xBD,0x3A,0xC0 };
 BMD_CONST REFIID IID_IBMDSwitcherFrame                            = /* 35A1F6A6-D317-4F89-A565-0F0BD414CF77 */ { 0x35,0xA1,0xF6,0xA6,0xD3,0x17,0x4F,0x89,0xA5,0x65,0x0F,0x0B,0xD4,0x14,0xCF,0x77 };
 BMD_CONST REFIID IID_IBMDSwitcherAudio                            = /* E89BD25E-FD04-4FBE-A124-CCAF5ADBE5B2 */ { 0xE8,0x9B,0xD2,0x5E,0xFD,0x04,0x4F,0xBE,0xA1,0x24,0xCC,0xAF,0x5A,0xDB,0xE5,0xB2 };
 BMD_CONST REFIID IID_IBMDSwitcherLockCallback                     = /* 56663D7A-85A8-4DA0-9B13-2A52D3C7740C */ { 0x56,0x66,0x3D,0x7A,0x85,0xA8,0x4D,0xA0,0x9B,0x13,0x2A,0x52,0xD3,0xC7,0x74,0x0C };
@@ -238,11 +245,12 @@ BMD_CONST REFIID IID_IBMDSwitcherAudioRoutingOutput               = /* DCA2A029-
 BMD_CONST REFIID IID_IBMDSwitcherAudioRoutingOutputIterator       = /* A1F44017-F822-4777-8740-556082CB4CE9 */ { 0xA1,0xF4,0x40,0x17,0xF8,0x22,0x47,0x77,0x87,0x40,0x55,0x60,0x82,0xCB,0x4C,0xE9 };
 BMD_CONST REFIID IID_IBMDSwitcherIdentityInformationCallback      = /* B242DEFF-2AD7-4300-AB37-F5E5553B8D2C */ { 0xB2,0x42,0xDE,0xFF,0x2A,0xD7,0x43,0x00,0xAB,0x37,0xF5,0xE5,0x55,0x3B,0x8D,0x2C };
 BMD_CONST REFIID IID_IBMDSwitcherIdentityInformation              = /* 9727DE72-C0FD-40DB-A69E-0E61C4F1A1B6 */ { 0x97,0x27,0xDE,0x72,0xC0,0xFD,0x40,0xDB,0xA6,0x9E,0x0E,0x61,0xC4,0xF1,0xA1,0xB6 };
+BMD_CONST REFIID IID_IBMDSwitcherFairlightAudioLoudnessMeters     = /* 8B768BEC-728A-11F0-971F-03846FC01734 */ { 0x8B,0x76,0x8B,0xEC,0x72,0x8A,0x11,0xF0,0x97,0x1F,0x03,0x84,0x6F,0xC0,0x17,0x34 };
+BMD_CONST REFIID IID_IBMDSwitcherFairlightAudioLoudnessMetersCallback = /* CC70ACDA-7290-11F0-B45A-5B0FBD9357EF */ { 0xCC,0x70,0xAC,0xDA,0x72,0x90,0x11,0xF0,0xB4,0x5A,0x5B,0x0F,0xBD,0x93,0x57,0xEF };
 
 /* Enum BMDSwitcherInputEventType - Used in IBMDSwitcherInputCallback */
 
-typedef uint32_t BMDSwitcherInputEventType;
-enum _BMDSwitcherInputEventType {
+enum BMDSwitcherInputEventType {
     bmdSwitcherInputEventTypeShortNameChanged                    = /* 'shnm' */ 0x73686E6D,
     bmdSwitcherInputEventTypeLongNameChanged                     = /* 'lgnm' */ 0x6C676E6D,
     bmdSwitcherInputEventTypeAreNamesDefaultChanged              = /* 'andc' */ 0x616E6463,
@@ -256,8 +264,7 @@ enum _BMDSwitcherInputEventType {
 
 /* Enum BMDSwitcherPortType - IBMDSwitcherInput Port Types */
 
-typedef uint32_t BMDSwitcherPortType;
-enum _BMDSwitcherPortType {
+enum BMDSwitcherPortType {
     bmdSwitcherPortTypeExternal                                  = /* 'extn' */ 0x6578746E,
     bmdSwitcherPortTypeBlack                                     = /* 'blak' */ 0x626C616B,
     bmdSwitcherPortTypeColorBars                                 = /* 'colb' */ 0x636F6C62,
@@ -269,13 +276,13 @@ enum _BMDSwitcherPortType {
     bmdSwitcherPortTypeAuxOutput                                 = /* 'auxo' */ 0x6175786F,
     bmdSwitcherPortTypeKeyCutOutput                              = /* 'kcto' */ 0x6B63746F,
     bmdSwitcherPortTypeMultiview                                 = /* 'mlvw' */ 0x6D6C7677,
+    bmdSwitcherPortTypeAudioMonitor                              = /* 'audm' */ 0x6175646D,
     bmdSwitcherPortTypeExternalDirect                            = /* 'edir' */ 0x65646972
 };
 
 /* Enum BMDSwitcherExternalPortType - IBMDSwitcherInput External Port Types */
 
-typedef uint32_t BMDSwitcherExternalPortType;
-enum _BMDSwitcherExternalPortType {
+enum BMDSwitcherExternalPortType {
     bmdSwitcherExternalPortTypeSDI                               = 0x00000001,
     bmdSwitcherExternalPortTypeHDMI                              = 0x00000002,
     bmdSwitcherExternalPortTypeComponent                         = 0x00000004,
@@ -293,8 +300,7 @@ enum _BMDSwitcherExternalPortType {
 
 /* Enum BMDSwitcherInputAvailability - IBMDSwitcherInput availablity bits */
 
-typedef uint32_t BMDSwitcherInputAvailability;
-enum _BMDSwitcherInputAvailability {
+enum BMDSwitcherInputAvailability {
     bmdSwitcherInputAvailabilityMixEffectBlock0                  = 0x00000001,
     bmdSwitcherInputAvailabilityMixEffectBlock1                  = 0x00000002,
     bmdSwitcherInputAvailabilityMixEffectBlock2                  = 0x00000080,
@@ -309,10 +315,15 @@ enum _BMDSwitcherInputAvailability {
     bmdSwitcherInputAvailabilityInputCut                         = 0x00000040
 };
 
+/* Enum BMDSwitcherInputIdConstant - Special case input IDs. */
+
+enum BMDSwitcherInputIdConstant {
+    bmdSwitcherInputIdNone                                       = 0xFFFF
+};
+
 /* Enum BMDSwitcherEventType - IBMDSwitcher event type */
 
-typedef uint32_t BMDSwitcherEventType;
-enum _BMDSwitcherEventType {
+enum BMDSwitcherEventType {
     bmdSwitcherEventTypeVideoModeChanged                         = /* 'sevd' */ 0x73657664,
     bmdSwitcherEventTypeMethodForDownConvertedSDChanged          = /* 'semd' */ 0x73656D64,
     bmdSwitcherEventTypeDownConvertedHDVideoModeChanged          = /* 'sedV' */ 0x73656456,
@@ -328,13 +339,13 @@ enum _BMDSwitcherEventType {
     bmdSwitcherEventTypeSuperSourceCascadeChanged                = /* 'sscc' */ 0x73736363,
     bmdSwitcherEventTypeAutoVideoModeChanged                     = /* 'aivm' */ 0x6169766D,
     bmdSwitcherEventTypeAutoVideoModeDetectedChanged             = /* 'avmd' */ 0x61766D64,
-    bmdSwitcherEventTypeFadeToBlackEnabledChanged                = /* 'fbeC' */ 0x66626543
+    bmdSwitcherEventTypeFadeToBlackEnabledChanged                = /* 'fbeC' */ 0x66626543,
+    bmdSwitcherEventTypeDskTallyOverrideEnabledChanged           = /* 'oteC' */ 0x6F746543
 };
 
 /* Enum BMDSwitcherInputColorEventType - Used in IBMDSwitcherInputColorCallback */
 
-typedef uint32_t BMDSwitcherInputColorEventType;
-enum _BMDSwitcherInputColorEventType {
+enum BMDSwitcherInputColorEventType {
     bmdSwitcherInputColorEventTypeHueChanged                     = /* 'HueC' */ 0x48756543,
     bmdSwitcherInputColorEventTypeSaturationChanged              = /* 'SatC' */ 0x53617443,
     bmdSwitcherInputColorEventTypeLumaChanged                    = /* 'LumC' */ 0x4C756D43
@@ -342,15 +353,20 @@ enum _BMDSwitcherInputColorEventType {
 
 /* Enum BMDSwitcherInputAuxEventType - Used in IBMDSwitcherInputAuxCallback */
 
-typedef uint32_t BMDSwitcherInputAuxEventType;
-enum _BMDSwitcherInputAuxEventType {
+enum BMDSwitcherInputAuxEventType {
     bmdSwitcherInputAuxEventTypeInputSourceChanged               = /* 'ipsC' */ 0x69707343
+};
+
+/* Enum BMDSwitcherInputAuxShadowEventType - Used in IBMDSwitcherInputAuxShadowCallback */
+
+enum BMDSwitcherInputAuxShadowEventType {
+    bmdSwitcherInputAuxShadowEventTypeEnabledChanged             = /* 'sase' */ 0x73617365,
+    bmdSwitcherInputAuxShadowEventTypeSubstitutionsChanged       = /* 'sass' */ 0x73617373
 };
 
 /* Enum BMDSwitcherSuperSourceBoxEventType - Used in IBMDSwitcherSuperSourceBoxCallback */
 
-typedef uint32_t BMDSwitcherSuperSourceBoxEventType;
-enum _BMDSwitcherSuperSourceBoxEventType {
+enum BMDSwitcherSuperSourceBoxEventType {
     bmdSwitcherSuperSourceBoxEventTypeEnabledChanged             = /* 'enbC' */ 0x656E6243,
     bmdSwitcherSuperSourceBoxEventTypeInputSourceChanged         = /* 'ipsC' */ 0x69707343,
     bmdSwitcherSuperSourceBoxEventTypePositionXChanged           = /* 'psxC' */ 0x70737843,
@@ -365,8 +381,7 @@ enum _BMDSwitcherSuperSourceBoxEventType {
 
 /* Enum BMDSwitcherInputSuperSourceEventType - Used in IBMDSwitcherInputSuperSourceCallback */
 
-typedef uint32_t BMDSwitcherInputSuperSourceEventType;
-enum _BMDSwitcherInputSuperSourceEventType {
+enum BMDSwitcherInputSuperSourceEventType {
     bmdSwitcherInputSuperSourceEventTypeInputFillChanged         = /* 'ipfC' */ 0x69706643,
     bmdSwitcherInputSuperSourceEventTypeInputCutChanged          = /* 'ipcC' */ 0x69706343,
     bmdSwitcherInputSuperSourceEventTypeArtOptionChanged         = /* 'atoC' */ 0x61746F43,
@@ -378,8 +393,7 @@ enum _BMDSwitcherInputSuperSourceEventType {
 
 /* Enum BMDSwitcherSuperSourceBorderEventType - Used in IBMDSwitcherSuperSourceBorderCallback */
 
-typedef uint32_t BMDSwitcherSuperSourceBorderEventType;
-enum _BMDSwitcherSuperSourceBorderEventType {
+enum BMDSwitcherSuperSourceBorderEventType {
     bmdSwitcherSuperSourceBorderEventTypeEnabledChanged          = /* 'enbC' */ 0x656E6243,
     bmdSwitcherSuperSourceBorderEventTypeBevelChanged            = /* 'bvlC' */ 0x62766C43,
     bmdSwitcherSuperSourceBorderEventTypeWidthOutChanged         = /* 'wdoC' */ 0x77646F43,
@@ -397,8 +411,7 @@ enum _BMDSwitcherSuperSourceBorderEventType {
 
 /* Enum BMDSwitcherSuperSourceBoxBorderEventType - Used in IBMDSwitcherSuperSourceBoxBorderCallback */
 
-typedef uint32_t BMDSwitcherSuperSourceBoxBorderEventType;
-enum _BMDSwitcherSuperSourceBoxBorderEventType {
+enum BMDSwitcherSuperSourceBoxBorderEventType {
     bmdSwitcherSuperSourceBoxBorderEventTypeEnabledChanged       = /* 'enbC' */ 0x656E6243,
     bmdSwitcherSuperSourceBoxBorderEventTypeWidthOutHorizontalChanged = /* 'wohC' */ 0x776F6843,
     bmdSwitcherSuperSourceBoxBorderEventTypeWidthOutVerticalChanged = /* 'wovC' */ 0x776F7643,
@@ -413,8 +426,7 @@ enum _BMDSwitcherSuperSourceBoxBorderEventType {
 
 /* Enum BMDSwitcherBorderBevelOption - Border Bevel Option for DVE Key and SuperSource Box */
 
-typedef uint32_t BMDSwitcherBorderBevelOption;
-enum _BMDSwitcherBorderBevelOption {
+enum BMDSwitcherBorderBevelOption {
     bmdSwitcherBorderBevelOptionNone                             = /* 'none' */ 0x6E6F6E65,
     bmdSwitcherBorderBevelOptionInOut                            = /* 'inot' */ 0x696E6F74,
     bmdSwitcherBorderBevelOptionIn                               = /* 'inin' */ 0x696E696E,
@@ -423,23 +435,20 @@ enum _BMDSwitcherBorderBevelOption {
 
 /* Enum BMDSwitcherTransitionMixParametersEventType - Used in IBMDSwitcherTransitionMixParametersCallback */
 
-typedef uint32_t BMDSwitcherTransitionMixParametersEventType;
-enum _BMDSwitcherTransitionMixParametersEventType {
+enum BMDSwitcherTransitionMixParametersEventType {
     bmdSwitcherTransitionMixParametersEventTypeRateChanged       = /* 'rteC' */ 0x72746543
 };
 
 /* Enum BMDSwitcherTransitionDipParametersEventType - Used in IBMDSwitcherTransitionDipParametersCallback */
 
-typedef uint32_t BMDSwitcherTransitionDipParametersEventType;
-enum _BMDSwitcherTransitionDipParametersEventType {
+enum BMDSwitcherTransitionDipParametersEventType {
     bmdSwitcherTransitionDipParametersEventTypeRateChanged       = /* 'rteC' */ 0x72746543,
     bmdSwitcherTransitionDipParametersEventTypeInputDipChanged   = /* 'ipdC' */ 0x69706443
 };
 
 /* Enum BMDSwitcherTransitionWipeParametersEventType - Used in IBMDSwitcherTransitionWipeParametersCallback */
 
-typedef uint32_t BMDSwitcherTransitionWipeParametersEventType;
-enum _BMDSwitcherTransitionWipeParametersEventType {
+enum BMDSwitcherTransitionWipeParametersEventType {
     bmdSwitcherTransitionWipeParametersEventTypeRateChanged      = /* 'rteC' */ 0x72746543,
     bmdSwitcherTransitionWipeParametersEventTypePatternChanged   = /* 'patC' */ 0x70617443,
     bmdSwitcherTransitionWipeParametersEventTypeBorderSizeChanged = /* 'bdsC' */ 0x62647343,
@@ -454,8 +463,7 @@ enum _BMDSwitcherTransitionWipeParametersEventType {
 
 /* Enum BMDSwitcherTransitionDVEParametersEventType - Used in IBMDSwitcherTransitionDVEParametersCallback */
 
-typedef uint32_t BMDSwitcherTransitionDVEParametersEventType;
-enum _BMDSwitcherTransitionDVEParametersEventType {
+enum BMDSwitcherTransitionDVEParametersEventType {
     bmdSwitcherTransitionDVEParametersEventTypeRateChanged       = /* 'rteC' */ 0x72746543,
     bmdSwitcherTransitionDVEParametersEventTypeLogoRateChanged   = /* 'lrtC' */ 0x6C727443,
     bmdSwitcherTransitionDVEParametersEventTypeReverseChanged    = /* 'revC' */ 0x72657643,
@@ -472,8 +480,7 @@ enum _BMDSwitcherTransitionDVEParametersEventType {
 
 /* Enum BMDSwitcherTransitionStingerParametersEventType - Used in IBMDSwitcherTransitionStingerParametersCallback */
 
-typedef uint32_t BMDSwitcherTransitionStingerParametersEventType;
-enum _BMDSwitcherTransitionStingerParametersEventType {
+enum BMDSwitcherTransitionStingerParametersEventType {
     bmdSwitcherTransitionStingerParametersEventTypeSourceChanged = /* 'srcC' */ 0x73726343,
     bmdSwitcherTransitionStingerParametersEventTypePreMultipliedChanged = /* 'pmuC' */ 0x706D7543,
     bmdSwitcherTransitionStingerParametersEventTypeClipChanged   = /* 'clpC' */ 0x636C7043,
@@ -487,8 +494,7 @@ enum _BMDSwitcherTransitionStingerParametersEventType {
 
 /* Enum BMDSwitcherTransitionParametersEventType - Used in IBMDSwitcherTransitionParametersCallback */
 
-typedef uint32_t BMDSwitcherTransitionParametersEventType;
-enum _BMDSwitcherTransitionParametersEventType {
+enum BMDSwitcherTransitionParametersEventType {
     bmdSwitcherTransitionParametersEventTypeTransitionStyleChanged = /* 'styC' */ 0x73747943,
     bmdSwitcherTransitionParametersEventTypeNextTransitionStyleChanged = /* 'nstC' */ 0x6E737443,
     bmdSwitcherTransitionParametersEventTypeTransitionSelectionChanged = /* 'sltC' */ 0x736C7443,
@@ -497,16 +503,14 @@ enum _BMDSwitcherTransitionParametersEventType {
 
 /* Enum BMDSwitcherSuperSourceArtOption - SuperSource Art Option */
 
-typedef uint32_t BMDSwitcherSuperSourceArtOption;
-enum _BMDSwitcherSuperSourceArtOption {
+enum BMDSwitcherSuperSourceArtOption {
     bmdSwitcherSuperSourceArtOptionBackground                    = /* 'bkgd' */ 0x626B6764,
     bmdSwitcherSuperSourceArtOptionForeground                    = /* 'frgd' */ 0x66726764
 };
 
 /* Enum BMDSwitcherMixEffectBlockEventType - Used in IBMDSwitcherMixEffectBlockCallback */
 
-typedef uint32_t BMDSwitcherMixEffectBlockEventType;
-enum _BMDSwitcherMixEffectBlockEventType {
+enum BMDSwitcherMixEffectBlockEventType {
     bmdSwitcherMixEffectBlockEventTypeProgramInputChanged        = /* 'pgiC' */ 0x70676943,
     bmdSwitcherMixEffectBlockEventTypePreviewInputChanged        = /* 'pviC' */ 0x70766943,
     bmdSwitcherMixEffectBlockEventTypeTransitionPositionChanged  = /* 'tspC' */ 0x74737043,
@@ -519,13 +523,20 @@ enum _BMDSwitcherMixEffectBlockEventType {
     bmdSwitcherMixEffectBlockEventTypeInputAvailabilityMaskChanged = /* 'avmC' */ 0x61766D43,
     bmdSwitcherMixEffectBlockEventTypeFadeToBlackRateChanged     = /* 'fbrC' */ 0x66627243,
     bmdSwitcherMixEffectBlockEventTypeFadeToBlackFullyBlackChanged = /* 'fbbC' */ 0x66626243,
-    bmdSwitcherMixEffectBlockEventTypeFadeToBlackInTransitionChanged = /* 'fbtC' */ 0x66627443
+    bmdSwitcherMixEffectBlockEventTypeFadeToBlackInTransitionChanged = /* 'fbtC' */ 0x66627443,
+    bmdSwitcherMixEffectBlockEventTypeTallyConfigChanged         = /* 'metc' */ 0x6D657463
+};
+
+/* Enum BMDSwitcherMixEffectBlockTallyEnabledFlags - Used in IBMDSwitcherMixEffectBlock */
+
+enum BMDSwitcherMixEffectBlockTallyEnabledFlags {
+    bmdSwitcherMixEffectBlockProgramTallyEnabled                 = 0x0001,
+    bmdSwitcherMixEffectBlockPreviewTallyEnabled                 = 0x0002
 };
 
 /* Enum BMDSwitcherAudioMonitorOutputEventType - Used in IBMDSwitcherAudioMonitorOutputCallback */
 
-typedef uint32_t BMDSwitcherAudioMonitorOutputEventType;
-enum _BMDSwitcherAudioMonitorOutputEventType {
+enum BMDSwitcherAudioMonitorOutputEventType {
     bmdSwitcherAudioMonitorOutputEventTypeMonitorEnableChanged   = /* 'mneC' */ 0x6D6E6543,
     bmdSwitcherAudioMonitorOutputEventTypeGainChanged            = /* 'mgnC' */ 0x6D676E43,
     bmdSwitcherAudioMonitorOutputEventTypeMuteChanged            = /* 'mteC' */ 0x6D746543,
@@ -537,8 +548,7 @@ enum _BMDSwitcherAudioMonitorOutputEventType {
 
 /* Enum BMDSwitcherAudioInputEventType - Used in IBMDSwitcherAudioInputCallback */
 
-typedef uint32_t BMDSwitcherAudioInputEventType;
-enum _BMDSwitcherAudioInputEventType {
+enum BMDSwitcherAudioInputEventType {
     bmdSwitcherAudioInputEventTypeCurrentExternalPortTypeChanged = /* 'eptC' */ 0x65707443,
     bmdSwitcherAudioInputEventTypeMixOptionChanged               = /* 'mxoC' */ 0x6D786F43,
     bmdSwitcherAudioInputEventTypeGainChanged                    = /* 'ignC' */ 0x69676E43,
@@ -548,8 +558,7 @@ enum _BMDSwitcherAudioInputEventType {
 
 /* Enum BMDSwitcherAudioMixerEventType - Used in IBMDSwitcherAudioMixerCallback */
 
-typedef uint32_t BMDSwitcherAudioMixerEventType;
-enum _BMDSwitcherAudioMixerEventType {
+enum BMDSwitcherAudioMixerEventType {
     bmdSwitcherAudioMixerEventTypeProgramOutGainChanged          = /* 'pgnC' */ 0x70676E43,
     bmdSwitcherAudioMixerEventTypeProgramOutBalanceChanged       = /* 'balC' */ 0x62616C43,
     bmdSwitcherAudioMixerEventTypeProgramOutFollowFadeToBlackChanged = /* 'ffbC' */ 0x66666243,
@@ -558,8 +567,7 @@ enum _BMDSwitcherAudioMixerEventType {
 
 /* Enum BMDSwitcherAudioInputType - Audio Input Type */
 
-typedef uint32_t BMDSwitcherAudioInputType;
-enum _BMDSwitcherAudioInputType {
+enum BMDSwitcherAudioInputType {
     bmdSwitcherAudioInputTypeEmbeddedWithVideo                   = /* 'ewvd' */ 0x65777664,
     bmdSwitcherAudioInputTypeMediaPlayer                         = /* 'mdpy' */ 0x6D647079,
     bmdSwitcherAudioInputTypeAudioIn                             = /* 'adin' */ 0x6164696E
@@ -567,8 +575,7 @@ enum _BMDSwitcherAudioInputType {
 
 /* Enum BMDSwitcherAudioMixOption - Audio Mix Option */
 
-typedef uint32_t BMDSwitcherAudioMixOption;
-enum _BMDSwitcherAudioMixOption {
+enum BMDSwitcherAudioMixOption {
     bmdSwitcherAudioMixOptionOff                                 = /* 'offf' */ 0x6F666666,
     bmdSwitcherAudioMixOptionOn                                  = /* 'onon' */ 0x6F6E6F6E,
     bmdSwitcherAudioMixOptionAudioFollowVideo                    = /* 'afvv' */ 0x61667676
@@ -576,16 +583,14 @@ enum _BMDSwitcherAudioMixOption {
 
 /* Enum BMDSwitcherTalkbackId - Talkback Id */
 
-typedef uint32_t BMDSwitcherTalkbackId;
-enum _BMDSwitcherTalkbackId {
+enum BMDSwitcherTalkbackId {
     bmdSwitcherTalkbackIdProduction                              = /* 'prod' */ 0x70726F64,
     bmdSwitcherTalkbackIdEngineering                             = /* 'engg' */ 0x656E6767
 };
 
 /* Enum BMDSwitcherTalkbackEventType - Used in IBMDSwitcherTalkbackCallback */
 
-typedef uint32_t BMDSwitcherTalkbackEventType;
-enum _BMDSwitcherTalkbackEventType {
+enum BMDSwitcherTalkbackEventType {
     bmdSwitcherTalkbackEventTypeMuteSDIChanged                   = /* 'tmsC' */ 0x746D7343,
     bmdSwitcherTalkbackEventTypeInputMuteSDIChanged              = /* 'imsC' */ 0x696D7343,
     bmdSwitcherTalkbackEventTypeCurrentInputSupportsMuteSDIChanged = /* 'ismC' */ 0x69736D43,
@@ -594,8 +599,7 @@ enum _BMDSwitcherTalkbackEventType {
 
 /* Enum BMDSwitcherAudioHeadphoneOutputEventType - Used in IBMDSwitcherAudioHeadphoneOutputCallback */
 
-typedef uint32_t BMDSwitcherAudioHeadphoneOutputEventType;
-enum _BMDSwitcherAudioHeadphoneOutputEventType {
+enum BMDSwitcherAudioHeadphoneOutputEventType {
     bmdSwitcherAudioHeadphoneOutputEventTypeGainChanged          = /* 'hogC' */ 0x686F6743,
     bmdSwitcherAudioHeadphoneOutputEventTypeInputProgramOutGainChanged = /* 'hopC' */ 0x686F7043,
     bmdSwitcherAudioHeadphoneOutputEventTypeInputTalkbackGainChanged = /* 'hotC' */ 0x686F7443,
@@ -604,8 +608,7 @@ enum _BMDSwitcherAudioHeadphoneOutputEventType {
 
 /* Enum BMDSwitcherFairlightAudioLimiterEventType - Used in IBMDSwitcherFairlightAudioLimiterCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioLimiterEventType;
-enum _BMDSwitcherFairlightAudioLimiterEventType {
+enum BMDSwitcherFairlightAudioLimiterEventType {
     bmdSwitcherFairlightAudioLimiterEventTypeEnabledChanged      = /* 'enbC' */ 0x656E6243,
     bmdSwitcherFairlightAudioLimiterEventTypeThresholdChanged    = /* 'thrC' */ 0x74687243,
     bmdSwitcherFairlightAudioLimiterEventTypeAttackChanged       = /* 'atkC' */ 0x61746B43,
@@ -615,8 +618,7 @@ enum _BMDSwitcherFairlightAudioLimiterEventType {
 
 /* Enum BMDSwitcherFairlightAudioCompressorEventType - Used in IBMDSwitcherFairlightAudioCompressorCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioCompressorEventType;
-enum _BMDSwitcherFairlightAudioCompressorEventType {
+enum BMDSwitcherFairlightAudioCompressorEventType {
     bmdSwitcherFairlightAudioCompressorEventTypeEnabledChanged   = /* 'enbC' */ 0x656E6243,
     bmdSwitcherFairlightAudioCompressorEventTypeThresholdChanged = /* 'thrC' */ 0x74687243,
     bmdSwitcherFairlightAudioCompressorEventTypeRatioChanged     = /* 'rtoC' */ 0x72746F43,
@@ -627,8 +629,7 @@ enum _BMDSwitcherFairlightAudioCompressorEventType {
 
 /* Enum BMDSwitcherFairlightAudioExpanderEventType - Used in IBMDSwitcherFairlightAudioExpanderCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioExpanderEventType;
-enum _BMDSwitcherFairlightAudioExpanderEventType {
+enum BMDSwitcherFairlightAudioExpanderEventType {
     bmdSwitcherFairlightAudioExpanderEventTypeEnabledChanged     = /* 'enbC' */ 0x656E6243,
     bmdSwitcherFairlightAudioExpanderEventTypeGateModeChanged    = /* 'gtmC' */ 0x67746D43,
     bmdSwitcherFairlightAudioExpanderEventTypeThresholdChanged   = /* 'thrC' */ 0x74687243,
@@ -641,15 +642,13 @@ enum _BMDSwitcherFairlightAudioExpanderEventType {
 
 /* Enum BMDSwitcherFairlightAudioDynamicsProcessorEventType - Used in IBMDSwitcherFairlightAudioDynamicsProcessorCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioDynamicsProcessorEventType;
-enum _BMDSwitcherFairlightAudioDynamicsProcessorEventType {
+enum BMDSwitcherFairlightAudioDynamicsProcessorEventType {
     bmdSwitcherFairlightAudioDynamicsProcessorEventTypeMakeupGainChanged = /* 'mugC' */ 0x6D756743
 };
 
 /* Enum BMDSwitcherFairlightAudioEqualizerBandEventType - Used in IBMDSwitcherFairlightAudioEqualizerBandCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioEqualizerBandEventType;
-enum _BMDSwitcherFairlightAudioEqualizerBandEventType {
+enum BMDSwitcherFairlightAudioEqualizerBandEventType {
     bmdSwitcherFairlightAudioEqualizerBandEventTypeEnabledChanged = /* 'enbC' */ 0x656E6243,
     bmdSwitcherFairlightAudioEqualizerBandEventTypeShapeChanged  = /* 'shpC' */ 0x73687043,
     bmdSwitcherFairlightAudioEqualizerBandEventTypeFrequencyRangeChanged = /* 'fqrC' */ 0x66717243,
@@ -660,8 +659,7 @@ enum _BMDSwitcherFairlightAudioEqualizerBandEventType {
 
 /* Enum BMDSwitcherFairlightAudioEqualizerBandShape - Fairlight Audio Equalizer Band Shape */
 
-typedef uint32_t BMDSwitcherFairlightAudioEqualizerBandShape;
-enum _BMDSwitcherFairlightAudioEqualizerBandShape {
+enum BMDSwitcherFairlightAudioEqualizerBandShape {
     bmdSwitcherFairlightAudioEqualizerBandShapeLowShelf          = 0x0001,
     bmdSwitcherFairlightAudioEqualizerBandShapeLowPass           = 0x0002,
     bmdSwitcherFairlightAudioEqualizerBandShapeBandPass          = 0x0004,
@@ -672,8 +670,7 @@ enum _BMDSwitcherFairlightAudioEqualizerBandShape {
 
 /* Enum BMDSwitcherFairlightAudioEqualizerBandFrequencyRange - Fairlight Audio Equalizer Band Frequency Range */
 
-typedef uint32_t BMDSwitcherFairlightAudioEqualizerBandFrequencyRange;
-enum _BMDSwitcherFairlightAudioEqualizerBandFrequencyRange {
+enum BMDSwitcherFairlightAudioEqualizerBandFrequencyRange {
     bmdSwitcherFairlightAudioEqualizerBandFrequencyRangeLow      = 0x0001,
     bmdSwitcherFairlightAudioEqualizerBandFrequencyRangeMidLow   = 0x0002,
     bmdSwitcherFairlightAudioEqualizerBandFrequencyRangeMidHigh  = 0x0004,
@@ -682,16 +679,14 @@ enum _BMDSwitcherFairlightAudioEqualizerBandFrequencyRange {
 
 /* Enum BMDSwitcherFairlightAudioEqualizerEventType - Used in IBMDSwitcherFairlightAudioEqualizerCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioEqualizerEventType;
-enum _BMDSwitcherFairlightAudioEqualizerEventType {
+enum BMDSwitcherFairlightAudioEqualizerEventType {
     bmdSwitcherFairlightAudioEqualizerEventTypeEnabledChanged    = /* 'enbC' */ 0x656E6243,
     bmdSwitcherFairlightAudioEqualizerEventTypeGainChanged       = /* 'ganC' */ 0x67616E43
 };
 
 /* Enum BMDSwitcherFairlightAudioSourceEventType - Used in IBMDSwitcherFairlightAudioSourceCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioSourceEventType;
-enum _BMDSwitcherFairlightAudioSourceEventType {
+enum BMDSwitcherFairlightAudioSourceEventType {
     bmdSwitcherFairlightAudioSourceEventTypeIsActiveChanged      = /* 'isaC' */ 0x69736143,
     bmdSwitcherFairlightAudioSourceEventTypeMaxDelayFramesChanged = /* 'mdfC' */ 0x6D646643,
     bmdSwitcherFairlightAudioSourceEventTypeDelayFramesChanged   = /* 'dlfC' */ 0x646C6643,
@@ -705,24 +700,21 @@ enum _BMDSwitcherFairlightAudioSourceEventType {
 
 /* Enum BMDSwitcherFairlightAudioSoloEventType - Used in IBMDSwitcherFairlightAudioSoloCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioSoloEventType;
-enum _BMDSwitcherFairlightAudioSoloEventType {
+enum BMDSwitcherFairlightAudioSoloEventType {
     bmdSwitcherFairlightAudioSoloEventTypeSoloChanged            = /* 'fasC' */ 0x66617343,
     bmdSwitcherFairlightAudioSoloEventTypeSoloInputChanged       = /* 'fsiC' */ 0x66736943
 };
 
 /* Enum BMDSwitcherFairlightAudioSourceType - Fairlight Audio Source Type */
 
-typedef uint32_t BMDSwitcherFairlightAudioSourceType;
-enum _BMDSwitcherFairlightAudioSourceType {
+enum BMDSwitcherFairlightAudioSourceType {
     bmdSwitcherFairlightAudioSourceTypeMono                      = /* 'mono' */ 0x6D6F6E6F,
     bmdSwitcherFairlightAudioSourceTypeStereo                    = /* 'ster' */ 0x73746572
 };
 
 /* Enum BMDSwitcherFairlightAudioMixOption - Fairlight Audio Mix Option */
 
-typedef uint32_t BMDSwitcherFairlightAudioMixOption;
-enum _BMDSwitcherFairlightAudioMixOption {
+enum BMDSwitcherFairlightAudioMixOption {
     bmdSwitcherFairlightAudioMixOptionOff                        = 0x00000001,
     bmdSwitcherFairlightAudioMixOptionOn                         = 0x00000002,
     bmdSwitcherFairlightAudioMixOptionAudioFollowVideo           = 0x00000004
@@ -730,24 +722,22 @@ enum _BMDSwitcherFairlightAudioMixOption {
 
 /* Enum BMDSwitcherFairlightAudioInputEventType - Used in IBMDSwitcherFairlightAudioInputCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioInputEventType;
-enum _BMDSwitcherFairlightAudioInputEventType {
+enum BMDSwitcherFairlightAudioInputEventType {
     bmdSwitcherFairlightAudioInputEventTypeCurrentExternalPortTypeChanged = /* 'eptC' */ 0x65707443,
     bmdSwitcherFairlightAudioInputEventTypeConfigurationChanged  = /* 'cfgC' */ 0x63666743
 };
 
 /* Enum BMDSwitcherFairlightAnalogAudioInputEventType - Used in IBMDSwitcherFairlightAnalogAudioInputCallback */
 
-typedef uint32_t BMDSwitcherFairlightAnalogAudioInputEventType;
-enum _BMDSwitcherFairlightAnalogAudioInputEventType {
+enum BMDSwitcherFairlightAnalogAudioInputEventType {
     bmdSwitcherFairlightAnalogAudioInputEventTypeLevelChanged    = /* 'aalC' */ 0x61616C43,
-    bmdSwitcherFairlightAnalogAudioInputEventTypePowerModeChanged = /* 'aamC' */ 0x61616D43
+    bmdSwitcherFairlightAnalogAudioInputEventTypePowerModeChanged = /* 'aamC' */ 0x61616D43,
+    bmdSwitcherFairlightAnalogAudioInputEventTypePadEnabledChanged = /* 'aapC' */ 0x61617043
 };
 
 /* Enum BMDSwitcherFairlightAudioAnalogInputLevel - Fairlight Analog Audio Input Level */
 
-typedef uint32_t BMDSwitcherFairlightAudioAnalogInputLevel;
-enum _BMDSwitcherFairlightAudioAnalogInputLevel {
+enum BMDSwitcherFairlightAudioAnalogInputLevel {
     bmdSwitcherFairlightAudioAnalogInputLevelMicrophone          = 0x00000001,
     bmdSwitcherFairlightAudioAnalogInputLevelConsumerLine        = 0x00000002,
     bmdSwitcherFairlightAudioAnalogInputLevelProLine             = 0x00000004
@@ -755,16 +745,14 @@ enum _BMDSwitcherFairlightAudioAnalogInputLevel {
 
 /* Enum BMDSwitcherFairlightAudioAnalogInputMicPowerMode - Fairlight Analog Audio Input Microphone Power Mode */
 
-typedef uint32_t BMDSwitcherFairlightAudioAnalogInputMicPowerMode;
-enum _BMDSwitcherFairlightAudioAnalogInputMicPowerMode {
+enum BMDSwitcherFairlightAudioAnalogInputMicPowerMode {
     bmdSwitcherFairlightAudioAnalogInputMicPowerModeNoPower      = 0x00000001,
     bmdSwitcherFairlightAudioAnalogInputMicPowerModePlugInPower  = 0x00000002
 };
 
 /* Enum BMDSwitcherFairlightAudioInputType - Fairlight Audio Input Type */
 
-typedef uint32_t BMDSwitcherFairlightAudioInputType;
-enum _BMDSwitcherFairlightAudioInputType {
+enum BMDSwitcherFairlightAudioInputType {
     bmdSwitcherFairlightAudioInputTypeEmbeddedWithVideo          = /* 'ewvd' */ 0x65777664,
     bmdSwitcherFairlightAudioInputTypeMediaPlayer                = /* 'mdpy' */ 0x6D647079,
     bmdSwitcherFairlightAudioInputTypeAudioIn                    = /* 'adin' */ 0x6164696E,
@@ -773,8 +761,7 @@ enum _BMDSwitcherFairlightAudioInputType {
 
 /* Enum BMDSwitcherFairlightAudioInputConfiguration - Fairlight Audio Input Configuration */
 
-typedef uint32_t BMDSwitcherFairlightAudioInputConfiguration;
-enum _BMDSwitcherFairlightAudioInputConfiguration {
+enum BMDSwitcherFairlightAudioInputConfiguration {
     bmdSwitcherFairlightAudioInputConfigurationMono              = 0x00000001,
     bmdSwitcherFairlightAudioInputConfigurationStereo            = 0x00000002,
     bmdSwitcherFairlightAudioInputConfigurationDualMono          = 0x00000004
@@ -782,8 +769,7 @@ enum _BMDSwitcherFairlightAudioInputConfiguration {
 
 /* Enum BMDSwitcherFairlightAudioHeadphoneOutputEventType - Used in IBMDSwitcherFairlightAudioHeadphoneOutputCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioHeadphoneOutputEventType;
-enum _BMDSwitcherFairlightAudioHeadphoneOutputEventType {
+enum BMDSwitcherFairlightAudioHeadphoneOutputEventType {
     bmdSwitcherFairlightAudioHeadphoneOutputEventTypeGainChanged = /* 'hogC' */ 0x686F6743,
     bmdSwitcherFairlightAudioHeadphoneOutputEventTypeInputMasterOutGainChanged = /* 'homC' */ 0x686F6D43,
     bmdSwitcherFairlightAudioHeadphoneOutputEventTypeInputTalkbackGainChanged = /* 'hotC' */ 0x686F7443,
@@ -794,8 +780,7 @@ enum _BMDSwitcherFairlightAudioHeadphoneOutputEventType {
 
 /* Enum BMDSwitcherFairlightAudioAuxOutputInputId - Used in IBMDSwitcherFairlightAudioAuxOutputInput */
 
-typedef uint32_t BMDSwitcherFairlightAudioAuxOutputInputId;
-enum _BMDSwitcherFairlightAudioAuxOutputInputId {
+enum BMDSwitcherFairlightAudioAuxOutputInputId {
     BMDSwitcherFairlightAudioAuxOutputInputIdProgram             = /* 'aiiP' */ 0x61696950,
     BMDSwitcherFairlightAudioAuxOutputInputIdMicrophone          = /* 'aiiM' */ 0x6169694D,
     BMDSwitcherFairlightAudioAuxOutputInputIdProductionTalkback  = /* 'aiiT' */ 0x61696954,
@@ -804,24 +789,21 @@ enum _BMDSwitcherFairlightAudioAuxOutputInputId {
 
 /* Enum BMDSwitcherFairlightAudioAuxOutputId - Used in IBMDSwitcherFairlightAudioAuxOutput */
 
-typedef uint32_t BMDSwitcherFairlightAudioAuxOutputId;
-enum _BMDSwitcherFairlightAudioAuxOutputId {
+enum BMDSwitcherFairlightAudioAuxOutputId {
     BMDSwitcherFairlightAudioAuxOutputIdControl                  = /* 'aoiS' */ 0x616F6953,
     BMDSwitcherFairlightAudioAuxOutputIdStudio                   = /* 'aoiC' */ 0x616F6943
 };
 
 /* Enum BMDSwitcherFairlightAudioAuxOutputInputEventType - Used in IBMDSwitcherFairlightAudioAuxOutputInputCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioAuxOutputInputEventType;
-enum _BMDSwitcherFairlightAudioAuxOutputInputEventType {
+enum BMDSwitcherFairlightAudioAuxOutputInputEventType {
     bmdSwitcherFairlightAudioAuxOutputInputEventTypeGainChanged  = /* 'aoig' */ 0x616F6967,
     bmdSwitcherFairlightAudioAuxOutputInputEventTypeMuteChanged  = /* 'aoim' */ 0x616F696D
 };
 
 /* Enum BMDSwitcherFairlightAudioAuxOutputEventType - Used in IBMDSwitcherFairlightAudioAuxOutputCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioAuxOutputEventType;
-enum _BMDSwitcherFairlightAudioAuxOutputEventType {
+enum BMDSwitcherFairlightAudioAuxOutputEventType {
     bmdSwitcherFairlightAudioAuxOutputEventTypeGainChanged       = /* 'aogC' */ 0x616F6743,
     bmdSwitcherFairlightAudioAuxOutputEventTypeMuteChanged       = /* 'aomC' */ 0x616F6D43,
     bmdSwitcherFairlightAudioAuxOutputEventTypeDimOnChanged      = /* 'aodC' */ 0x616F6443,
@@ -830,8 +812,7 @@ enum _BMDSwitcherFairlightAudioAuxOutputEventType {
 
 /* Enum BMDSwitcherFairlightAudioMixerEventType - Used in IBMDSwitcherFairlightAudioMixerCallback */
 
-typedef uint32_t BMDSwitcherFairlightAudioMixerEventType;
-enum _BMDSwitcherFairlightAudioMixerEventType {
+enum BMDSwitcherFairlightAudioMixerEventType {
     bmdSwitcherFairlightAudioMixerEventTypeMasterOutFaderGainChanged = /* 'fdgC' */ 0x66646743,
     bmdSwitcherFairlightAudioMixerEventTypeMasterOutFollowFadeToBlackChanged = /* 'ffbC' */ 0x66666243,
     bmdSwitcherFairlightAudioMixerEventTypeAudioFollowVideoCrossfadeTransitionChanged = /* 'aftC' */ 0x61667443,
@@ -840,8 +821,7 @@ enum _BMDSwitcherFairlightAudioMixerEventType {
 
 /* Enum BMDSwitcherTransitionStyle - Transition styles used in IBMDSwitcherTransitionParameters */
 
-typedef uint32_t BMDSwitcherTransitionStyle;
-enum _BMDSwitcherTransitionStyle {
+enum BMDSwitcherTransitionStyle {
     bmdSwitcherTransitionStyleMix                                = /* 'mixx' */ 0x6D697878,
     bmdSwitcherTransitionStyleDip                                = /* 'dipp' */ 0x64697070,
     bmdSwitcherTransitionStyleWipe                               = /* 'wipe' */ 0x77697065,
@@ -851,8 +831,7 @@ enum _BMDSwitcherTransitionStyle {
 
 /* Enum BMDSwitcherTransitionSelection - Used in IBMDSwitcherTransitionParameters */
 
-typedef uint32_t BMDSwitcherTransitionSelection;
-enum _BMDSwitcherTransitionSelection {
+enum BMDSwitcherTransitionSelection {
     bmdSwitcherTransitionSelectionBackground                     = 0x00000001,
     bmdSwitcherTransitionSelectionKey1                           = 0x00000002,
     bmdSwitcherTransitionSelectionKey2                           = 0x00000004,
@@ -862,8 +841,7 @@ enum _BMDSwitcherTransitionSelection {
 
 /* Enum BMDSwitcherKeyLumaParametersEventType - Used in IBMDSwitcherKeyLumaParametersCallback */
 
-typedef uint32_t BMDSwitcherKeyLumaParametersEventType;
-enum _BMDSwitcherKeyLumaParametersEventType {
+enum BMDSwitcherKeyLumaParametersEventType {
     bmdSwitcherKeyLumaParametersEventTypePreMultipliedChanged    = /* 'pmlC' */ 0x706D6C43,
     bmdSwitcherKeyLumaParametersEventTypeClipChanged             = /* 'clpC' */ 0x636C7043,
     bmdSwitcherKeyLumaParametersEventTypeGainChanged             = /* 'gneC' */ 0x676E6543,
@@ -872,8 +850,7 @@ enum _BMDSwitcherKeyLumaParametersEventType {
 
 /* Enum BMDSwitcherKeyChromaParametersEventType - Used in IBMDSwitcherKeyChromaParametersCallback */
 
-typedef uint32_t BMDSwitcherKeyChromaParametersEventType;
-enum _BMDSwitcherKeyChromaParametersEventType {
+enum BMDSwitcherKeyChromaParametersEventType {
     bmdSwitcherKeyChromaParametersEventTypeHueChanged            = /* 'hueC' */ 0x68756543,
     bmdSwitcherKeyChromaParametersEventTypeGainChanged           = /* 'gneC' */ 0x676E6543,
     bmdSwitcherKeyChromaParametersEventTypeYSuppressChanged      = /* 'yspC' */ 0x79737043,
@@ -883,8 +860,7 @@ enum _BMDSwitcherKeyChromaParametersEventType {
 
 /* Enum BMDSwitcherKeyAdvancedChromaParametersEventType - Used in IBMDSwitcherKeyAdvancedChromaParametersCallback */
 
-typedef uint32_t BMDSwitcherKeyAdvancedChromaParametersEventType;
-enum _BMDSwitcherKeyAdvancedChromaParametersEventType {
+enum BMDSwitcherKeyAdvancedChromaParametersEventType {
     bmdSwitcherKeyAdvancedChromaParametersEventTypeForegroundLevelChanged = /* 'cflC' */ 0x63666C43,
     bmdSwitcherKeyAdvancedChromaParametersEventTypeBackgroundLevelChanged = /* 'cblC' */ 0x63626C43,
     bmdSwitcherKeyAdvancedChromaParametersEventTypeKeyEdgeChanged = /* 'ckeC' */ 0x636B6543,
@@ -906,8 +882,7 @@ enum _BMDSwitcherKeyAdvancedChromaParametersEventType {
 
 /* Enum BMDSwitcherKeyPatternParametersEventType - Used in IBMDSwitcherKeyPatternParametersCallback */
 
-typedef uint32_t BMDSwitcherKeyPatternParametersEventType;
-enum _BMDSwitcherKeyPatternParametersEventType {
+enum BMDSwitcherKeyPatternParametersEventType {
     bmdSwitcherKeyPatternParametersEventTypePatternChanged       = /* 'patC' */ 0x70617443,
     bmdSwitcherKeyPatternParametersEventTypeSizeChanged          = /* 'szeC' */ 0x737A6543,
     bmdSwitcherKeyPatternParametersEventTypeSymmetryChanged      = /* 'symC' */ 0x73796D43,
@@ -919,8 +894,7 @@ enum _BMDSwitcherKeyPatternParametersEventType {
 
 /* Enum BMDSwitcherKeyFlyKeyFrameParametersEventType - Used in IBMDSwitcherKeyFlyKeyFrameParametersCallback */
 
-typedef uint32_t BMDSwitcherKeyFlyKeyFrameParametersEventType;
-enum _BMDSwitcherKeyFlyKeyFrameParametersEventType {
+enum BMDSwitcherKeyFlyKeyFrameParametersEventType {
     bmdSwitcherKeyFlyKeyFrameParametersEventTypeSizeXChanged     = /* 'fszx' */ 0x66737A78,
     bmdSwitcherKeyFlyKeyFrameParametersEventTypeSizeYChanged     = /* 'fszy' */ 0x66737A79,
     bmdSwitcherKeyFlyKeyFrameParametersEventTypePositionXChanged = /* 'fpsx' */ 0x66707378,
@@ -941,8 +915,7 @@ enum _BMDSwitcherKeyFlyKeyFrameParametersEventType {
 
 /* Enum BMDSwitcherKeyFlyParametersEventType - Used in IBMDSwitcherKeyFlyParametersCallback */
 
-typedef uint32_t BMDSwitcherKeyFlyParametersEventType;
-enum _BMDSwitcherKeyFlyParametersEventType {
+enum BMDSwitcherKeyFlyParametersEventType {
     bmdSwitcherKeyFlyParametersEventTypeFlyChanged               = /* 'flyC' */ 0x666C7943,
     bmdSwitcherKeyFlyParametersEventTypeCanFlyChanged            = /* 'cflC' */ 0x63666C43,
     bmdSwitcherKeyFlyParametersEventTypeRateChanged              = /* 'rteC' */ 0x72746543,
@@ -958,8 +931,7 @@ enum _BMDSwitcherKeyFlyParametersEventType {
 
 /* Enum BMDSwitcherKeyDVEParametersEventType - Used in IBMDSwitcherKeyDVEParametersCallback */
 
-typedef uint32_t BMDSwitcherKeyDVEParametersEventType;
-enum _BMDSwitcherKeyDVEParametersEventType {
+enum BMDSwitcherKeyDVEParametersEventType {
     bmdSwitcherKeyDVEParametersEventTypeShadowChanged            = /* 'shdC' */ 0x73686443,
     bmdSwitcherKeyDVEParametersEventTypeLightSourceDirectionChanged = /* 'ltdC' */ 0x6C746443,
     bmdSwitcherKeyDVEParametersEventTypeLightSourceAltitudeChanged = /* 'ltaC' */ 0x6C746143,
@@ -984,8 +956,7 @@ enum _BMDSwitcherKeyDVEParametersEventType {
 
 /* Enum BMDSwitcherKeyEventType - Used in IBMDSwitcherKeyCallback */
 
-typedef uint32_t BMDSwitcherKeyEventType;
-enum _BMDSwitcherKeyEventType {
+enum BMDSwitcherKeyEventType {
     bmdSwitcherKeyEventTypeTypeChanged                           = /* 'typC' */ 0x74797043,
     bmdSwitcherKeyEventTypeInputCutChanged                       = /* 'ipcC' */ 0x69706343,
     bmdSwitcherKeyEventTypeInputFillChanged                      = /* 'ipfC' */ 0x69706643,
@@ -1000,8 +971,7 @@ enum _BMDSwitcherKeyEventType {
 
 /* Enum BMDSwitcherKeyType - (Upstream) Key types */
 
-typedef uint32_t BMDSwitcherKeyType;
-enum _BMDSwitcherKeyType {
+enum BMDSwitcherKeyType {
     bmdSwitcherKeyTypeLuma                                       = /* 'luma' */ 0x6C756D61,
     bmdSwitcherKeyTypeChroma                                     = /* 'chrm' */ 0x6368726D,
     bmdSwitcherKeyTypePattern                                    = /* 'ptrn' */ 0x7074726E,
@@ -1010,8 +980,7 @@ enum _BMDSwitcherKeyType {
 
 /* Enum BMDSwitcherPatternStyle - Pattern style for Wipe Transition, or Pattern Keys */
 
-typedef uint32_t BMDSwitcherPatternStyle;
-enum _BMDSwitcherPatternStyle {
+enum BMDSwitcherPatternStyle {
     bmdSwitcherPatternStyleLeftToRightBar                        = /* 'ltrb' */ 0x6C747262,
     bmdSwitcherPatternStyleTopToBottomBar                        = /* 'ttbb' */ 0x74746262,
     bmdSwitcherPatternStyleHorizontalBarnDoor                    = /* 'hbnd' */ 0x68626E64,
@@ -1032,10 +1001,16 @@ enum _BMDSwitcherPatternStyle {
     bmdSwitcherPatternStyleTopRightDiagonal                      = /* 'trdg' */ 0x74726467
 };
 
+/* Enum BMDSwitcherMixEffectBlockShadowEventType - Used in IBMDSwitcherMixEffectBlockShadowCallback */
+
+enum BMDSwitcherMixEffectBlockShadowEventType {
+    bmdSwitcherMixEffectBlockShadowEventTypeEnabledChanged       = /* 'sbse' */ 0x73627365,
+    bmdSwitcherMixEffectBlockShadowEventTypeSubstitutionsChanged = /* 'sbss' */ 0x73627373
+};
+
 /* Enum BMDSwitcherVideoMode - Video mode of Switcher */
 
-typedef uint32_t BMDSwitcherVideoMode;
-enum _BMDSwitcherVideoMode {
+enum BMDSwitcherVideoMode {
     bmdSwitcherVideoMode525i5994NTSC                             = /* 'ntsc' */ 0x6E747363,
     bmdSwitcherVideoMode625i50PAL                                = /* 'pall' */ 0x70616C6C,
     bmdSwitcherVideoMode525i5994Anamorphic                       = /* 'ntsA' */ 0x6E747341,
@@ -1074,8 +1049,7 @@ enum _BMDSwitcherVideoMode {
 
 /* Enum BMDSwitcherDownConversionMethod - Down convert method used when converting 16:9 to 4:3 */
 
-typedef uint32_t BMDSwitcherDownConversionMethod;
-enum _BMDSwitcherDownConversionMethod {
+enum BMDSwitcherDownConversionMethod {
     bmdSwitcherDownConversionMethodCentreCut                     = /* 'dmcc' */ 0x646D6363,
     bmdSwitcherDownConversionMethodLetterbox                     = /* 'dmlb' */ 0x646D6C62,
     bmdSwitcherDownConversionMethodAnamorphic                    = /* 'dmam' */ 0x646D616D
@@ -1083,16 +1057,14 @@ enum _BMDSwitcherDownConversionMethod {
 
 /* Enum BMDSwitcher3GSDIOutputLevel - Switcher 3G-SDI level mode for all outputs */
 
-typedef uint32_t BMDSwitcher3GSDIOutputLevel;
-enum _BMDSwitcher3GSDIOutputLevel {
+enum BMDSwitcher3GSDIOutputLevel {
     bmdSwitcher3GSDIOutputLevelA                                 = /* '3gsa' */ 0x33677361,
     bmdSwitcher3GSDIOutputLevelB                                 = /* '3gsb' */ 0x33677362
 };
 
 /* Enum BMDSwitcherColorimetryMode - Switcher Colorimetry mode for all outputs */
 
-typedef uint32_t BMDSwitcherColorimetryMode;
-enum _BMDSwitcherColorimetryMode {
+enum BMDSwitcherColorimetryMode {
     bmdSwitcherColorimetryModeRec601_SDR                         = /* 'c6sd' */ 0x63367364,
     bmdSwitcherColorimetryModeRec709_SDR                         = /* 'c7sd' */ 0x63377364,
     bmdSwitcherColorimetryModeRec2020_SDR                        = /* 'c22s' */ 0x63323273,
@@ -1103,16 +1075,14 @@ enum _BMDSwitcherColorimetryMode {
 
 /* Enum BMDSwitcherPowerStatus - IBMDSwitcher Power Status bits */
 
-typedef uint32_t BMDSwitcherPowerStatus;
-enum _BMDSwitcherPowerStatus {
+enum BMDSwitcherPowerStatus {
     bmdSwitcherPowerStatusSupply1                                = 0x01,
     bmdSwitcherPowerStatusSupply2                                = 0x02
 };
 
 /* Enum BMDSwitcherPixelFormat - Pixel Format used in IBMDSwitcherFrame */
 
-typedef uint32_t BMDSwitcherPixelFormat;
-enum _BMDSwitcherPixelFormat {
+enum BMDSwitcherPixelFormat {
     bmdSwitcherPixelFormat8BitARGB                               = /* 'argb' */ 0x61726762,
     bmdSwitcherPixelFormat8BitXRGB                               = /* 'xrgb' */ 0x78726762,
     bmdSwitcherPixelFormat8BitYUV                                = /* '2vuy' */ 0x32767579,
@@ -1121,8 +1091,7 @@ enum _BMDSwitcherPixelFormat {
 
 /* Enum BMDSwitcherFlyKeyFrame - Used in IBMDSwitcherKeyFlyParameters */
 
-typedef uint32_t BMDSwitcherFlyKeyFrame;
-enum _BMDSwitcherFlyKeyFrame {
+enum BMDSwitcherFlyKeyFrame {
     bmdSwitcherFlyKeyFrameFull                                   = 0x00000001,
     bmdSwitcherFlyKeyFrameInfinityCentreOfKey                    = 0x00000002,
     bmdSwitcherFlyKeyFrameInfinityTopLeft                        = 0x00000004,
@@ -1140,8 +1109,7 @@ enum _BMDSwitcherFlyKeyFrame {
 
 /* Enum BMDSwitcherDVETransitionStyle - Transition style for DVE Transition */
 
-typedef uint32_t BMDSwitcherDVETransitionStyle;
-enum _BMDSwitcherDVETransitionStyle {
+enum BMDSwitcherDVETransitionStyle {
     bmdSwitcherDVETransitionStyleSwooshTopLeft                   = /* 'swtl' */ 0x7377746C,
     bmdSwitcherDVETransitionStyleSwooshTop                       = /* 'swtc' */ 0x73777463,
     bmdSwitcherDVETransitionStyleSwooshTopRight                  = /* 'swtr' */ 0x73777472,
@@ -1181,8 +1149,7 @@ enum _BMDSwitcherDVETransitionStyle {
 
 /* Enum BMDSwitcherStingerTransitionSource - Transition source used in Stinger Transitions */
 
-typedef uint32_t BMDSwitcherStingerTransitionSource;
-enum _BMDSwitcherStingerTransitionSource {
+enum BMDSwitcherStingerTransitionSource {
     bmdSwitcherStingerTransitionSourceMediaPlayer1               = /* 'smp1' */ 0x736D7031,
     bmdSwitcherStingerTransitionSourceMediaPlayer2               = /* 'smp2' */ 0x736D7032,
     bmdSwitcherStingerTransitionSourceMediaPlayer3               = /* 'smp3' */ 0x736D7033,
@@ -1192,16 +1159,14 @@ enum _BMDSwitcherStingerTransitionSource {
 
 /* Enum BMDSwitcherMediaPlayerSourceType - Source for a Media Player */
 
-typedef uint32_t BMDSwitcherMediaPlayerSourceType;
-enum _BMDSwitcherMediaPlayerSourceType {
+enum BMDSwitcherMediaPlayerSourceType {
     bmdSwitcherMediaPlayerSourceTypeStill                        = /* 'smps' */ 0x736D7073,
     bmdSwitcherMediaPlayerSourceTypeClip                         = /* 'smpc' */ 0x736D7063
 };
 
 /* Enum BMDSwitcherMultiViewLayout - Layout for MultiView */
 
-typedef uint32_t BMDSwitcherMultiViewLayout;
-enum _BMDSwitcherMultiViewLayout {
+enum BMDSwitcherMultiViewLayout {
     bmdSwitcherMultiViewLayoutProgramTop                         = 0x0C,
     bmdSwitcherMultiViewLayoutProgramBottom                      = 0x03,
     bmdSwitcherMultiViewLayoutProgramLeft                        = 0x0a,
@@ -1214,8 +1179,7 @@ enum _BMDSwitcherMultiViewLayout {
 
 /* Enum BMDSwitcherMultiViewEventType - Used in IBMDSwitcherMultiViewCallback */
 
-typedef uint32_t BMDSwitcherMultiViewEventType;
-enum _BMDSwitcherMultiViewEventType {
+enum BMDSwitcherMultiViewEventType {
     bmdSwitcherMultiViewEventTypeLayoutChanged                   = /* 'lotC' */ 0x6C6F7443,
     bmdSwitcherMultiViewEventTypeWindowChanged                   = /* 'wdwC' */ 0x77647743,
     bmdSwitcherMultiViewEventTypeCurrentInputSupportsVuMeterChanged = /* 'vmsC' */ 0x766D7343,
@@ -1232,16 +1196,14 @@ enum _BMDSwitcherMultiViewEventType {
 
 /* Enum BMDSwitcherMultiViewSafeAreaType - Type of SafeArea displayed in Multiview */
 
-typedef uint32_t BMDSwitcherMultiViewSafeAreaType;
-enum _BMDSwitcherMultiViewSafeAreaType {
+enum BMDSwitcherMultiViewSafeAreaType {
     bmdSwitcherMultiViewSafeAreaTypeAspect16x9                   = 0x00000001,
     bmdSwitcherMultiViewSafeAreaTypeAspect9x16                   = 0x00000002
 };
 
 /* Enum BMDSwitcherDownstreamKeyEventType - Used in IBMDSwitcherDownstreamKeyCallback */
 
-typedef uint32_t BMDSwitcherDownstreamKeyEventType;
-enum _BMDSwitcherDownstreamKeyEventType {
+enum BMDSwitcherDownstreamKeyEventType {
     bmdSwitcherDownstreamKeyEventTypeInputCutChanged             = /* 'ipcC' */ 0x69706343,
     bmdSwitcherDownstreamKeyEventTypeInputFillChanged            = /* 'ipfC' */ 0x69706643,
     bmdSwitcherDownstreamKeyEventTypeTieChanged                  = /* 'tieC' */ 0x74696543,
@@ -1264,8 +1226,7 @@ enum _BMDSwitcherDownstreamKeyEventType {
 
 /* Enum BMDSwitcherConnectToFailure - used in ConnectTo */
 
-typedef uint32_t BMDSwitcherConnectToFailure;
-enum _BMDSwitcherConnectToFailure {
+enum BMDSwitcherConnectToFailure {
     bmdSwitcherConnectToFailureNoResponse                        = /* 'cfnr' */ 0x63666E72,
     bmdSwitcherConnectToFailureIncompatibleFirmware              = /* 'cfif' */ 0x63666966,
     bmdSwitcherConnectToFailureCorruptData                       = /* 'cfcd' */ 0x63666364,
@@ -1276,15 +1237,13 @@ enum _BMDSwitcherConnectToFailure {
 
 /* Enum BMDSwitcherSaveRecallType - BMDSwitcher Save Recall Type */
 
-typedef uint32_t BMDSwitcherSaveRecallType;
-enum _BMDSwitcherSaveRecallType {
+enum BMDSwitcherSaveRecallType {
     bmdSwitcherSaveRecallTypeStartupState                        = /* 'srss' */ 0x73727373
 };
 
 /* Enum BMDSwitcherMediaPoolEventType - Used in IBMDSwitcherClipCallback, IBMDSwitcherStillsCallback */
 
-typedef uint32_t BMDSwitcherMediaPoolEventType;
-enum _BMDSwitcherMediaPoolEventType {
+enum BMDSwitcherMediaPoolEventType {
     bmdSwitcherMediaPoolEventTypeValidChanged                    = /* 'vlid' */ 0x766C6964,
     bmdSwitcherMediaPoolEventTypeNameChanged                     = /* 'name' */ 0x6E616D65,
     bmdSwitcherMediaPoolEventTypeHashChanged                     = /* 'hash' */ 0x68617368,
@@ -1300,15 +1259,13 @@ enum _BMDSwitcherMediaPoolEventType {
 
 /* Enum BMDSwitcherStillCaptureEventType - Used in IBMDSwitcherStillCaptureCallback */
 
-typedef uint32_t BMDSwitcherStillCaptureEventType;
-enum _BMDSwitcherStillCaptureEventType {
+enum BMDSwitcherStillCaptureEventType {
     bmdSwitcherStillCaptureEventTypeIsAvailableChanged           = /* 'scac' */ 0x73636163
 };
 
 /* Enum BMDSwitcherRecordDiskStatus - Used in IBMDSwitcherRecordDisk */
 
-typedef uint32_t BMDSwitcherRecordDiskStatus;
-enum _BMDSwitcherRecordDiskStatus {
+enum BMDSwitcherRecordDiskStatus {
     bmdSwitcherRecordDiskIdle                                    = /* 'rdid' */ 0x72646964,
     bmdSwitcherRecordDiskUnformatted                             = /* 'rduf' */ 0x72647566,
     bmdSwitcherRecordDiskActive                                  = /* 'rdav' */ 0x72646176,
@@ -1317,16 +1274,14 @@ enum _BMDSwitcherRecordDiskStatus {
 
 /* Enum BMDSwitcherRecordDiskProperties - Used in IBMDSwitcherRecordDisk */
 
-typedef uint32_t BMDSwitcherRecordDiskProperties;
-enum _BMDSwitcherRecordDiskProperties {
+enum BMDSwitcherRecordDiskProperties {
     bmdSwitcherRecordDiskPropertySlowDisk                        = 0x01,
     bmdSwitcherRecordDiskPropertySlowConnection                  = 0x02
 };
 
 /* Enum BMDSwitcherRecordDiskEventType - Used in IBMDSwitcherRecordDiskCallback */
 
-typedef uint32_t BMDSwitcherRecordDiskEventType;
-enum _BMDSwitcherRecordDiskEventType {
+enum BMDSwitcherRecordDiskEventType {
     bmdSwitcherRecordDiskEventTypeStatusChanged                  = /* 'rdsc' */ 0x72647363,
     bmdSwitcherRecordDiskEventTypePropertiesChanged              = /* 'rdpc' */ 0x72647063,
     bmdSwitcherRecordDiskEventTypeRecordingTimeAvailableChanged  = /* 'rdtc' */ 0x72647463,
@@ -1335,8 +1290,7 @@ enum _BMDSwitcherRecordDiskEventType {
 
 /* Enum BMDSwitcherRecordAVEventType - Used in IBMDSwitcherRecordAVCallback */
 
-typedef uint32_t BMDSwitcherRecordAVEventType;
-enum _BMDSwitcherRecordAVEventType {
+enum BMDSwitcherRecordAVEventType {
     bmdSwitcherRecordAVEventTypeFilenameChanged                  = /* 'rmfc' */ 0x726D6663,
     bmdSwitcherRecordAVEventTypeRecordInAllCamerasChanged        = /* 'racc' */ 0x72616363,
     bmdSwitcherRecordAVEventTypeTimecodeChanged                  = /* 'rmdc' */ 0x726D6463,
@@ -1350,16 +1304,14 @@ enum _BMDSwitcherRecordAVEventType {
 
 /* Enum BMDSwitcherRecordDiskAvailabilityEventType - Used in IBMDSwitcherRecordAVCallback */
 
-typedef uint32_t BMDSwitcherRecordDiskAvailabilityEventType;
-enum _BMDSwitcherRecordDiskAvailabilityEventType {
+enum BMDSwitcherRecordDiskAvailabilityEventType {
     bmdSwitcherRecordDiskAvailabilityEventTypeAvailable          = /* 'rdaa' */ 0x72646161,
     bmdSwitcherRecordDiskAvailabilityEventTypeRemoved            = /* 'rdar' */ 0x72646172
 };
 
 /* Enum BMDSwitcherRecordAVState - Used in IBMDSwitcherRecordAV */
 
-typedef uint32_t BMDSwitcherRecordAVState;
-enum _BMDSwitcherRecordAVState {
+enum BMDSwitcherRecordAVState {
     bmdSwitcherRecordAVStateIdle                                 = /* 'rasi' */ 0x72617369,
     bmdSwitcherRecordAVStateRecording                            = /* 'rasr' */ 0x72617372,
     bmdSwitcherRecordAVStateStopping                             = /* 'rass' */ 0x72617373
@@ -1367,8 +1319,7 @@ enum _BMDSwitcherRecordAVState {
 
 /* Enum BMDSwitcherRecordAVError - Used in IBMDSwitcherRecordAV */
 
-typedef uint32_t BMDSwitcherRecordAVError;
-enum _BMDSwitcherRecordAVError {
+enum BMDSwitcherRecordAVError {
     bmdSwitcherRecordAVErrorNone                                 = /* 'renn' */ 0x72656E6E,
     bmdSwitcherRecordAVErrorNoMedia                              = /* 'renm' */ 0x72656E6D,
     bmdSwitcherRecordAVErrorMediaFull                            = /* 'remf' */ 0x72656D66,
@@ -1380,8 +1331,7 @@ enum _BMDSwitcherRecordAVError {
 
 /* Enum BMDSwitcherStreamRTMPEventType - Used in IBMDSwitcherStreamRTMPCallback */
 
-typedef uint32_t BMDSwitcherStreamRTMPEventType;
-enum _BMDSwitcherStreamRTMPEventType {
+enum BMDSwitcherStreamRTMPEventType {
     bmdSwitcherStreamRTMPEventTypeServiceNameChanged             = /* 'rsnh' */ 0x72736E68,
     bmdSwitcherStreamRTMPEventTypeUrlChanged                     = /* 'rsuc' */ 0x72737563,
     bmdSwitcherStreamRTMPEventTypeKeyChanged                     = /* 'rskc' */ 0x72736B63,
@@ -1401,16 +1351,14 @@ enum _BMDSwitcherStreamRTMPEventType {
 
 /* Enum BMDSwitcherRemoteSourceConfigurationSourceEventType - Used in IBMDSwitcherRemoteSourceConfigurationCallback */
 
-typedef uint32_t BMDSwitcherRemoteSourceConfigurationSourceEventType;
-enum _BMDSwitcherRemoteSourceConfigurationSourceEventType {
+enum BMDSwitcherRemoteSourceConfigurationSourceEventType {
     bmdSwitcherRemoteSourceConfigurationEventSourceAdded         = /* 'rica' */ 0x72696361,
     bmdSwitcherRemoteSourceConfigurationEventSourceRemoved       = /* 'rimr' */ 0x72696D72
 };
 
 /* Enum BMDSwitcherRemoteSourceInternetStatusType - Used in IBMDSwitcherRemoteSourceConfiguration */
 
-typedef uint32_t BMDSwitcherRemoteSourceInternetStatusType;
-enum _BMDSwitcherRemoteSourceInternetStatusType {
+enum BMDSwitcherRemoteSourceInternetStatusType {
     BMDSwitcherRemoteSourceInternetStatusAccessible              = /* 'iscc' */ 0x69736363,
     BMDSwitcherRemoteSourceInternetStatusTesting                 = /* 'ists' */ 0x69737473,
     BMDSwitcherRemoteSourceInternetStatusOffline                 = /* 'isci' */ 0x69736369,
@@ -1419,8 +1367,7 @@ enum _BMDSwitcherRemoteSourceInternetStatusType {
 
 /* Enum BMDSwitcherRemoteSourcePortStatusType - Used in IBMDSwitcherRemoteSourceConfiguration */
 
-typedef uint32_t BMDSwitcherRemoteSourcePortStatusType;
-enum _BMDSwitcherRemoteSourcePortStatusType {
+enum BMDSwitcherRemoteSourcePortStatusType {
     BMDSwitcherRemoteSourcePortStatusMapped                      = /* 'ipim' */ 0x6970696D,
     BMDSwitcherRemoteSourcePortStatusNoGateway                   = /* 'ipgp' */ 0x69706770,
     BMDSwitcherRemoteSourcePortStatusDisabled                    = /* 'ipds' */ 0x69706473,
@@ -1430,8 +1377,7 @@ enum _BMDSwitcherRemoteSourcePortStatusType {
 
 /* Enum BMDSwitcherRemoteSourceConfigurationEventType - Used in IBMDSwitcherRemoteSourceConfigurationCallback */
 
-typedef uint32_t BMDSwitcherRemoteSourceConfigurationEventType;
-enum _BMDSwitcherRemoteSourceConfigurationEventType {
+enum BMDSwitcherRemoteSourceConfigurationEventType {
     bmdSwitcherRemoteSourceConfigurationEventDiscoverableChanged = /* 'rsds' */ 0x72736473,
     bmdSwitcherRemoteSourceConfigurationEventInternetProbeStatusChanged = /* 'rsip' */ 0x72736970,
     bmdSwitcherRemoteSourceConfigurationEventInternetSettingsChanged = /* 'rsst' */ 0x72737374
@@ -1439,24 +1385,21 @@ enum _BMDSwitcherRemoteSourceConfigurationEventType {
 
 /* Enum BMDSwitcherRemoteSourceEventType - Used in IBMDSwitcherRemoteSourceCallback */
 
-typedef uint32_t BMDSwitcherRemoteSourceEventType;
-enum _BMDSwitcherRemoteSourceEventType {
+enum BMDSwitcherRemoteSourceEventType {
     bmdSwitcherRemoteSourceEventTypeChanged                      = /* 'isad' */ 0x69736164,
     bmdSwitcherRemoteSourceEventTypeLinkChanged                  = /* 'iscd' */ 0x69736364
 };
 
 /* Enum BMDSwitcherRemoteSourceExternalEventType - Used in IBMDSwitcherRemoteSourceExternalCallback */
 
-typedef uint32_t BMDSwitcherRemoteSourceExternalEventType;
-enum _BMDSwitcherRemoteSourceExternalEventType {
+enum BMDSwitcherRemoteSourceExternalEventType {
     bmdSwitcherRemoteSourceExternalEventTypeChanged              = /* 'ismc' */ 0x69736D63,
     bmdSwitcherRemoteSourceExternalEventTypeXMLUpdated           = /* 'isxm' */ 0x6973786D
 };
 
 /* Enum BMDSwitcherStreamRTMPState - Used in IBMDSwitcherStreamRTMP */
 
-typedef uint32_t BMDSwitcherStreamRTMPState;
-enum _BMDSwitcherStreamRTMPState {
+enum BMDSwitcherStreamRTMPState {
     bmdSwitcherStreamRTMPStateIdle                               = /* 'rtsi' */ 0x72747369,
     bmdSwitcherStreamRTMPStateConnecting                         = /* 'rtsc' */ 0x72747363,
     bmdSwitcherStreamRTMPStateStreaming                          = /* 'rtss' */ 0x72747373,
@@ -1465,8 +1408,7 @@ enum _BMDSwitcherStreamRTMPState {
 
 /* Enum BMDSwitcherStreamRTMPError - Used in IBMDSwitcherStreamRTMP */
 
-typedef uint32_t BMDSwitcherStreamRTMPError;
-enum _BMDSwitcherStreamRTMPError {
+enum BMDSwitcherStreamRTMPError {
     bmdSwitcherStreamRTMPErrorNone                               = /* 'rten' */ 0x7274656E,
     bmdSwitcherStreamRTMPErrorInvalidState                       = /* 'rtei' */ 0x72746569,
     bmdSwitcherStreamRTMPErrorUnknown                            = /* 'rteu' */ 0x72746575
@@ -1474,24 +1416,21 @@ enum _BMDSwitcherStreamRTMPError {
 
 /* Enum BMDSwitcherVideoCodec - Used in IBMDSwitcherStreamRTMP */
 
-typedef uint32_t BMDSwitcherVideoCodec;
-enum _BMDSwitcherVideoCodec {
+enum BMDSwitcherVideoCodec {
     BMDSwitcherVideoCodecH264                                    = /* 'vch4' */ 0x76636834,
     BMDSwitcherVideoCodecH265                                    = /* 'vch5' */ 0x76636835
 };
 
 /* Enum BMDSwitcherStreamDownConvertMode - Used in IBMDSwitcherStreamRTMP */
 
-typedef uint32_t BMDSwitcherStreamDownConvertMode;
-enum _BMDSwitcherStreamDownConvertMode {
+enum BMDSwitcherStreamDownConvertMode {
     bmdSwitcherStreamDownConvertModeNone                         = /* 'sdcn' */ 0x7364636E,
     bmdSwitcherStreamDownConvertModeHD1080                       = /* 'sdch' */ 0x73646368
 };
 
 /* Enum BMDSwitcherCameraControlEventType - Used in IBMDSwitcherCameraControlCallback */
 
-typedef uint32_t BMDSwitcherCameraControlEventType;
-enum _BMDSwitcherCameraControlEventType {
+enum BMDSwitcherCameraControlEventType {
     bmdSwitcherCameraControlEventTypePeriodicFlushIntervalChanged = /* 'pfic' */ 0x70666963,
     bmdSwitcherCameraControlEventTypeParameterValueChanged       = /* 'pmvc' */ 0x706D7663,
     bmdSwitcherCameraControlEventTypeParameterPeriodicFlushEnabledChanged = /* 'pmpc' */ 0x706D7063
@@ -1499,8 +1438,7 @@ enum _BMDSwitcherCameraControlEventType {
 
 /* Enum BMDSwitcherCameraControlParameterType - Used in IBMDSwitcherCameraControl */
 
-typedef uint32_t BMDSwitcherCameraControlParameterType;
-enum _BMDSwitcherCameraControlParameterType {
+enum BMDSwitcherCameraControlParameterType {
     bmdSwitcherCameraControlParameterTypeVoidBool                = /* 'ccvb' */ 0x63637662,
     bmdSwitcherCameraControlParameterTypeSigned8Bit              = /* 'ccs8' */ 0x63637338,
     bmdSwitcherCameraControlParameterTypeSigned16Bit             = /* 'ccs1' */ 0x63637331,
@@ -1512,8 +1450,7 @@ enum _BMDSwitcherCameraControlParameterType {
 
 /* Enum BMDSwitcherMacroPoolEventType - Used in IBMDSwitcherMacroPoolCallback */
 
-typedef uint32_t BMDSwitcherMacroPoolEventType;
-enum _BMDSwitcherMacroPoolEventType {
+enum BMDSwitcherMacroPoolEventType {
     bmdSwitcherMacroPoolEventTypeValidChanged                    = /* 'mava' */ 0x6D617661,
     bmdSwitcherMacroPoolEventTypeHasUnsupportedOpsChanged        = /* 'maop' */ 0x6D616F70,
     bmdSwitcherMacroPoolEventTypeNameChanged                     = /* 'mana' */ 0x6D616E61,
@@ -1525,16 +1462,14 @@ enum _BMDSwitcherMacroPoolEventType {
 
 /* Enum BMDSwitcherMacroControlEventType - Used in IBMDSwitcherMacroControlCallback */
 
-typedef uint32_t BMDSwitcherMacroControlEventType;
-enum _BMDSwitcherMacroControlEventType {
+enum BMDSwitcherMacroControlEventType {
     bmdSwitcherMacroControlEventTypeRunStatusChanged             = /* 'marn' */ 0x6D61726E,
     bmdSwitcherMacroControlEventTypeRecordStatusChanged          = /* 'marc' */ 0x6D617263
 };
 
 /* Enum BMDSwitcherMacroRunStatus - Used in IBMDSwitcherMacroControl */
 
-typedef uint32_t BMDSwitcherMacroRunStatus;
-enum _BMDSwitcherMacroRunStatus {
+enum BMDSwitcherMacroRunStatus {
     bmdSwitcherMacroRunStatusIdle                                = 0x00,
     bmdSwitcherMacroRunStatusRunning                             = 0x01,
     bmdSwitcherMacroRunStatusWaitingForUser                      = 0x02
@@ -1542,16 +1477,14 @@ enum _BMDSwitcherMacroRunStatus {
 
 /* Enum BMDSwitcherMacroRecordStatus - Used in IBMDSwitcherMacroControl */
 
-typedef uint32_t BMDSwitcherMacroRecordStatus;
-enum _BMDSwitcherMacroRecordStatus {
+enum BMDSwitcherMacroRecordStatus {
     bmdSwitcherMacroRecordStatusIdle                             = 0x00,
     bmdSwitcherMacroRecordStatusRecording                        = 0x01
 };
 
 /* Enum BMDSwitcherSerialPortFunction - Used in IBMDSwitcherSerialPort */
 
-typedef uint32_t BMDSwitcherSerialPortFunction;
-enum _BMDSwitcherSerialPortFunction {
+enum BMDSwitcherSerialPortFunction {
     bmdSwitcherSerialPortFunctionNone                            = /* 'spfn' */ 0x7370666E,
     bmdSwitcherSerialPortFunctionPtzVisca                        = /* 'spfp' */ 0x73706670,
     bmdSwitcherSerialPortFunctionGvg100                          = /* 'spfg' */ 0x73706667
@@ -1559,24 +1492,21 @@ enum _BMDSwitcherSerialPortFunction {
 
 /* Enum BMDSwitcherSerialPortBaudRate - Used in IBMDSwitcherSerialPort */
 
-typedef uint32_t BMDSwitcherSerialPortBaudRate;
-enum _BMDSwitcherSerialPortBaudRate {
+enum BMDSwitcherSerialPortBaudRate {
     bmdSwitcherSerialPortBaudRate9600                            = 9600,
     bmdSwitcherSerialPortBaudRate38400                           = 38400
 };
 
 /* Enum BMDSwitcherSerialPortEventType - Used in IBMDSwitcherSerialPortCallback */
 
-typedef uint32_t BMDSwitcherSerialPortEventType;
-enum _BMDSwitcherSerialPortEventType {
+enum BMDSwitcherSerialPortEventType {
     bmdSwitcherSerialPortEventTypeFunctionChanged                = /* 'spfc' */ 0x73706663,
     bmdSwitcherSerialPortEventTypeBaudRateChanged                = /* 'spbC' */ 0x73706243
 };
 
 /* Enum BMDSwitcherViscaEventType - Used in IBMDSwitcherVisca */
 
-typedef uint32_t BMDSwitcherViscaEventType;
-enum _BMDSwitcherViscaEventType {
+enum BMDSwitcherViscaEventType {
     bmdSwitcherViscaEventTypeDeviceAdded                         = /* 'vscA' */ 0x76736341,
     bmdSwitcherViscaEventTypeDeviceRemoved                       = /* 'vscR' */ 0x76736352,
     bmdSwitcherViscaEventTypeIPPingResponse                      = /* 'vscP' */ 0x76736350
@@ -1584,23 +1514,20 @@ enum _BMDSwitcherViscaEventType {
 
 /* Enum BMDSwitcherViscaDeviceId - Used in IBMDSwitcherVisca, IBMDSwitcherViscaDevice and IBMDSwitcherInput */
 
-typedef uint32_t BMDSwitcherViscaDeviceId;
-enum _BMDSwitcherViscaDeviceId {
+enum BMDSwitcherViscaDeviceId {
     bmdSwitcherViscaDeviceIdNone                                 = 0xFFFFFFFF
 };
 
 /* Enum BMDSwitcherViscaDeviceConnectionType - Used in IBMDSwitcherViscaDevice */
 
-typedef uint32_t BMDSwitcherViscaDeviceConnectionType;
-enum _BMDSwitcherViscaDeviceConnectionType {
+enum BMDSwitcherViscaDeviceConnectionType {
     bmdSwitcherViscaDeviceConnectionTypeIP                       = /* 'vsci' */ 0x76736369,
     bmdSwitcherViscaDeviceConnectionTypeSerial                   = /* 'vscs' */ 0x76736373
 };
 
 /* Enum BMDSwitcherViscaDeviceState - Used in IBMDSwitcherViscaDevice */
 
-typedef uint32_t BMDSwitcherViscaDeviceState;
-enum _BMDSwitcherViscaDeviceState {
+enum BMDSwitcherViscaDeviceState {
     bmdSwitcherViscaDeviceStateDisconnected                      = /* 'vssa' */ 0x76737361,
     bmdSwitcherViscaDeviceStateConnecting                        = /* 'vssu' */ 0x76737375,
     bmdSwitcherViscaDeviceStateConnected                         = /* 'vssd' */ 0x76737364
@@ -1608,8 +1535,7 @@ enum _BMDSwitcherViscaDeviceState {
 
 /* Enum BMDSwitcherViscaDeviceEventType - Used in IBMDSwitcherViscaDeviceCallback */
 
-typedef uint32_t BMDSwitcherViscaDeviceEventType;
-enum _BMDSwitcherViscaDeviceEventType {
+enum BMDSwitcherViscaDeviceEventType {
     bmdSwitcherViscaDeviceEventTypeStateChanged                  = /* 'vdec' */ 0x76646563,
     bmdSwitcherViscaDeviceEventTypeNameChanged                   = /* 'vden' */ 0x7664656E,
     bmdSwitcherViscaDeviceEventTypeEnabledChanged                = /* 'vdee' */ 0x76646565,
@@ -1618,8 +1544,7 @@ enum _BMDSwitcherViscaDeviceEventType {
 
 /* Enum BMDSwitcherViscaPingResult - Used in IBMDSwitcherViscaCallback */
 
-typedef uint32_t BMDSwitcherViscaPingResult;
-enum _BMDSwitcherViscaPingResult {
+enum BMDSwitcherViscaPingResult {
     bmdSwitcherViscaPingResultSuccess                            = /* 'vprs' */ 0x76707273,
     bmdSwitcherViscaPingResultTimeout                            = /* 'vprt' */ 0x76707274,
     bmdSwitcherViscaPingResultUnreachable                        = /* 'vpru' */ 0x76707275,
@@ -1628,16 +1553,14 @@ enum _BMDSwitcherViscaPingResult {
 
 /* Enum BMDSwitcherHyperDeckClipEventType - Used in IBMDSwitcherHyperDeckClipCallback */
 
-typedef uint32_t BMDSwitcherHyperDeckClipEventType;
-enum _BMDSwitcherHyperDeckClipEventType {
+enum BMDSwitcherHyperDeckClipEventType {
     bmdSwitcherHyperDeckClipEventTypeValidChanged                = /* 'ecnC' */ 0x65636E43,
     bmdSwitcherHyperDeckClipEventTypeInfoAvailableChanged        = /* 'eciC' */ 0x65636943
 };
 
 /* Enum BMDSwitcherHyperDeckPlayerState - Device State of an HyperDeck */
 
-typedef uint32_t BMDSwitcherHyperDeckPlayerState;
-enum _BMDSwitcherHyperDeckPlayerState {
+enum BMDSwitcherHyperDeckPlayerState {
     bmdSwitcherHyperDeckStateUnknown                             = /* 'epsu' */ 0x65707375,
     bmdSwitcherHyperDeckStateIdle                                = /* 'epsi' */ 0x65707369,
     bmdSwitcherHyperDeckStatePlay                                = /* 'epsp' */ 0x65707370,
@@ -1647,8 +1570,7 @@ enum _BMDSwitcherHyperDeckPlayerState {
 
 /* Enum BMDSwitcherHyperDeckEventType - Used in IBMDSwitcherHyperDeckCallback */
 
-typedef uint32_t BMDSwitcherHyperDeckEventType;
-enum _BMDSwitcherHyperDeckEventType {
+enum BMDSwitcherHyperDeckEventType {
     bmdSwitcherHyperDeckEventTypeConnectionStatusChanged         = /* 'emsC' */ 0x656D7343,
     bmdSwitcherHyperDeckEventTypeRemoteAccessEnabledChanged      = /* 'emaC' */ 0x656D6143,
     bmdSwitcherHyperDeckEventTypeStorageMediaStateChanged        = /* 'emvC' */ 0x656D7643,
@@ -1675,8 +1597,7 @@ enum _BMDSwitcherHyperDeckEventType {
 
 /* Enum BMDSwitcherHyperDeckConnectionStatus - HyperDeck Connection State */
 
-typedef uint32_t BMDSwitcherHyperDeckConnectionStatus;
-enum _BMDSwitcherHyperDeckConnectionStatus {
+enum BMDSwitcherHyperDeckConnectionStatus {
     bmdSwitcherHyperDeckConnectionStatusNotConnected             = /* 'esnc' */ 0x65736E63,
     bmdSwitcherHyperDeckConnectionStatusConnecting               = /* 'escg' */ 0x65736367,
     bmdSwitcherHyperDeckConnectionStatusConnected                = /* 'escd' */ 0x65736364,
@@ -1685,16 +1606,14 @@ enum _BMDSwitcherHyperDeckConnectionStatus {
 
 /* Enum BMDSwitcherHyperDeckStorageMediaState - HyperDeck Storage Media State */
 
-typedef uint32_t BMDSwitcherHyperDeckStorageMediaState;
-enum _BMDSwitcherHyperDeckStorageMediaState {
+enum BMDSwitcherHyperDeckStorageMediaState {
     bmdSwitcherHyperDeckStorageMediaStateReady                   = /* 'esrd' */ 0x65737264,
     bmdSwitcherHyperDeckStorageMediaStateUnavailable             = /* 'esun' */ 0x6573756E
 };
 
 /* Enum BMDSwitcherHyperDeckErrorType - HyperDeck Transient Error */
 
-typedef uint32_t BMDSwitcherHyperDeckErrorType;
-enum _BMDSwitcherHyperDeckErrorType {
+enum BMDSwitcherHyperDeckErrorType {
     bmdSwitcherHyperDeckErrorTypeUnknown                         = /* 'eeuk' */ 0x6565756B,
     bmdSwitcherHyperDeckErrorTypeAlreadyInUse                    = /* 'eeiu' */ 0x65656975,
     bmdSwitcherHyperDeckErrorTypeDuplicateAddress                = /* 'eeda' */ 0x65656461,
@@ -1706,16 +1625,14 @@ enum _BMDSwitcherHyperDeckErrorType {
 
 /* Enum BMDSwitcherMixMinusOutputAudioMode - Mix-Minus Output Audio Mode */
 
-typedef uint32_t BMDSwitcherMixMinusOutputAudioMode;
-enum _BMDSwitcherMixMinusOutputAudioMode {
+enum BMDSwitcherMixMinusOutputAudioMode {
     bmdSwitcherMixMinusOutputAudioModeProgramOut                 = 0x00000001,
     bmdSwitcherMixMinusOutputAudioModeMixMinus                   = 0x00000002
 };
 
 /* Enum BMDSwitcherMixMinusOutputEventType - Used in IBMDSwitcherMixMinusOutputCallback */
 
-typedef uint32_t BMDSwitcherMixMinusOutputEventType;
-enum _BMDSwitcherMixMinusOutputEventType {
+enum BMDSwitcherMixMinusOutputEventType {
     bmdSwitcherMixMinusOutputEventTypeAvailableAudioModesChanged = /* 'ammC' */ 0x616D6D43,
     bmdSwitcherMixMinusOutputEventTypeAudioModeChanged           = /* 'mmmC' */ 0x6D6D6D43,
     bmdSwitcherMixMinusOutputEventTypeHasMinusAudioInputIdChanged = /* 'hmaC' */ 0x686D6143,
@@ -1724,23 +1641,20 @@ enum _BMDSwitcherMixMinusOutputEventType {
 
 /* Enum BMDSwitcherAudioInputXLREventType - Used in IBMDSwitcherAudioInputXLRCallback */
 
-typedef uint32_t BMDSwitcherAudioInputXLREventType;
-enum _BMDSwitcherAudioInputXLREventType {
+enum BMDSwitcherAudioInputXLREventType {
     bmdSwitcherAudioInputXLREventTypeRCAToXLREnabledChanged      = /* 'rtxC' */ 0x72747843
 };
 
 /* Enum BMDSwitcherTimeCodeMode - Used in IBMDSwitcher */
 
-typedef uint32_t BMDSwitcherTimeCodeMode;
-enum _BMDSwitcherTimeCodeMode {
+enum BMDSwitcherTimeCodeMode {
     bmdSwitcherTimeCodeModeFreeRun                               = /* 'tmfr' */ 0x746D6672,
     bmdSwitcherTimeCodeModeTimeOfDay                             = /* 'tmtd' */ 0x746D7464
 };
 
 /* Enum BMDSwitcherDisplayClockEventType - Used in IBMDSwitcherDisplayClockCallback */
 
-typedef uint32_t BMDSwitcherDisplayClockEventType;
-enum _BMDSwitcherDisplayClockEventType {
+enum BMDSwitcherDisplayClockEventType {
     bmdSwitcherDisplayClockEventTypeEnabledChanged               = /* 'enaC' */ 0x656E6143,
     bmdSwitcherDisplayClockEventTypeSizeChanged                  = /* 'sizC' */ 0x73697A43,
     bmdSwitcherDisplayClockEventTypeOpacityChanged               = /* 'opcC' */ 0x6F706343,
@@ -1755,15 +1669,13 @@ enum _BMDSwitcherDisplayClockEventType {
 
 /* Enum BMDSwitcherIdentityInformationEventType - Used in IBMDSwitcherIdentityInformationCallback */
 
-typedef uint32_t BMDSwitcherIdentityInformationEventType;
-enum _BMDSwitcherIdentityInformationEventType {
+enum BMDSwitcherIdentityInformationEventType {
     bmdSwitcherIdentityInformationEventTypeFieldsChanged         = /* 'IdCn' */ 0x4964436E
 };
 
 /* Enum BMDSwitcherDisplayClockState - DisplayClock current state */
 
-typedef uint32_t BMDSwitcherDisplayClockState;
-enum _BMDSwitcherDisplayClockState {
+enum BMDSwitcherDisplayClockState {
     bmdSwitcherDisplayClockStateStopped                          = /* 'dsST' */ 0x64735354,
     bmdSwitcherDisplayClockStateRunning                          = /* 'dsRU' */ 0x64735255,
     bmdSwitcherDisplayClockStateReset                            = /* 'dsRE' */ 0x64735245
@@ -1771,8 +1683,7 @@ enum _BMDSwitcherDisplayClockState {
 
 /* Enum BMDSwitcherDisplayClockMode - Used to change the DisplayClocks type. */
 
-typedef uint32_t BMDSwitcherDisplayClockMode;
-enum _BMDSwitcherDisplayClockMode {
+enum BMDSwitcherDisplayClockMode {
     bmdSwitcherDisplayClockModeCountdown                         = /* 'dtyD' */ 0x64747944,
     bmdSwitcherDisplayClockModeCountup                           = /* 'dtyU' */ 0x64747955,
     bmdSwitcherDisplayClockModeTimeOfDay                         = /* 'dtyT' */ 0x64747954
@@ -1780,8 +1691,7 @@ enum _BMDSwitcherDisplayClockMode {
 
 /* Enum BMDSwitcherAudioChannelPair - IBMDSwitcher Audio Channel Pair Id */
 
-typedef uint32_t BMDSwitcherAudioChannelPair;
-enum _BMDSwitcherAudioChannelPair {
+enum BMDSwitcherAudioChannelPair {
     bmdSwitcherAudioChannelPair_1_2                              = 0,
     bmdSwitcherAudioChannelPair_3_4                              = 1,
     bmdSwitcherAudioChannelPair_5_6                              = 2,
@@ -1794,8 +1704,7 @@ enum _BMDSwitcherAudioChannelPair {
 
 /* Enum BMDSwitcherAudioInternalPortType - IBMDSwitcher Audio Internal Port Types */
 
-typedef uint32_t BMDSwitcherAudioInternalPortType;
-enum _BMDSwitcherAudioInternalPortType {
+enum BMDSwitcherAudioInternalPortType {
     bmdSwitcherAudioInternalPortTypeNotInternal                  = /* 'aini' */ 0x61696E69,
     bmdSwitcherAudioInternalPortTypeNoAudio                      = /* 'aina' */ 0x61696E61,
     bmdSwitcherAudioInternalPortTypeTalkbackMix                  = /* 'aitb' */ 0x61697462,
@@ -1814,19 +1723,33 @@ enum _BMDSwitcherAudioInternalPortType {
 
 /* Enum BMDSwitcherAudioRoutingSourceEventType - Used in IBMDSwitcherAudioRoutingSourceCallback */
 
-typedef uint32_t BMDSwitcherAudioRoutingSourceEventType;
-enum _BMDSwitcherAudioRoutingSourceEventType {
+enum BMDSwitcherAudioRoutingSourceEventType {
     bmdSwitcherAudioRoutingSourceEventTypeNameChanged            = /* 'ARSN' */ 0x4152534E,
     bmdSwitcherAudioRoutingSourceEventTypeNameDefaultChanged     = /* 'ARSD' */ 0x41525344
 };
 
 /* Enum BMDSwitcherAudioRoutingOutputEventType - Used in IBMDSwitcherAudioRoutingOutputCallback */
 
-typedef uint32_t BMDSwitcherAudioRoutingOutputEventType;
-enum _BMDSwitcherAudioRoutingOutputEventType {
+enum BMDSwitcherAudioRoutingOutputEventType {
     bmdSwitcherAudioRoutingOutputEventTypeNameChanged            = /* 'ARON' */ 0x41524F4E,
     bmdSwitcherAudioRoutingOutputEventTypeNameDefaultChanged     = /* 'AROD' */ 0x41524F44,
     bmdSwitcherAudioRoutingOutputEventTypeSourceChanged          = /* 'AROS' */ 0x41524F53
+};
+
+/* Enum BMDSwitcherFairlightAudioLoudnessScaleRange - Used in IBMDSwitcherFairlightAudioLoudnessMeters */
+
+enum BMDSwitcherFairlightAudioLoudnessScaleRange {
+    bmdSwitcherFairlightAudioLoudnessScaleRangeEBU9              = /* 'ebu9' */ 0x65627539,
+    bmdSwitcherFairlightAudioLoudnessScaleRangeEBU18             = /* 'eb18' */ 0x65623138
+};
+
+/* Enum BMDSwitcherFairlightAudioLoudnessMetersEventType - Used in IBMDSwitcherFairlightAudioLoudnessMetersCallback */
+
+enum BMDSwitcherFairlightAudioLoudnessMetersEventType {
+    bmdSwitcherFairlightAudioLoudnessMetersEventTypeStandardIndexChanged = /* 'stdC' */ 0x73746443,
+    bmdSwitcherFairlightAudioLoudnessMetersEventTypeScaleRangeChanged = /* 'ranC' */ 0x72616E43,
+    bmdSwitcherFairlightAudioLoudnessMetersEventTypeAbsoluteChanged = /* 'absC' */ 0x61627343,
+    bmdSwitcherFairlightAudioLoudnessMetersEventTypeTargetChanged = /* 'tarC' */ 0x74617243
 };
 
 #if defined(__cplusplus)
@@ -1907,12 +1830,16 @@ class IBMDSwitcherTransitionStingerParametersCallback;
 class IBMDSwitcherTransitionStingerParameters;
 class IBMDSwitcherTransitionParametersCallback;
 class IBMDSwitcherTransitionParameters;
+class IBMDSwitcherMixEffectBlockShadowCallback;
+class IBMDSwitcherMixEffectBlockShadow;
 class IBMDSwitcherMixEffectBlockCallback;
 class IBMDSwitcherMixEffectBlock;
 class IBMDSwitcherInputCallback;
 class IBMDSwitcherInput;
 class IBMDSwitcherInputColorCallback;
 class IBMDSwitcherInputColor;
+class IBMDSwitcherInputAuxShadowCallback;
+class IBMDSwitcherInputAuxShadow;
 class IBMDSwitcherInputAuxCallback;
 class IBMDSwitcherInputAux;
 class IBMDSwitcherSuperSourceBoxCallback;
@@ -1932,6 +1859,8 @@ class IBMDSwitcherSuperSourceBoxIterator;
 class IBMDSwitcherMixEffectBlockIterator;
 class IBMDSwitcherDownstreamKeyIterator;
 class IBMDSwitcherKeyIterator;
+class IBMDSwitcherMixEffectBlockShadowIterator;
+class IBMDSwitcherInputAuxShadowIterator;
 class IBMDSwitcherMediaPlayerIterator;
 class IBMDSwitcherMultiViewIterator;
 class IBMDSwitcherAudioMonitorOutputIterator;
@@ -2005,6 +1934,8 @@ class IBMDSwitcherAudioRoutingOutput;
 class IBMDSwitcherAudioRoutingOutputIterator;
 class IBMDSwitcherIdentityInformationCallback;
 class IBMDSwitcherIdentityInformation;
+class IBMDSwitcherFairlightAudioLoudnessMeters;
+class IBMDSwitcherFairlightAudioLoudnessMetersCallback;
 
 /* Interface IBMDSwitcherAudioMonitorOutputCallback - Audio Monitor Output Object Callback */
 
@@ -2483,6 +2414,9 @@ public:
     virtual HRESULT GetSupportedMicPowerModes (/* out */ BMDSwitcherFairlightAudioAnalogInputMicPowerMode* powerModes) = 0;
     virtual HRESULT GetMicPowerMode (/* out */ BMDSwitcherFairlightAudioAnalogInputMicPowerMode* powerMode) = 0;
     virtual HRESULT SetMicPowerMode (/* in */ BMDSwitcherFairlightAudioAnalogInputMicPowerMode powerMode) = 0;
+    virtual HRESULT DoesSupportAnalogMicPad (/* out */ bool* hasAnalogMicPad) = 0;
+    virtual HRESULT GetAnalogMicPadEnabled (/* out */ bool* enabled) = 0;
+    virtual HRESULT SetAnalogMicPadEnabled (/* in */ bool enabled) = 0;
     virtual HRESULT AddCallback (/* in */ IBMDSwitcherFairlightAnalogAudioInputCallback* callback) = 0;
     virtual HRESULT RemoveCallback (/* in */ IBMDSwitcherFairlightAnalogAudioInputCallback* callback) = 0;
 
@@ -3373,6 +3307,33 @@ protected:
     virtual ~IBMDSwitcherTransitionParameters () {} // call Release method to drop reference count
 };
 
+/* Interface IBMDSwitcherMixEffectBlockShadowCallback - Mix Effect Block Shadow Notification Callback */
+
+class BMD_PUBLIC IBMDSwitcherMixEffectBlockShadowCallback : public IUnknown
+{
+public:
+    virtual HRESULT Notify (/* in */ BMDSwitcherMixEffectBlockShadowEventType eventType) = 0;
+
+protected:
+    virtual ~IBMDSwitcherMixEffectBlockShadowCallback () {} // call Release method to drop reference count
+};
+
+/* Interface IBMDSwitcherMixEffectBlockShadow - Mix Effect Block Shadow */
+
+class BMD_PUBLIC IBMDSwitcherMixEffectBlockShadow : public IUnknown
+{
+public:
+    virtual HRESULT GetShadowedMixEffectBlockIndex (/* out */ uint32_t* meBlockIndex) = 0;
+    virtual HRESULT SetEnabled (/* in */ bool enabled) = 0;
+    virtual HRESULT GetEnabled (/* out */ bool* enabled) = 0;
+    virtual HRESULT SetSubstitution (/* in */ BMDSwitcherInputId source, /* in */ BMDSwitcherInputId substitute) = 0;
+    virtual HRESULT GetSubstitution (/* in */ BMDSwitcherInputId source, /* out */ BMDSwitcherInputId* substitute) = 0;
+    virtual HRESULT SetSubstitutions (/* in */ uint32_t count, /* in */ const BMDSourceSubstitution* substitutes) = 0;
+    virtual HRESULT GetSubstitutions (/* in, out */ uint32_t* count, /* out */ BMDSourceSubstitution* substitutes) = 0;
+    virtual HRESULT AddCallback (/* in */ IBMDSwitcherMixEffectBlockShadowCallback* callback) = 0;
+    virtual HRESULT RemoveCallback (/* in */ IBMDSwitcherMixEffectBlockShadowCallback* callback) = 0;
+};
+
 /* Interface IBMDSwitcherMixEffectBlockCallback - Mix Effect Block Notification Callback */
 
 class BMD_PUBLIC IBMDSwitcherMixEffectBlockCallback : public IUnknown
@@ -3411,6 +3372,8 @@ public:
     virtual HRESULT GetInFadeToBlack (/* out */ bool* value) = 0;
     virtual HRESULT GetFadeToBlackInTransition (/* out */ bool* value) = 0;
     virtual HRESULT GetInputAvailabilityMask (/* out */ BMDSwitcherInputAvailability* value) = 0;
+    virtual HRESULT SetTallyConfig (/* in */ BMDSwitcherMixEffectBlockTallyEnabledFlags config) = 0;
+    virtual HRESULT GetTallyConfig (/* out */ BMDSwitcherMixEffectBlockTallyEnabledFlags* config) = 0;
     virtual HRESULT CreateIterator (/* in */ REFIID iid, /* out */ LPVOID* ppv) = 0;
     virtual HRESULT AddCallback (/* in */ IBMDSwitcherMixEffectBlockCallback* callback) = 0;
     virtual HRESULT RemoveCallback (/* in */ IBMDSwitcherMixEffectBlockCallback* callback) = 0;
@@ -3490,6 +3453,33 @@ protected:
     virtual ~IBMDSwitcherInputColor () {} // call Release method to drop reference count
 };
 
+/* Interface IBMDSwitcherInputAuxShadowCallback - Aux Input Shadow Notification Callback */
+
+class BMD_PUBLIC IBMDSwitcherInputAuxShadowCallback : public IUnknown
+{
+public:
+    virtual HRESULT Notify (/* in */ BMDSwitcherInputAuxShadowEventType eventType) = 0;
+
+protected:
+    virtual ~IBMDSwitcherInputAuxShadowCallback () {} // call Release method to drop reference count
+};
+
+/* Interface IBMDSwitcherInputAuxShadow - Aux Input Shadow Object */
+
+class BMD_PUBLIC IBMDSwitcherInputAuxShadow : public IUnknown
+{
+public:
+    virtual HRESULT GetShadowedMixEffectBlockIndex (/* out */ uint32_t* meBlockIndex) = 0;
+    virtual HRESULT SetEnabled (/* in */ bool enabled) = 0;
+    virtual HRESULT GetEnabled (/* out */ bool* enabled) = 0;
+    virtual HRESULT SetSubstitution (/* in */ BMDSwitcherInputId source, /* in */ BMDSwitcherInputId substitute) = 0;
+    virtual HRESULT GetSubstitution (/* in */ BMDSwitcherInputId source, /* out */ BMDSwitcherInputId* substitute) = 0;
+    virtual HRESULT SetSubstitutions (/* in */ uint32_t count, /* in */ const BMDSourceSubstitution* substitutes) = 0;
+    virtual HRESULT GetSubstitutions (/* in, out */ uint32_t* count, /* out */ BMDSourceSubstitution* substitutes) = 0;
+    virtual HRESULT AddCallback (/* in */ IBMDSwitcherInputAuxShadowCallback* callback) = 0;
+    virtual HRESULT RemoveCallback (/* in */ IBMDSwitcherInputAuxShadowCallback* callback) = 0;
+};
+
 /* Interface IBMDSwitcherInputAuxCallback - Aux Input Object Callback */
 
 class BMD_PUBLIC IBMDSwitcherInputAuxCallback : public IUnknown
@@ -3509,6 +3499,7 @@ public:
     virtual HRESULT GetInputSource (/* out */ BMDSwitcherInputId* input) = 0;
     virtual HRESULT SetInputSource (/* in */ BMDSwitcherInputId input) = 0;
     virtual HRESULT GetInputAvailabilityMask (/* out */ BMDSwitcherInputAvailability* availabilityMask) = 0;
+    virtual HRESULT CreateIterator (/* in */ REFIID iid, /* out */ LPVOID* ppv) = 0;
     virtual HRESULT AddCallback (/* in */ IBMDSwitcherInputAuxCallback* callback) = 0;
     virtual HRESULT RemoveCallback (/* in */ IBMDSwitcherInputAuxCallback* callback) = 0;
 
@@ -3867,6 +3858,28 @@ protected:
     virtual ~IBMDSwitcherKeyIterator () {} // call Release method to drop reference count
 };
 
+/* Interface IBMDSwitcherMixEffectBlockShadowIterator - Mix Effect Block Shadow Iterator */
+
+class BMD_PUBLIC IBMDSwitcherMixEffectBlockShadowIterator : public IUnknown
+{
+public:
+    virtual HRESULT Next (/* out */ IBMDSwitcherMixEffectBlockShadow** mixEffectBlockShadow) = 0;
+
+protected:
+    virtual ~IBMDSwitcherMixEffectBlockShadowIterator () {} // call Release method to drop reference count
+};
+
+/* Interface IBMDSwitcherInputAuxShadowIterator - Input Aux Shadow Iterator */
+
+class BMD_PUBLIC IBMDSwitcherInputAuxShadowIterator : public IUnknown
+{
+public:
+    virtual HRESULT Next (/* out */ IBMDSwitcherInputAuxShadow** inputAuxShadow) = 0;
+
+protected:
+    virtual ~IBMDSwitcherInputAuxShadowIterator () {} // call Release method to drop reference count
+};
+
 /* Interface IBMDSwitcherMediaPlayerIterator - Media Player Iterator */
 
 class BMD_PUBLIC IBMDSwitcherMediaPlayerIterator : public IUnknown
@@ -4023,6 +4036,10 @@ public:
     virtual HRESULT DoesSupportFadeToBlackEnabledSetting (/* out */ bool* supported) = 0;
     virtual HRESULT GetFadeToBlackEnabled (/* out */ bool* enabled) = 0;
     virtual HRESULT SetFadeToBlackEnabled (/* in */ bool enabled) = 0;
+    virtual HRESULT DoesSupportDskTallyOverride (/* out */ bool* supported) = 0;
+    virtual HRESULT GetDskTallyOverrideEnabled (/* out */ bool* enabled) = 0;
+    virtual HRESULT SetDskTallyOverrideEnabled (/* in */ bool enabled) = 0;
+    virtual HRESULT DoesSupportTallyConfig (/* out */ bool* supported) = 0;
     virtual HRESULT CreateIterator (/* in */ REFIID iid, /* out */ LPVOID* ppv) = 0;
     virtual HRESULT AddCallback (/* in */ IBMDSwitcherCallback* callback) = 0;
     virtual HRESULT RemoveCallback (/* in */ IBMDSwitcherCallback* callback) = 0;
@@ -5042,6 +5059,32 @@ public:
 
 protected:
     virtual ~IBMDSwitcherIdentityInformation () {} // call Release method to drop reference count
+};
+
+/* Interface IBMDSwitcherFairlightAudioLoudnessMeters - Loudness settings */
+
+class BMD_PUBLIC IBMDSwitcherFairlightAudioLoudnessMeters : public IUnknown
+{
+public:
+    virtual HRESULT GetStandardData (/* in */ uint16_t standardIndex, /* out */ CFStringRef* label, /* out */ double* fixedTarget, /* out */ bool* hasDefaultScaleRange, /* out */ BMDSwitcherFairlightAudioLoudnessScaleRange* defaultScaleRange, /* out */ bool* hasDefaultAbsolute, /* out */ bool* defaultAbsolute) = 0;
+    virtual HRESULT GetStandardIndex (/* out */ uint16_t* standardIndex) = 0;
+    virtual HRESULT SetStandardIndex (/* in */ uint16_t standardIndex) = 0;
+    virtual HRESULT GetScaleRange (/* out */ BMDSwitcherFairlightAudioLoudnessScaleRange* scaleRange) = 0;
+    virtual HRESULT SetScaleRange (/* in */ BMDSwitcherFairlightAudioLoudnessScaleRange scaleRange) = 0;
+    virtual HRESULT GetScaleAbsolute (/* out */ bool* absolute) = 0;
+    virtual HRESULT SetScaleAbsolute (/* in */ bool absolute) = 0;
+    virtual HRESULT GetTarget (/* out */ double* target) = 0;
+    virtual HRESULT SetTarget (/* in */ double target) = 0;
+    virtual HRESULT AddCallback (/* in */ IBMDSwitcherFairlightAudioLoudnessMetersCallback* callback) = 0;
+    virtual HRESULT RemoveCallback (/* in */ IBMDSwitcherFairlightAudioLoudnessMetersCallback* callback) = 0;
+};
+
+/* Interface IBMDSwitcherFairlightAudioLoudnessMetersCallback -  */
+
+class BMD_PUBLIC IBMDSwitcherFairlightAudioLoudnessMetersCallback : public IUnknown
+{
+public:
+    virtual HRESULT Notify (/* in */ BMDSwitcherFairlightAudioLoudnessMetersEventType eventType) = 0;
 };
 
 /* Functions */
